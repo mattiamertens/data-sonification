@@ -1,0 +1,95 @@
+@font-face {
+    font-family: 'Berlin Grotesk';
+    src: url('fonts/BerlinGrotesk-Thin.eot');
+    src: url('fonts/BerlinGrotesk-Thin.eot?#iefix') format('embedded-opentype'),
+        url('fonts/BerlinGrotesk-Thin.woff2') format('woff2'),
+        url('fonts/BerlinGrotesk-Thin.woff') format('woff');
+    font-weight: 100;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Berlin Grotesk';
+    src: url('fonts/BerlinGrotesk-Light.eot');
+    src: url('fonts/BerlinGrotesk-Light.eot?#iefix') format('embedded-opentype'),
+        url('fonts/BerlinGrotesk-Light.woff2') format('woff2'),
+        url('fonts/BerlinGrotesk-Light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Berlin Grotesk';
+    src: url('fonts/BerlinGrotesk-Regular.eot');
+    src: url('fonts/BerlinGrotesk-Regular.eot?#iefix') format('embedded-opentype'),
+        url('fonts/BerlinGrotesk-Regular.woff2') format('woff2'),
+        url('fonts/BerlinGrotesk-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Berlin Grotesk';
+    src: url('fonts/BerlinGrotesk-Medium.eot');
+    src: url('fonts/BerlinGrotesk-Medium.eot?#iefix') format('embedded-opentype'),
+        url('fonts/BerlinGrotesk-Medium.woff2') format('woff2'),
+        url('fonts/BerlinGrotesk-Medium.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Berlin Grotesk';
+    src: url('fonts/BerlinGrotesk-Bold.eot');
+    src: url('fonts/BerlinGrotesk-Bold.eot?#iefix') format('embedded-opentype'),
+        url('fonts/BerlinGrotesk-Bold.woff2') format('woff2'),
+        url('fonts/BerlinGrotesk-Bold.woff') format('woff');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+body, * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Berlin Grotesk', sans-serif;
+    font-weight: 300;
+    color: white;
+}
+body{
+    background-color: #EBEBEB;
+}
+a{
+    text-decoration: none;
+}
+#canvas{
+    z-index: -1;
+}
+.exclusion{
+    mix-blend-mode: difference;
+}
+.flex-sb-center {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.flex-center-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.fixed{
+    position: fixed;
+    left: 0;
+    width: -webkit-fill-available;
+    font-size: 18px;
+    z-index: 1000;
+}
+.fixed-padding{
+    padding: 12px 16px;
+}
+.footer{
+bottom: 0;
+}
