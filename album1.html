@@ -28,8 +28,8 @@
             <div class="cta-wrapper flex-center-center exclusion">
                 <div class="button-tertiary">Hover </div>&nbsp;on a dot to hear an extract of music play
             </div>
-            <div class="song-wrapper">
-                <div class="song exclusion"></div>
+            <div class="song-wrapper absolute">
+                <svg width="800" height="600" class="song-graph"></svg>
             </div>
         </div>
     </div>
@@ -203,7 +203,7 @@ varying float vDistance; // Pass the distance to fragment shader
     }
 </script>
 
-  
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
 <script type="module" src="newMain.js"></script>
 
 </html>

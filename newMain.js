@@ -10,7 +10,7 @@ const scene = new THREE.Scene();
 
 // Create a camera
 const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 10000);
-camera.position.z = 5;
+camera.position.z = 8;
 
 
 // Create a renderer
@@ -20,7 +20,7 @@ renderer.setClearColor(0xEBEBEB, 1);
 
 // Disable zooming
 const controls = new OrbitControls(camera, renderer.domElement);
-controls.enableZoom = true;
+controls.enableZoom = false;
 
 document.getElementById('canvas').appendChild(renderer.domElement);
 
@@ -72,7 +72,7 @@ sphereGeometry.setAttribute('initialDistance', new THREE.BufferAttribute(initial
 // SHADER MATERIAL
 let sphereMesh = new THREE.ShaderMaterial({
     uniforms: {      
-        colorA: { value: new THREE.Color(0x000000) },
+        colorA: { value: new THREE.Color(0x032061) },
         colorB: { value: new THREE.Color(0x8DE4F7) },
         u_frequency: {type: 'f', value: 0.0},
         audioData: { value: new Float32Array(32) }
@@ -90,37 +90,34 @@ camera.add(listener);
 
 const sound = new THREE.Audio(listener);
 const audioLoader = new THREE.AudioLoader();
-audioLoader.load('assets/despacito.mp3', function(buffer){
+audioLoader.load('assets/top.mp3', function(buffer){
     sound.setBuffer(buffer);
 
-    let playing = false;
-    window.addEventListener('click', () => {
-        if (!playing){
-            sound.play();
-            playing = true;
-        }
-        else {
-            sound.pause();
-            playing = false;
-        }
-    })
+    // let playing = false;
+    // window.addEventListener('click', () => {
+    //     if (!playing){
+    //         sound.play();
+    //         playing = true;
+    //     }
+    //     else {
+    //         sound.pause();
+    //         playing = false;
+    //     }
+    // })
 })
 
 const analyser = new THREE.AudioAnalyser(sound, 32);
 
 
 let noise = openSimplexNoise.makeNoise4D(Date.now());
-console.log(noise(1,1,1,1));
+// console.log(noise(1,1,1,1));
 let clock = new THREE.Clock();
 
 // Mouse position
 let mouse = new THREE.Vector2();
 let mouse3D = new THREE.Vector3();
 let raycaster = new THREE.Raycaster();
-// window.addEventListener('mousemove', (e) => {
-//     mouse.x = e.clientX / window.innerWidth;
-//     mouse.y = e.clientY / window.innerHeight;
-// });
+
 // Add event listener for mouse move
 window.addEventListener('mousemove', (event) => {
     // Normalize mouse position to range [-1, 1]
@@ -185,7 +182,6 @@ function animate() {
     let scale = 0.4 + easedT * 0.6;
     sphere.scale.set(scale, scale, scale);
 
-
     // Render the scene
     renderer.render(scene, camera);
 }
@@ -198,5 +194,144 @@ window.addEventListener('resize', () => {
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-// Start the animation loopoop
+
+// Start the animation loop
 animate();
+
+
+// D3 code for songs
+import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
+const width = window.innerWidth;
+const height = window.innerHeight;
+
+const svg = d3.select(".song-graph")
+    .attr("width", width)
+    .attr("height", height) 
+    .attr("viewBox", [-width / 2, -height / 2, width, height])
+    .append('g')
+
+// Load data from JSON file
+d3.json("assets/songs.json").then(data =>{
+    update(data);
+    console.log(data)
+})
+
+function update(data){
+    const nodes = data.nodes;
+    // console.log(node.data)
+    
+    // const simulation = d3.forceSimulation()
+    //     .force("charge", d3.forceManyBody().strength(-50))
+    //     .force("center", d3.forceCenter(width / 2, height / 2))
+    //     .force("collision", d3.forceCollide().radius(30))
+    //     .on("tick", ticked);
+
+    const node = svg.append("g")
+        .attr("class", "songs-node")
+        .selectAll("circle")
+        .data(data)
+        .enter().append("circle")
+        .attr("class", "single-song")
+        .attr("r", 10)
+        .attr('fill', 'white')
+        .attr('data-song', d => d.link)
+        .attr('data-title', d => d.title)
+        .on('click', function(d){
+            const selection = d3.select(this)
+            let selected = $(this).attr('data-song')
+            console.log(selected)
+            const song = new Audio(selected);
+
+            let playing = false;
+
+            if (!playing){
+                song.play();
+                playing = true;
+                console.log(playing)
+            }
+            else {
+                song.pause();
+                playing = false;
+            }
+
+
+
+            // new Audio(selected).play();
+        })
+        // .on('mouseleave', function(){
+        //     let selected = $(this).attr('data-song')
+        //     console.log(selected);
+            
+        //     new Audio(selected).pause();
+        // })
+        // .on('click', function(d){
+        //     let selected = $(this).attr('data-song')
+        //     console.log(selected)
+        // })
+
+    const labels = svg.selectAll('text')
+        .data(data)
+        .enter().append('text')
+        .attr('fill', 'red')
+        .text(d=> d.title)
+        
+    const song = svg.selectAll("audio")
+        .data(data)
+        .enter().append('audio')
+        .attr('href', d=> d.link)
+    
+    // Add audio elements for each song
+    // const audioElements = nodes.map(node => {
+    //     const audio = new Audio(node.audio);
+    //     audio.preload = 'auto';
+    //     return { id: node.id, audio: audio };
+    // });
+
+   
+    const simulation1 = d3.forceSimulation() 
+      .force("charge", d3.forceManyBody())
+      .force("x", d3.forceX())
+      .force("y", d3.forceY())
+      .on("tick", ticked2);
+
+    // UNDERSTAND WHICH ONE WORKS BETTER
+    function ticked() {
+        node
+            .attr("transform", d=>`translate(${d.x*1.5}, ${d.y/1.2})`);
+    }
+    function ticked2() {
+        node.attr("cx", d => d.x)
+            .attr("cy", d => d.y)
+            .call(drag(simulation1));
+
+        labels.attr('x', d => d.x)
+              .attr('y', d => d.y)
+    }
+      simulation1.nodes(data)
+      simulation1.alpha(1)
+      simulation1.restart()
+
+      function drag(simulation) {
+        function dragstarted(event, d) {
+            if (!event.active) simulation.alphaTarget(0.3).restart();
+            d.fx = d.x;
+            d.fy = d.y;
+        }
+
+        function dragged(event, d) {
+            d.fx = event.x;
+            d.fy = event.y;
+        }
+
+        function dragended(event, d) {
+            if (!event.active) simulation.alphaTarget(0);
+            d.fx = null;
+            d.fy = null;
+        }
+
+        return d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended);
+    }
+}

@@ -66,9 +66,13 @@ a{
 }
 #canvas{
     z-index: -1;
+    position: absolute;
 }
 .exclusion{
     mix-blend-mode: difference;
+}
+.column{
+    flex-direction: column;
 }
 .flex-sb-center {
     display: flex;
@@ -87,9 +91,36 @@ a{
     font-size: 18px;
     z-index: 1000;
 }
+.absolute{
+    position: absolute;
+}
 .fixed-padding{
     padding: 12px 16px;
 }
 .footer{
 bottom: 0;
+}
+
+
+.album-wrapper{
+    height: 100vh;
+}
+.album-title{
+    font-size: 80px;
+}
+.cta-wrapper{
+    font-size: 24px;
+}
+
+.song-graph{
+    z-index: 10;
+}
+.song{
+    width: 8px;
+    height: 8px;
+    border-radius: 30px;
+    background-color: white;
+}
+.single-song:hover{
+    fill: red;
 }
