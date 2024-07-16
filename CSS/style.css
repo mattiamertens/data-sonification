@@ -121,6 +121,13 @@ bottom: 0;
     border-radius: 30px;
     background-color: white;
 }
+.single-song{
+    fill: #d9d9d9;
+    mix-blend-mode: exclusion;
+    r: 6px;
+}
 .single-song:hover{
-    fill: red;
+    outline: 1.5px solid #343434;
+    border-radius: 100px;
+    outline-offset: 8px;
 }

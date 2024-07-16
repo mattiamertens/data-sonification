@@ -208,7 +208,6 @@ const svg = d3.select(".song-graph")
     .attr("width", width)
     .attr("height", height) 
     .attr("viewBox", [-width / 2, -height / 2, width, height])
-    .append('g')
 
 // Load data from JSON file
 d3.json("assets/songs.json").then(data =>{
@@ -216,15 +215,9 @@ d3.json("assets/songs.json").then(data =>{
     console.log(data)
 })
 
+var playing = false;
+var currentAudio = null;
 function update(data){
-    const nodes = data.nodes;
-    // console.log(node.data)
-    
-    // const simulation = d3.forceSimulation()
-    //     .force("charge", d3.forceManyBody().strength(-50))
-    //     .force("center", d3.forceCenter(width / 2, height / 2))
-    //     .force("collision", d3.forceCollide().radius(30))
-    //     .on("tick", ticked);
 
     const node = svg.append("g")
         .attr("class", "songs-node")
@@ -232,66 +225,76 @@ function update(data){
         .data(data)
         .enter().append("circle")
         .attr("class", "single-song")
-        .attr("r", 10)
-        .attr('fill', 'white')
         .attr('data-song', d => d.link)
         .attr('data-title', d => d.title)
-        .on('click', function(d){
-            const selection = d3.select(this)
-            let selected = $(this).attr('data-song')
-            console.log(selected)
-            const song = new Audio(selected);
-
-            let playing = false;
-
-            if (!playing){
-                song.play();
-                playing = true;
-                console.log(playing)
-            }
-            else {
-                song.pause();
-                playing = false;
-            }
-
-
-
-            // new Audio(selected).play();
-        })
-        // .on('mouseleave', function(){
-        //     let selected = $(this).attr('data-song')
-        //     console.log(selected);
-            
-        //     new Audio(selected).pause();
-        // })
-        // .on('click', function(d){
+        // .on('click', function(event, d){
         //     let selected = $(this).attr('data-song')
         //     console.log(selected)
-        // })
+        //     // const song = new Audio(selected);
+        //     // song.src = `${selected}`;
+            
 
-    const labels = svg.selectAll('text')
+
+        //     if (!playing){
+        //         new Audio(selected).play();
+        //         // song.play();
+        //         // console.log('true before now: ' + playing)
+        //         playing = true;
+        //     }
+        //     else {
+        //         // song.pause();
+        //         // document.getElementsByTagName('audio').pause();
+        //         // const cosa = $('audio');
+        //         // const cosa = document.querySelectorAll('audio');
+        //         // console.log(cosa)
+        //         // cosa.forEach(cosa => {
+        //         //     cosa.pause()
+        //         // })
+        //         new Audio(selected).pause();
+        //         console.log('mi dovrei fermare')
+        //         playing = false;
+
+        //     }
+        // })
+        .on('mouseenter', function(event, d){
+            if (currentAudio){
+                currentAudio.pause();
+            }
+            currentAudio = new Audio(d.link);
+            currentAudio.play();
+        })
+        .on('mouseleave', function(){
+            if (currentAudio){
+                currentAudio.pause();
+                currentAudio = null;
+            }
+        })
+
+    const labels = svg.append('g')
+        .attr('class', 'labels-node')
+        .selectAll('text')
         .data(data)
         .enter().append('text')
         .attr('fill', 'red')
         .text(d=> d.title)
         
-    const song = svg.selectAll("audio")
+    const canzone = svg.append('g')
+        .attr('class', 'audio-node')
+        .selectAll("audio")
         .data(data)
         .enter().append('audio')
         .attr('href', d=> d.link)
-    
-    // Add audio elements for each song
-    // const audioElements = nodes.map(node => {
-    //     const audio = new Audio(node.audio);
-    //     audio.preload = 'auto';
-    //     return { id: node.id, audio: audio };
-    // });
-
    
     const simulation1 = d3.forceSimulation() 
       .force("charge", d3.forceManyBody())
       .force("x", d3.forceX())
       .force("y", d3.forceY())
+      .force("collide", d3.forceCollide().radius(d => -22))
+    //   .force("charge", d3.forceManyBody().strength(-15))
+    //   .force("charge", d3.forceManyBody().strength(-35).distanceMax(800))
+      .force("charge", d3.forceManyBody().strength(200).distanceMax(-10))
+    //   .force("center", d3.forceCenter(width / 2, height / 2))
+      .force("collision", d3.forceCollide().radius(70))
       .on("tick", ticked2);
 
     // UNDERSTAND WHICH ONE WORKS BETTER
