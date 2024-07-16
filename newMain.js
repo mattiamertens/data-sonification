@@ -90,21 +90,22 @@ camera.add(listener);
 
 const sound = new THREE.Audio(listener);
 const audioLoader = new THREE.AudioLoader();
-audioLoader.load('assets/top.mp3', function(buffer){
-    sound.setBuffer(buffer);
+// audioLoader.load('/assets/top.mp3', function(buffer){
+//     sound.setBuffer(buffer);
 
-    // let playing = false;
-    // window.addEventListener('click', () => {
-    //     if (!playing){
-    //         sound.play();
-    //         playing = true;
-    //     }
-    //     else {
-    //         sound.pause();
-    //         playing = false;
-    //     }
-    // })
-})
+//     let playing = false;
+//     window.addEventListener('click', () => {
+//         if (!playing){
+//             sound.play();
+//             // sound.setVolume(0.1);
+//             playing = true;
+//         }
+//         else {
+//             sound.pause();
+//             playing = false;
+//         }
+//     })
+// })
 
 const analyser = new THREE.AudioAnalyser(sound, 32);
 
@@ -217,6 +218,8 @@ d3.json("assets/songs.json").then(data =>{
 
 var playing = false;
 var currentAudio = null;
+var currentTrack = null;
+
 function update(data){
 
     const node = svg.append("g")
@@ -260,14 +263,23 @@ function update(data){
             if (currentAudio){
                 currentAudio.pause();
             }
-            currentAudio = new Audio(d.link);
-            currentAudio.play();
+            // currentAudio = new Audio(d.link);
+            // currentAudio.play();
+            // currentTrack = d.link; // Update the current track
+            // passTrackToThreeJS(currentTrack);
+
+            audioLoader.load(d.link, function(buffer){
+                sound.setBuffer(buffer);
+                sound.play();
+                
+            })
         })
         .on('mouseleave', function(){
             if (currentAudio){
                 currentAudio.pause();
                 currentAudio = null;
             }
+            sound.pause();
         })
 
     const labels = svg.append('g')
@@ -337,4 +349,25 @@ function update(data){
             .on("drag", dragged)
             .on("end", dragended);
     }
+}
+
+
+function passTrackToThreeJS(track) {
+    console.log("Current track:", track);
+    // audioLoader.load(track, function(buffer){
+    //     sound.setBuffer(buffer);
+    
+    //     let playing = false;
+    //     window.addEventListener('click', () => {
+    //         if (!playing){
+    //             sound.play();
+    //             playing = true;
+    //         }
+    //         else {
+    //             sound.pause();
+    //             playing = false;
+    //         }
+    //     })
+    // })
+    
 }
