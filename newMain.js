@@ -170,8 +170,8 @@ function animate() {
     // Update audio data
     sphereMesh.uniforms.audioData.value = audioData;
     uniforms.u_frequency.value = avgfrequency;
-    sphere.rotation.y += 0.0004;
-    sphere.rotation.x += -0.0004;
+    sphere.rotation.y += 0.0006;
+    sphere.rotation.x += -0.0006;
 
     // Update raycaster with mouse position
     raycaster.setFromCamera(mouse, camera);
@@ -259,7 +259,7 @@ function update(data){
 
         //     }
         // })
-        .on('mouseenter', function(event, d){
+        .on('click', function(event, d){
             if (currentAudio){
                 currentAudio.pause();
             }
@@ -274,21 +274,21 @@ function update(data){
                 
             })
         })
-        .on('mouseleave', function(){
-            if (currentAudio){
-                currentAudio.pause();
-                currentAudio = null;
-            }
-            sound.pause();
-        })
+        // .on('mouseleave', function(){
+        //     if (currentAudio){
+        //         currentAudio.pause();
+        //         currentAudio = null;
+        //     }
+        //     sound.pause();
+        // })
 
-    const labels = svg.append('g')
-        .attr('class', 'labels-node')
-        .selectAll('text')
-        .data(data)
-        .enter().append('text')
-        .attr('fill', 'red')
-        .text(d=> d.title)
+    // const labels = svg.append('g')
+    //     .attr('class', 'labels-node')
+    //     .selectAll('text')
+    //     .data(data)
+    //     .enter().append('text')
+    //     .attr('fill', 'red')
+    //     .text(d=> d.title)
         
     const canzone = svg.append('g')
         .attr('class', 'audio-node')
@@ -319,8 +319,8 @@ function update(data){
             .attr("cy", d => d.y)
             .call(drag(simulation1));
 
-        labels.attr('x', d => d.x)
-              .attr('y', d => d.y)
+        // labels.attr('x', d => d.x)
+        //       .attr('y', d => d.y)
     }
       simulation1.nodes(data)
       simulation1.alpha(1)
@@ -351,7 +351,18 @@ function update(data){
     }
 }
 
-
+let soundVolume = true;
+$('.muter').on('click', function(){
+    if (soundVolume) {
+        $('.muter-text')[0].innerHTML = "sound on";
+        sound.setVolume(1);
+        soundVolume = false;
+    } else {
+        $('.muter-text')[0].innerHTML = "sound off";
+        sound.setVolume(0);
+        soundVolume = true;
+    }
+})
 function passTrackToThreeJS(track) {
     console.log("Current track:", track);
     // audioLoader.load(track, function(buffer){
