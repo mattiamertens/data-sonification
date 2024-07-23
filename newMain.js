@@ -3,19 +3,24 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import openSimplexNoise from 'https://cdn.skypack.dev/open-simplex-noise';
 
+const width = document.documentElement.clientWidth;
+const height = document.documentElement.clientHeight;
+console.log(width, height);
+console.log(window.innerWidth, window.innerHeight);
+
 // Create a scene
 const scene = new THREE.Scene();
 // Set the background color
 
 
 // Create a camera
-const camera = new THREE.PerspectiveCamera(100, window.innerWidth / window.innerHeight, 0.1, 10000);
+const camera = new THREE.PerspectiveCamera(100, width / height, 0.1, 10000);
 camera.position.z = 8;
 
 
 // Create a renderer
 const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(width, height);
 renderer.setClearColor(0xEBEBEB, 1);
 
 // Disable zooming
@@ -190,11 +195,10 @@ function animate() {
 
 // Make the canvas responsive
 window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setSize(width, height);
 });
-
 
 // Start the animation loop
 animate();
@@ -202,85 +206,50 @@ animate();
 
 // D3 code for songs
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
-const width = window.innerWidth;
-const height = window.innerHeight;
 
 const svg = d3.select(".song-graph")
     .attr("width", width)
     .attr("height", height) 
-    .attr("viewBox", [-width / 2, -height / 2, width, height])
+    .attr("viewBox", `${-width/2} ${-height/2} ${width} ${height}`)
+    .attr("preserveAspectRatio", "xMinYMin meet");
 
 // Load data from JSON file
 d3.json("assets/songs.json").then(data =>{
     update(data);
-    console.log(data)
 })
 
-var playing = false;
-var currentAudio = null;
+var currentAudio = false;
 var currentTrack = null;
 
 function update(data){
 
     const node = svg.append("g")
-        .attr("class", "songs-node")
+        .attr("class", "preview-songs-node")
         .selectAll("circle")
         .data(data)
         .enter().append("circle")
         .attr("class", "single-song")
-        .attr('data-song', d => d.link)
+        .attr('data-song-link_h', d => d.link+"_h.mp3")
+        .attr('data-song-link', d => d.link+".mp3")
         .attr('data-title', d => d.title)
-        // .on('click', function(event, d){
-        //     let selected = $(this).attr('data-song')
-        //     console.log(selected)
-        //     // const song = new Audio(selected);
-        //     // song.src = `${selected}`;
-            
-
-
-        //     if (!playing){
-        //         new Audio(selected).play();
-        //         // song.play();
-        //         // console.log('true before now: ' + playing)
-        //         playing = true;
-        //     }
-        //     else {
-        //         // song.pause();
-        //         // document.getElementsByTagName('audio').pause();
-        //         // const cosa = $('audio');
-        //         // const cosa = document.querySelectorAll('audio');
-        //         // console.log(cosa)
-        //         // cosa.forEach(cosa => {
-        //         //     cosa.pause()
-        //         // })
-        //         new Audio(selected).pause();
-        //         console.log('mi dovrei fermare')
-        //         playing = false;
-
-        //     }
-        // })
         .on('click', function(event, d){
             if (currentAudio){
-                currentAudio.pause();
+                sound.pause();
+                $('.current-song')[0].innerHTML = 'nothing';
+                console.log(currentAudio);
+                currentAudio = false;
             }
-            // currentAudio = new Audio(d.link);
-            // currentAudio.play();
-            // currentTrack = d.link; // Update the current track
-            // passTrackToThreeJS(currentTrack);
-
-            audioLoader.load(d.link, function(buffer){
-                sound.setBuffer(buffer);
-                sound.play();
+            else {
+                audioLoader.load(d.link+"_h.mp3", function(buffer){
+                    sound.setBuffer(buffer);
+                    sound.play();
+                    $('.current-song')[0].innerHTML = d.title;
+                    currentAudio = true;  
+                    console.log(currentAudio);
                 
-            })
+                })
+            }         
         })
-        // .on('mouseleave', function(){
-        //     if (currentAudio){
-        //         currentAudio.pause();
-        //         currentAudio = null;
-        //     }
-        //     sound.pause();
-        // })
 
     // const labels = svg.append('g')
     //     .attr('class', 'labels-node')
@@ -290,30 +259,28 @@ function update(data){
     //     .attr('fill', 'red')
     //     .text(d=> d.title)
         
-    const canzone = svg.append('g')
-        .attr('class', 'audio-node')
-        .selectAll("audio")
-        .data(data)
-        .enter().append('audio')
-        .attr('href', d=> d.link)
+    // Sembra che Canzone non serva a nulla
+    // const canzone = svg.append('g')
+    //     .attr('class', 'audio-node')
+    //     .selectAll("audio")
+    //     .data(data)
+    //     .enter().append('audio')
+    //     .attr('href', d => d.link+d.highlight+".mp3")
    
     const simulation1 = d3.forceSimulation() 
-      .force("charge", d3.forceManyBody())
+    //   .force("charge", d3.forceManyBody())
       .force("x", d3.forceX())
       .force("y", d3.forceY())
-      .force("collide", d3.forceCollide().radius(d => -22))
     //   .force("charge", d3.forceManyBody().strength(-15))
     //   .force("charge", d3.forceManyBody().strength(-35).distanceMax(800))
-      .force("charge", d3.forceManyBody().strength(200).distanceMax(-10))
+    //   .force("charge", d3.forceManyBody().strength(200).distanceMax(-10))
     //   .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(70))
+      .force("collision", d3.forceCollide().radius(60))
+    //   .force("radial", d3.forceRadial(0,0, 0))
+    //   .force("collide", d3.forceCollide().radius(20))
       .on("tick", ticked2);
 
-    // UNDERSTAND WHICH ONE WORKS BETTER
-    function ticked() {
-        node
-            .attr("transform", d=>`translate(${d.x*1.5}, ${d.y/1.2})`);
-    }
+
     function ticked2() {
         node.attr("cx", d => d.x)
             .attr("cy", d => d.y)

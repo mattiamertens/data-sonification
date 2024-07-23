@@ -1,62 +1,52 @@
 [
   {
-    "title": 1,
-    "album": "FLATLANDIA",
-    "link": "/assets/despacito.mp3"
+    "title": "White on White",
+    "album": "Diagram and projection",
+    "link": "assets/albums/Diagram_and_projection/1"
   },
   {
-    "title": 2,
-    "album": "FLATLANDIA",
-    "link": "/assets/navigating.mp3"
+    "title": "Into Convergence",
+    "album": "Diagram and projection",
+    "link": "assets/albums/Diagram_and_projection/2.mp3"
   },
   {
-    "title": 3,
-    "album": "FLATLANDIA",
-    "link": "/assets/top.mp3"
+    "title": "The Bells of St. Petersburg",
+    "album": "Diagram and projection",
+    "link": "assets/albums/Diagram_and_projection/3.mp3"
   },
   {
-    "title": 4,
-    "album": "FLATLANDIA",
-    "link": ""
+    "title": "Palette",
+    "album": "Diagram and projection",
+    "link": "assets/albums/Diagram_and_projection/4"
   },
   {
-    "title": 5,
-    "album": "FLATLANDIA",
-    "link": ""
+    "title": "The Immigration of Butterflies",
+    "album": "Diagram and projection",
+    "link": "assets/albums/Diagram_and_projection/5"
   },
   {
-    "title": 6,
-    "album": "FLATLANDIA",
-    "link": ""
+    "title": "The Birdcage",
+    "album": "Diagram and projection",
+    "link": "assets/albums/Diagram_and_projection/6"
   },
   {
-    "title": 7,
-    "album": "FLATLANDIA",
-    "link": ""
+    "title": "In the Light Hour",
+    "album": "Diagram and projection",
+    "link": "assets/albums/Diagram_and_projection/7"
   },
   {
-    "title": 8,
-    "album": "FLATLANDIA",
-    "link": ""
+    "title": "Sidetrack",
+    "album": "Diagram and projection",
+    "link": "assets/albums/Diagram_and_projection/8"
   },
   {
-    "title": 9,
-    "album": "FLATLANDIA",
-    "link": ""
+    "title": "A Shade of Grey",
+    "album": "Diagram and projection",
+    "link": "assets/albums/Diagram_and_projection/9"
   },
   {
-    "title": 10,
-    "album": "FLATLANDIA",
-    "link": ""
-  },
-  {
-    "title": 11,
-    "album": "FLATLANDIA",
-    "link": ""
-  },
-  {
-    "title": 12,
-    "album": "FLATLANDIA",
-    "link": ""
+    "title": "Black on Black",
+    "album": "Diagram and projection",
+    "link": "assets/albums/Diagram_and_projection/10"
   }
 ]
