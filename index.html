@@ -10,8 +10,8 @@
 <body>
     <div class="navbar flex-sb-center fixed fixed-padding exclusion">
         <div class="home "><a href="index.html" class="bold">Sound Sculpting</a></div>
-        <div class="muter bold flex-center-center">
-            sound off
+        <div class="muter bold flex-center-center"> 
+            <div class="muter-text bold">sound off</div>
             <div class="line_viz">-----</div>
         </div>
     </div>
@@ -21,6 +21,17 @@
         <div class="about"><a href="about.html" class="bold"> about </a></div>
     </div>
 
+    <div class="content-wrapper">
+        <div class="video-wrapper">
+            <video controls autoplay muted loop poster="" class="video">
+                <source src="assets/video/home/video_homepage.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="text flex-center-center column exclusion absolute">
+            <div> This experience is enhanced by sound </div>
+            <div class="button-tertiary audioToggle"> Click to listen </div>
+        </div>
+    </div>
     <div class="interactive-wrapper">
         <div id="canvas"></div>
         <div class="album-wrapper flex-center-center column">

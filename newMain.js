@@ -1,6 +1,5 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import openSimplexNoise from 'https://cdn.skypack.dev/open-simplex-noise';
 
 const width = document.documentElement.clientWidth;
@@ -36,32 +35,20 @@ const uniforms = {
 }
 
 // LIGHTS
-// const ambientLight = new THREE.AmbientLight(0xFF0000), 
-//     pointLight = new THREE.PointLight(0x00FF00),
-//     dl = new THREE.DirectionalLight(0xFF00C8, 1100);
-// scene.add(ambientLight, pointLight, dl);
-// // pointLight.position.set(0, 4, 0);
+const ambientLight = new THREE.AmbientLight(0xFF0000), 
+    pointLight = new THREE.PointLight(0x00FF00),
+    dl = new THREE.DirectionalLight(0xFF00C8, 100);
+    scene.add(ambientLight, pointLight, dl);
+    pointLight.position.set(0, 4, 0);
+    dl.position.set(-3, 5, 0);
 
 // const helper = new THREE.PointLightHelper(pointLight, 5);
 // scene.add(helper);
 // const helper2 = new THREE.DirectionalLightHelper(dl, 5);
 // scene.add(helper2);
 
-
-// const material = new THREE.ShaderMaterial({
-//     uniforms,
-//     vertexShader: document.getElementById('vertex').textContent,
-//     fragmentShader: document.getElementById('fragment').textContent,
-//     wireframe: true
-// });
-// const geometry = new THREE.IcosahedronGeometry(40, 16);
- 
-// const mesh = new THREE.Mesh(geometry, material);
-// scene.add(mesh);
-
-
-// GEOMETRY
-let sphereGeometry = new THREE.SphereGeometry(3, 162, 162);
+// SPHERE GEOMETRY
+let sphereGeometry = new THREE.SphereGeometry(3, 64, 62);
 sphereGeometry.positionData = [];
 let initialDistances = new Float32Array(sphereGeometry.attributes.position.count);
 let v3 = new THREE.Vector3();
@@ -71,13 +58,30 @@ for (let i = 0; i < sphereGeometry.attributes.position.count; i++){
     initialDistances[i] = v3.length(); // Store initial distance
 }
 
+
+// OUTER MESH
+const material = new THREE.ShaderMaterial({
+    uniforms,
+    vertexShader: document.getElementById('v-shad').textContent,
+    fragmentShader: document.getElementById('fragmentShader').textContent,
+    wireframe: true
+});
+const geometry = new THREE.IcosahedronGeometry(4, 20);
+geometry.positionData = [];
+for (let i = 0; i < geometry.attributes.position.count; i++){
+    v3.fromBufferAttribute(geometry.attributes.position, i);
+    geometry.positionData.push(v3.clone());
+} 
+const mesh = new THREE.Mesh(geometry, material);
+// scene.add(mesh);
+
 // Add initialDistance attribute
 sphereGeometry.setAttribute('initialDistance', new THREE.BufferAttribute(initialDistances, 1));
 
 // SHADER MATERIAL
 let sphereMesh = new THREE.ShaderMaterial({
     uniforms: {      
-        colorA: { value: new THREE.Color(0x032061) },
+        colorA: { value: new THREE.Color(0x0037B2) },
         colorB: { value: new THREE.Color(0x8DE4F7) },
         u_frequency: {type: 'f', value: 0.0},
         audioData: { value: new Float32Array(32) }
@@ -95,22 +99,6 @@ camera.add(listener);
 
 const sound = new THREE.Audio(listener);
 const audioLoader = new THREE.AudioLoader();
-// audioLoader.load('/assets/top.mp3', function(buffer){
-//     sound.setBuffer(buffer);
-
-//     let playing = false;
-//     window.addEventListener('click', () => {
-//         if (!playing){
-//             sound.play();
-//             // sound.setVolume(0.1);
-//             playing = true;
-//         }
-//         else {
-//             sound.pause();
-//             playing = false;
-//         }
-//     })
-// })
 
 const analyser = new THREE.AudioAnalyser(sound, 32);
 
@@ -139,42 +127,72 @@ window.addEventListener('mousemove', (event) => {
 function lerp(start, end, t) {
     return start * (1 - t) + end * t;
 }
-function easeInOutQuad(t) {
-    return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-}
+// function easeInOutQuad(t) {
+//     return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+// }
 const transDuration = 0.7;
 
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
-
     let elapsedTime = clock.getElapsedTime();
 
     let t = Math.min(elapsedTime / transDuration, 1.0);
-    let easedT = easeInOutQuad(t);
+    // let easedT = easeInOutQuad(t);
+    // console.log(easedT);
 
     let audioData = analyser.data;
     let avgfrequency = analyser.getAverageFrequency();
+    // console.log(avgfrequency);
 
     // Update sphere geometry based on audio data
     sphereGeometry.positionData.forEach((p, idx) => {
-        let noiseValue = noise(p.x, p.y, p.z, elapsedTime*0.3);
+        let noiseValue = noise(p.x, p.y, p.z, elapsedTime*0.1)*1.5 + (avgfrequency * 0.01);
         let audioFactor = audioData[idx % audioData.length] / 256;
-        let combinedIn = noiseValue + (audioFactor * 0.001);
-        let interpolatedInfluence = easedT * combinedIn;
-        //let interpolatedInfluence = lerp(0, combinedIn, t); 
+        let combinedIn = noiseValue + audioFactor;
         
-        v3.copy(p).addScaledVector(p, interpolatedInfluence * 0.1);
+        v3.copy(p).addScaledVector(p, combinedIn * 0.1);
         
 
         sphereGeometry.attributes.position.setXYZ(idx, v3.x, v3.y, v3.z);
+        // console.log(easedT);
     })
+    // sphereGeometry.positionData.forEach((p, idx) => {
+    //     let noiseValue = noise(p.x, p.y, p.z, elapsedTime*0.3);
+    //     let audioFactor = audioData[idx % audioData.length] / 256;
+    //     let combinedIn = noiseValue + (audioFactor * 0.001);
+    //     let interpolatedInfluence = easedT * combinedIn;
+    //     //let interpolatedInfluence = lerp(0, combinedIn, t); 
+        
+    //     v3.copy(p).addScaledVector(p, interpolatedInfluence * 0.1);
+        
+
+    //     sphereGeometry.attributes.position.setXYZ(idx, v3.x, v3.y, v3.z);
+    // })
     sphereGeometry.computeVertexNormals();
     sphereGeometry.attributes.position.needsUpdate = true;
 
+    // UPADATE OUTER MESH
+    // geometry.positionData.forEach((p, idx) => {
+    //     let noiseValue = noise(p.x, p.y, p.z, elapsedTime*10);
+    //     let audioFactor = audioData[idx % audioData.length] / 256;
+    //     let combinedIn = noiseValue + (audioFactor * 0.001);
+    //     let interpolatedInfluence = easedT * combinedIn;
+    //     //let interpolatedInfluence = lerp(0, combinedIn, t); 
+    //     v3.copy(p).addScaledVector(p, interpolatedInfluence * 0.1);
+        
+    //     geometry.attributes.position.setXYZ(idx, v3.x, v3.y, v3.z);
+    // })
+    // geometry.computeVertexNormals();
+    // geometry.attributes.position.needsUpdate = true;
+
     // Update audio data
-    sphereMesh.uniforms.audioData.value = audioData;
-    uniforms.u_frequency.value = avgfrequency;
+    // sphereMesh.uniforms.audioData.value = audioData;
+    // console.log(audioData);
+
+    // uniforms.u_frequency.value = avgfrequency;
+    // sphereMesh.uniforms.u_frequency.value = avgfrequency;
+
     sphere.rotation.y += 0.0006;
     sphere.rotation.x += -0.0006;
 
@@ -185,7 +203,7 @@ function animate() {
     sphere.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), direction);
 
     // Interpolate sphere scale
-    let scale = 0.4 + easedT * 0.6;
+    let scale = 1.4 * 0.6;
     sphere.scale.set(scale, scale, scale);
 
     // Render the scene
@@ -229,27 +247,27 @@ function update(data){
         .data(data)
         .enter().append("circle")
         .attr("class", "single-song")
-        .attr('data-song-link_h', d => d.link+"_h.mp3")
-        .attr('data-song-link', d => d.link+".mp3")
+        .attr('dataSongLink_h', d => d.link+"_h.mp3")
+        .attr('dataSongLink', d => d.link+".mp3")
         .attr('data-title', d => d.title)
         .on('click', function(event, d){
             if (currentAudio){
                 sound.pause();
                 $('.current-song')[0].innerHTML = 'nothing';
-                console.log(currentAudio);
                 currentAudio = false;
             }
             else {
-                audioLoader.load(d.link+"_h.mp3", function(buffer){
+                const linkino = this.getAttribute('dataSongLink_h');
+                audioLoader.load(linkino, function(buffer){
                     sound.setBuffer(buffer);
                     sound.play();
                     $('.current-song')[0].innerHTML = d.title;
-                    currentAudio = true;  
-                    console.log(currentAudio);
+                    currentAudio = true;
                 
                 })
             }         
         })
+        
 
     // const labels = svg.append('g')
     //     .attr('class', 'labels-node')
@@ -317,19 +335,6 @@ function update(data){
             .on("end", dragended);
     }
 }
-
-let soundVolume = true;
-$('.muter').on('click', function(){
-    if (soundVolume) {
-        $('.muter-text')[0].innerHTML = "sound on";
-        sound.setVolume(1);
-        soundVolume = false;
-    } else {
-        $('.muter-text')[0].innerHTML = "sound off";
-        sound.setVolume(0);
-        soundVolume = true;
-    }
-})
 function passTrackToThreeJS(track) {
     console.log("Current track:", track);
     // audioLoader.load(track, function(buffer){
@@ -349,3 +354,40 @@ function passTrackToThreeJS(track) {
     // })
     
 }
+
+// Audio toggle
+var video = $('.video')[0];
+let soundVolume = true;
+$('.muter').on('click', function(){
+    if (soundVolume) {
+        $('.muter-text')[0].innerHTML = "sound on";
+        sound.setVolume(1);
+        // video.muted = false;
+        soundVolume = false;
+
+    } else {
+        $('.muter-text')[0].innerHTML = "sound off";
+        sound.setVolume(0);
+        // video.muted = true;
+        soundVolume = true;
+    }
+})
+
+
+// HOMEPAGE
+$('.audioToggle').on('click', function(){
+    if(video.muted){
+        video.muted = false;
+
+    } else {
+        video.muted = true;
+    }
+})
+
+// VIDEO PLAY PAUSE BASED ON SCROLL
+$(window).scroll(function(){
+  var scroll = $(this).scrollTop();
+  scroll > height/2 ? video.pause() : video.play()
+})
+
+

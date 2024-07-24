@@ -61,7 +61,6 @@ body, * {
 body{
     background-color: #EBEBEB;
     /* box-sizing: border-box; */
-
 }
 a{
     text-decoration: none;
@@ -88,6 +87,7 @@ a{
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 .fixed{
     position: fixed;
@@ -108,6 +108,12 @@ a{
 .footer{
 bottom: 0;
 }
+.button-tertiary{
+    cursor: pointer;
+}
+.button-tertiary:hover{
+    text-decoration: underline;
+}
 
 
 .album-wrapper{
@@ -123,6 +129,25 @@ bottom: 0;
     z-index: 101;
     width: 100vw;
     height: 100vh;
+}
+.video-wrapper{
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+}
+video{
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+}
+.text{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
 }
 .current-song{
     padding: 4px 6px;
