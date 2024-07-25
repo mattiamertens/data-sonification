@@ -237,7 +237,7 @@ d3.json("assets/songs.json").then(data =>{
 })
 
 var currentAudio = false;
-var currentTrack = null;
+// var currentTrack = null;
 
 function update(data){
 
@@ -251,8 +251,10 @@ function update(data){
         .attr('dataSongLink', d => d.link+".mp3")
         .attr('data-title', d => d.title)
         .on('click', function(event, d){
+            console.log(sound.context.currentTime);
+            console.log(sound);
             if (currentAudio){
-                sound.pause();
+                sound.stop();
                 $('.current-song')[0].innerHTML = 'nothing';
                 currentAudio = false;
             }
@@ -265,7 +267,15 @@ function update(data){
                     currentAudio = true;
                 
                 })
-            }         
+            }  
+            sound.onEnded = function() {
+                console.log('The sound has ended!');
+                sound.stop();
+                // sound.context.currentTime = 0;
+                currentAudio = false;
+                $('.current-song')[0].innerHTML = 'nothing';
+                sound.setBuffer(null);
+            };       
         })
         
 
@@ -335,35 +345,19 @@ function update(data){
             .on("end", dragended);
     }
 }
-function passTrackToThreeJS(track) {
-    console.log("Current track:", track);
-    // audioLoader.load(track, function(buffer){
-    //     sound.setBuffer(buffer);
-    
-    //     let playing = false;
-    //     window.addEventListener('click', () => {
-    //         if (!playing){
-    //             sound.play();
-    //             playing = true;
-    //         }
-    //         else {
-    //             sound.pause();
-    //             playing = false;
-    //         }
-    //     })
-    // })
-    
-}
+
+
 
 // Audio toggle
 var video = $('.video')[0];
-let soundVolume = true;
+let soundVolume = false;
 $('.muter').on('click', function(){
     if (soundVolume) {
         $('.muter-text')[0].innerHTML = "sound on";
         sound.setVolume(1);
         // video.muted = false;
         soundVolume = false;
+        console.log('now sound will be on?');
 
     } else {
         $('.muter-text')[0].innerHTML = "sound off";
@@ -378,6 +372,7 @@ $('.muter').on('click', function(){
 $('.audioToggle').on('click', function(){
     if(video.muted){
         video.muted = false;
+        alert('Sound on')
 
     } else {
         video.muted = true;

@@ -29,18 +29,20 @@
         </div>
         <div class="text flex-center-center column exclusion absolute">
             <div> This experience is enhanced by sound </div>
-            <div class="button-tertiary audioToggle"> Click to listen </div>
+            <div class="button-tertiary audioToggle"> Click to enable sound </div>
         </div>
     </div>
+
     <div class="interactive-wrapper">
         <div id="canvas"></div>
         <div class="album-wrapper flex-center-center column">
-            <div class="album-title exclusion flex-center-center">FLATLANDIA</div>
-            <div class="cta-wrapper flex-center-center exclusion">
-                <div class="button-tertiary">Hover </div>&nbsp;on a dot to hear an extract of music play
+            <div class="album-title exclusion flex-center-center">DIAGRAM AND PROJECTION</div>
+            <div class="cta-wrapper flex-center-center exclusion column">
+                Interact with a dot to hear an extract of music play
+                <div class="currently-playing flex-center-center">Currently playing:&nbsp; <div class="current-song">nothing</div></div>
             </div>
-            <div class="song-wrapper">
-                <div class="song exclusion"></div>
+            <div class="song-wrapper absolute">
+                <svg class="song-graph"></svg>
             </div>
         </div>
     </div>
