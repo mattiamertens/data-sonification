@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../CSS/style.css">    
+    <title>Sound Sculpting</title>
+
+</head>
+<body>
+    <div class="navbar flex-sb-center fixed fixed-padding exclusion">
+        <div class="home "><a href="../index.html" class="bold">Sound Sculpting</a></div>
+        <div class="muter bold flex-center-center"> 
+            <div class="muter-text bold ">sound off</div>
+            <div class="line_viz">-----</div>
+        </div>
+    </div>
+    
+    <div class="footer flex-sb-center fixed fixed-padding exclusion">
+        <div class="work"><a href="../work.html" class="bold">work</a></div>
+        <div class="about"><a href="../about.html" class="bold"> about </a></div>
+    </div>
+
+    <div class="interactive-wrapper">
+        <div id="canvas"></div>
+        <div class="album-wrapper flex-center-center column">
+            <div class="album-title exclusion flex-center-center">DIAGRAM AND PROJECTION</div>
+            <div class="cta-wrapper flex-center-center exclusion column">
+                Interact with a dot to hear an extract of music play
+                <div class="currently-playing flex-center-center">Currently playing:&nbsp; <div class="current-song">nothing</div></div>
+            </div>
+            <div class="song-wrapper absolute">
+                <svg class="song-graph"></svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-wrapper column">
+        <div class="video-wrapper" style="z-index: 0;">
+            <video controls autoplay muted loop poster="" class="video">
+                <source src="../assets/video/album/trailer.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="album-description-wrapper g-24 vh-100 flex-sb-start">
+            <div class="description-text exclusion column g-24">
+                <p>
+                    As a pianist, I was daily in contact with the masterpieces of the past and therefore I always found challenging to compose for piano myself. I was able to express myself only through musical language I inherited from the pieces I had been studying: my early works were overflowing with thematic ideas.
+                </p>
+                <p>
+                    After many years of composing, my change was not gradual, but drastic: in 2021, I composed White on White, a piece that destroyed my past full of notes and is built almost around single note.
+                </p>
+                <p>
+                    Hence, three years later, Diagram and Projection is an album born from internalizing the extremization of White on White's fracture. White on White is its seed, a quite complex and structured piece... that generates the less elaborated following tracks, each dedicated to a nuance of the first one. Mostly, I stopped thinking of music as a series of notes and started thinking of it as flows of energy: a composition for me is an intensification and fading of different sound colours, a malleable mass that sways in search of its form but never manages to structure itself.
+                </p>
+                <p>
+                    The change that led me to this concept came from my experience in the field of film composition, especially that of electronic music, but it was hard for me to transpose it onto the piano. I translated the cinematic, ambient sound and surround spatiality onto my keyboard through almost imperceptible dIfferences in dynamics, arranged in different, simultaneous layers, that play like automations of a Channel EQ of a drone, in the minimalism of obsessive and hypnotic repetition, in a particular and detailed use of pedal, in changes of meter and metronome. To me, these features are almost more important than the notes themselves, they destroy any superstructure in search of that layout of an idea that is born as a free soundscape.
+                </p>
+                <p>
+                    At a certain point, each key was not longer corresponding to its note and I focused on the charm of distorting the instrument: it is a piano that cannot and does not want to be such.
+                </p>
+            </div>
+            <div class="album-cover-wrapper">
+                <img src="../assets/pics/covers/Diagram_and_projection.png" alt="" class="album-cover-s">
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+<script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.166.1/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.166.1/examples/jsm/"
+      }
+    }
+  </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script type="x-shader/x-vertex" id="vertexShader">
+uniform float u_time;
+uniform float u_frequency;
+uniform float audioData[32];
+varying vec3 vPosition; // Pass position to fragment shader
+varying float vDistance; // Pass distance to fragment shader
+
+void main() {
+    vec3 transformed = position;
+    float audioInfluence = audioData[int(mod(float(gl_VertexID), 32.0))] / 256.0;
+    transformed += normal * audioInfluence;
+    vDistance = length(transformed); // Calculate distance from center
+    vPosition = transformed; // Pass the modified position
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(transformed, 1.0);
+}
+
+</script>
+
+<script type="x-shader/x-vertex" id="v-shad">
+    uniform float u_time;
+uniform float u_frequency;
+uniform float audioData[32];
+varying float vDistance; // Pass the distance to fragment shader
+
+    attribute float initialDistance; // Attribute for the initial distance
+    varying float vMixFactor; // Pass the mix factor to fragment shader
+
+    void main() {
+        vec3 transformed = position;
+        float audioInfluence = audioData[int(mod(float(gl_VertexID), 32.0))] / 256.0;
+        float noiseInfluence = 0.5 + 0.5 * sin(u_time + length(position) * 2.0); // Smooth sine-based noise
+        transformed += normal * (audioInfluence * 0.5 + noiseInfluence ); // Combine influences
+        vDistance = length(transformed); // Calculate distance from the center
+
+        // Calculate mix factor based on initial distance
+        vMixFactor = clamp((length(transformed) - initialDistance) / (0.2 * initialDistance), 0.0, 1.0);
+
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(transformed, 1.0);
+    }
+
+</script>
+
+<script type="x-shader/x-vertex" id="fragmentShader">
+    uniform vec3 colorA;
+    uniform vec3 colorB;
+    varying vec3 vPosition; // Interpolated position from vertex shader
+    varying float vDistance; // Interpolated distance from vertex shader
+
+    varying float vMixFactor; // Interpolated mix factor from vertex shader
+
+    
+    void main() {
+        // Interpolate between colorA and colorB based on the y position
+        // float mixFactor = (vPosition.y + 1.0) / 2.0; // Normalize to 0.0 to 1.0 range
+        float mixFactor = clamp(vDistance/3.4, 0.0, 1.0); // Normalize to 0.0 to 1.0 range
+        // vec3 mixedColor = mix(colorA, colorB, mixFactor);
+        
+        vec3 mixedColor = mix(colorA, colorB, vMixFactor);
+        gl_FragColor = vec4(mixedColor, 1.0);
+    }
+    
+</script>
+
+
+<script id="vertex" type="text/glsl">
+    #define NORMAL
+
+    #if defined( FLAT_SHADED ) || defined( USE_BUMPMAP ) || defined( TANGENTSPACE_NORMALMAP )
+        varying vec3 vViewPosition;
+    #endif
+    
+    #include <common>
+    #include <uv_pars_vertex>
+    #include <displacementmap_pars_vertex>
+    #include <normal_pars_vertex>
+    #include <morphtarget_pars_vertex>
+    #include <skinning_pars_vertex>
+    #include <logdepthbuf_pars_vertex>
+    #include <clipping_planes_pars_vertex>
+
+    uniform float u_frequency;
+    uniform float audioData[32];
+
+    varying float vDistance;
+
+    void main() {
+        // Compute a displacement using audio data
+        float displacement = audioData[int(mod(position.x * 2.0 + position.y * 3.0 + position.z * 5.0, 32.0))] * 0.1;
+
+        // Include Three.js vertex shader code
+        #include <uv_vertex>
+        #include <beginnormal_vertex>
+        #include <morphnormal_vertex>
+        #include <skinbase_vertex>
+        #include <skinnormal_vertex>
+        #include <defaultnormal_vertex>
+        #include <normal_vertex>
+        #include <begin_vertex>
+
+        // Apply displacement
+        transformed += normal * displacement;
+
+        // Calculate distance from center
+        vDistance = length(transformed);
+
+        #include <morphtarget_vertex>
+        #include <skinning_vertex>
+        #include <displacementmap_vertex>
+        #include <project_vertex>
+        #include <logdepthbuf_vertex>
+        #include <clipping_planes_vertex>
+
+        #if defined( FLAT_SHADED ) || defined( USE_BUMPMAP ) || defined( TANGENTSPACE_NORMALMAP )
+            vViewPosition = - mvPosition.xyz;
+        #endif
+    }
+</script>
+
+<script id="fragment" type="text/glsl">
+    uniform vec3 colorA;
+    uniform vec3 colorB;
+
+    #define NORMAL
+
+    #if defined( FLAT_SHADED ) || defined( USE_BUMPMAP ) || defined( TANGENTSPACE_NORMALMAP )
+        varying vec3 vViewPosition;
+    #endif
+    
+    #include <packing>
+    #include <uv_pars_fragment>
+    #include <normal_pars_fragment>
+    #include <bumpmap_pars_fragment>
+    #include <normalmap_pars_fragment>
+    #include <logdepthbuf_pars_fragment>
+    #include <clipping_planes_pars_fragment>
+
+    varying float vDistance;
+
+    void main() {
+        #include <clipping_planes_fragment>
+        #include <logdepthbuf_fragment>
+        #include <normal_fragment_begin>
+        #include <normal_fragment_maps>
+
+        // Map the distance to a color gradient
+        vec3 color = mix(colorA, colorB, vDistance);
+
+        gl_FragColor = vec4(color, 1.0);
+
+        #ifdef OPAQUE
+            gl_FragColor.a = 1.0;
+        #endif
+    }
+</script>
+
+  
+<script type="module" src="../D&P.js"></script>
+
+</html>

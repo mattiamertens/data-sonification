@@ -232,7 +232,7 @@ const svg = d3.select(".song-graph")
     .attr("preserveAspectRatio", "xMinYMin meet");
 
 // Load data from JSON file
-d3.json("assets/songs.json").then(data =>{
+d3.json("/assets/songs.json").then(data =>{
     update(data);
 })
 
@@ -247,7 +247,7 @@ function update(data){
         .data(data)
         .enter().append("circle")
         .attr("class", "single-song")
-        .attr('dataSongLink_h', d => d.link+"_h.mp3")
+        .attr('dataSongLink_h', d => "../"+d.link+"_h.mp3")
         .attr('dataSongLink', d => d.link+".mp3")
         .attr('data-title', d => d.title)
         .on('click', function(event, d){

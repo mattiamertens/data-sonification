@@ -16,14 +16,6 @@ d3.json("assets/bio.json").then(dataDots =>{
 
 function updateDots(dataDots){
 
-    
-
-    // const node = pic_dots.append("div")
-    //     .attr("class", "cerchio")
-    //     .selectAll("div")
-    //     .data(dataDots)
-    //     .enter().append("div")
-
     const node = pic_dots
         .selectAll("div")
         .data(dataDots)
