@@ -232,7 +232,7 @@ const svg = d3.select(".song-graph")
     .attr("preserveAspectRatio", "xMinYMin meet");
 
 // Load data from JSON file
-d3.json("./assets/songs.json").then(data =>{
+d3.json("../assets/songs.json").then(data =>{
     update(data);
 })
 
