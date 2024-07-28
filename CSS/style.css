@@ -248,6 +248,9 @@ video{
 .album-cover-s{
     width: 100%;
 }
+.currently-playing{
+    flex-wrap: wrap;
+}
 
 
 
