@@ -231,8 +231,9 @@ const svg = d3.select(".song-graph")
     .attr("viewBox", `${-width/2} ${-height/2} ${width} ${height}`)
     .attr("preserveAspectRatio", "xMinYMin meet");
 
+
 // Load data from JSON file
-d3.json("/assets/songs.json").then(data =>{
+d3.json("./assets/songs.json").then(data =>{
     update(data);
 })
 
