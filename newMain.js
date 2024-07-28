@@ -248,7 +248,7 @@ function update(data){
         .data(data)
         .enter().append("circle")
         .attr("class", "single-song")
-        .attr('dataSongLink_h', d => "../"+d.link+"_h.mp3")
+        .attr('dataSongLink_h', d => "./"+d.link+"_h.mp3")
         .attr('dataSongLink', d => d.link+".mp3")
         .attr('data-title', d => d.title)
         .on('click', function(event, d){

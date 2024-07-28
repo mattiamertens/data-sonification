@@ -61,7 +61,6 @@ body, * {
 }
 body{
     background-color: #EBEBEB;
-    /* box-sizing: border-box; */
 }
 a{
     text-decoration: none;
