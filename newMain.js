@@ -279,15 +279,6 @@ function update(data){
             };       
         })
         
-
-    // const labels = svg.append('g')
-    //     .attr('class', 'labels-node')
-    //     .selectAll('text')
-    //     .data(data)
-    //     .enter().append('text')
-    //     .attr('fill', 'red')
-    //     .text(d=> d.title)
-        
     // Sembra che Canzone non serva a nulla
     // const canzone = svg.append('g')
     //     .attr('class', 'audio-node')
@@ -298,52 +289,60 @@ function update(data){
    
     const simulation1 = d3.forceSimulation() 
     //   .force("charge", d3.forceManyBody())
-      .force("x", d3.forceX())
-      .force("y", d3.forceY())
+    //   .force("x", d3.forceX())
+    //   .force("y", d3.forceY())
     //   .force("charge", d3.forceManyBody().strength(-15))
     //   .force("charge", d3.forceManyBody().strength(-35).distanceMax(800))
     //   .force("charge", d3.forceManyBody().strength(200).distanceMax(-10))
     //   .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(60))
-    //   .force("radial", d3.forceRadial(0,0, 0))
-    //   .force("collide", d3.forceCollide().radius(20))
-      .on("tick", ticked2);
+    //   .force("collision", d3.forceCollide().radius(60))
+    // .force("charge", d3.forceCollide().radius(5).iterations(2))
+    .force("r", d3.forceRadial(width/5))
+    .on("tick", ticked2);
+    console.log(simulation1);
+   
+    const simulation2 = d3.forceSimulation()
+        .force("r", d3.forceRadial(width/2.2))
 
 
     function ticked2() {
         node.attr("cx", d => d.x)
             .attr("cy", d => d.y)
             .call(drag(simulation1));
-
-        // labels.attr('x', d => d.x)
-        //       .attr('y', d => d.y)
     }
-      simulation1.nodes(data)
-      simulation1.alpha(1)
-      simulation1.restart()
 
-      function drag(simulation) {
-        function dragstarted(event, d) {
-            if (!event.active) simulation.alphaTarget(0.3).restart();
-            d.fx = d.x;
-            d.fy = d.y;
-        }
+    if (width > 768){
+        simulation1.nodes(data)
+        simulation1.alpha(1)
+        simulation1.restart()
+    } else{
+        simulation2.nodes(data)
+        simulation2.alpha(1)
+        simulation2.restart()
+    }
 
-        function dragged(event, d) {
-            d.fx = event.x;
-            d.fy = event.y;
-        }
+    function drag(simulation) {
+    function dragstarted(event, d) {
+        if (!event.active) simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+    }
 
-        function dragended(event, d) {
-            if (!event.active) simulation.alphaTarget(0);
-            d.fx = null;
-            d.fy = null;
-        }
+    function dragged(event, d) {
+        d.fx = event.x;
+        d.fy = event.y;
+    }
 
-        return d3.drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended);
+    function dragended(event, d) {
+        if (!event.active) simulation.alphaTarget(0);
+        d.fx = null;
+        d.fy = null;
+    }
+
+    return d3.drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended);
     }
 }
 

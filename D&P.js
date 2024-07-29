@@ -4,8 +4,6 @@ import openSimplexNoise from 'https://cdn.skypack.dev/open-simplex-noise';
 
 const width = document.documentElement.clientWidth;
 const height = document.documentElement.clientHeight;
-console.log(width, height);
-console.log(window.innerWidth, window.innerHeight);
 
 // Create a scene
 const scene = new THREE.Scene();
@@ -18,7 +16,7 @@ camera.position.z = 8;
 
 
 // Create a renderer
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize(width, height);
 renderer.setClearColor(0xEBEBEB, 1);
 
@@ -29,7 +27,7 @@ controls.enableZoom = false;
 document.getElementById('canvas').appendChild(renderer.domElement);
 
 const uniforms = {
-    u_resolution: {type: 'v2', value: new THREE.Vector2(window.innerWidth, window.innerHeight)},
+    u_resolution: {type: 'v2', value: new THREE.Vector2(width, height)},
     u_time: {type: 'f', value: 0.0},
     u_frequency: {type: 'f', value: 0.0}
 }
@@ -48,7 +46,7 @@ const ambientLight = new THREE.AmbientLight(0xFF0000),
 // scene.add(helper2);
 
 // SPHERE GEOMETRY
-let sphereGeometry = new THREE.SphereGeometry(3, 64, 62);
+let sphereGeometry = new THREE.SphereGeometry(3, 100, 100);
 sphereGeometry.positionData = [];
 let initialDistances = new Float32Array(sphereGeometry.attributes.position.count);
 let v3 = new THREE.Vector3();
@@ -58,40 +56,39 @@ for (let i = 0; i < sphereGeometry.attributes.position.count; i++){
     initialDistances[i] = v3.length(); // Store initial distance
 }
 
-
-// OUTER MESH
-const material = new THREE.ShaderMaterial({
-    uniforms,
-    vertexShader: document.getElementById('v-shad').textContent,
-    fragmentShader: document.getElementById('fragmentShader').textContent,
-    wireframe: true
-});
-const geometry = new THREE.IcosahedronGeometry(4, 20);
-geometry.positionData = [];
-for (let i = 0; i < geometry.attributes.position.count; i++){
-    v3.fromBufferAttribute(geometry.attributes.position, i);
-    geometry.positionData.push(v3.clone());
-} 
-const mesh = new THREE.Mesh(geometry, material);
-// scene.add(mesh);
-
 // Add initialDistance attribute
 sphereGeometry.setAttribute('initialDistance', new THREE.BufferAttribute(initialDistances, 1));
 
 // SHADER MATERIAL
+// let sphereMesh = new THREE.ShaderMaterial({
+//     uniforms: {      
+//         colorA: { value: new THREE.Color(0x0037B2) },
+//         colorB: { value: new THREE.Color(0x8DE4F7) },
+//         u_frequency: {type: 'f', value: 0.0},
+//         audioData: { value: new Float32Array(32) }
+//     },
+//     vertexShader: document.getElementById('v-shad').textContent,
+//     fragmentShader: document.getElementById('fragmentShader').textContent,
+//     // wireframe: true
+// });
+
+// SECOND SHADER MATERIAL
+
 let sphereMesh = new THREE.ShaderMaterial({
     uniforms: {      
-        colorA: { value: new THREE.Color(0x0037B2) },
-        colorB: { value: new THREE.Color(0x8DE4F7) },
-        u_frequency: {type: 'f', value: 0.0},
-        audioData: { value: new Float32Array(32) }
+        colorA: {type: 'vec3', value: new THREE.Vector3(0.5, 0.5, 0.5)},
     },
-    vertexShader: document.getElementById('v-shad').textContent,
-    fragmentShader: document.getElementById('fragmentShader').textContent,
+    vertexShader: document.getElementById('codeV').textContent,
+    fragmentShader: document.getElementById('codeF').textContent,
     // wireframe: true
 });
+
+
+
 let sphere = new THREE.Mesh(sphereGeometry, sphereMesh);
-// sphere.scale.set(0.4, 0.4, 0.4);
+// Interpolate sphere scale
+let scale = 1.4 * 0.6;
+sphere.scale.set(scale, scale, scale);
 scene.add(sphere);
 
 const listener = new THREE.AudioListener();
@@ -113,20 +110,20 @@ let mouse3D = new THREE.Vector3();
 let raycaster = new THREE.Raycaster();
 
 // Add event listener for mouse move
-window.addEventListener('mousemove', (event) => {
-    // Normalize mouse position to range [-1, 1]
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+// window.addEventListener('mousemove', (event) => {
+//     // Normalize mouse position to range [-1, 1]
+//     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+//     mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
 
-    // Convert mouse position to 3D
-    mouse3D.set(mouse.x, mouse.y, 0);
-    mouse3D.unproject(camera);
-});
+//     // Convert mouse position to 3D
+//     mouse3D.set(mouse.x, mouse.y, 0);
+//     mouse3D.unproject(camera);
+// });
 
 // Function to linearly interpolate between two values
-function lerp(start, end, t) {
-    return start * (1 - t) + end * t;
-}
+// function lerp(start, end, t) {
+//     return start * (1 - t) + end * t;
+// }
 // function easeInOutQuad(t) {
 //     return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
 // }
@@ -135,28 +132,49 @@ const transDuration = 0.7;
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
-    let elapsedTime = clock.getElapsedTime();
-
-    let t = Math.min(elapsedTime / transDuration, 1.0);
-    // let easedT = easeInOutQuad(t);
-    // console.log(easedT);
+    let elapsedTime = clock.getElapsedTime()/1.0;
+    // console.log(elapsedTime);
 
     let audioData = analyser.data;
-    let avgfrequency = analyser.getAverageFrequency();
-    // console.log(avgfrequency);
+    let avgfrequency = analyser.getAverageFrequency()/60;
+    // console.log(audioData);
 
-    // Update sphere geometry based on audio data
     sphereGeometry.positionData.forEach((p, idx) => {
-        let noiseValue = noise(p.x, p.y, p.z, elapsedTime*0.1)*1.5 + (avgfrequency * 0.01);
         let audioFactor = audioData[idx % audioData.length] / 256;
-        let combinedIn = noiseValue + audioFactor;
-        
-        v3.copy(p).addScaledVector(p, combinedIn * 0.1);
-        
+        // let noiseValue = noise(p.x*(avgfrequency), p.y*avgfrequency, p.z*avgfrequency, elapsedTime*(0.2 + avgfrequency/(elapsedTime*1000))) + (avgfrequency * 0.01);
+        let noiseValue = noise(p.x*(avgfrequency), p.y*avgfrequency, p.z*avgfrequency, elapsedTime*0.2);
+        v3.copy(p).addScaledVector(p, noiseValue);
 
+        // console.log(p.x, p.y, p.z)
         sphereGeometry.attributes.position.setXYZ(idx, v3.x, v3.y, v3.z);
-        // console.log(easedT);
     })
+
+
+    sphereGeometry.positionData.forEach((p, idx) => {
+        let audioFactor = audioData[idx % audioData.length] / 256;
+        let noiseValue = noise(
+            p.x * (avgfrequency), 
+            p.y * (avgfrequency), 
+            p.z * (avgfrequency), 
+            elapsedTime * 0.7
+        );
+        
+        // Apply a low-pass filter or smooth the noise value over time
+        let smoothNoiseValue = lerp(p.noisePrevValue || noiseValue, noiseValue, 0.01);
+        p.noisePrevValue = smoothNoiseValue; // Store the previous noise value for smoothing
+        
+        // Scale down the noise contribution to make the transition smoother
+        let combinedValue = smoothNoiseValue + audioFactor * 0.005;
+    
+        v3.copy(p).addScaledVector(p, combinedValue);
+        sphereGeometry.attributes.position.setXYZ(idx, v3.x, v3.y, v3.z);
+    });
+    
+    // Function to linearly interpolate between two values
+    function lerp(start, end, t) {
+        return start * (1 - t) + end * t;
+    }
+
     // sphereGeometry.positionData.forEach((p, idx) => {
     //     let noiseValue = noise(p.x, p.y, p.z, elapsedTime*0.3);
     //     let audioFactor = audioData[idx % audioData.length] / 256;
@@ -169,6 +187,7 @@ function animate() {
 
     //     sphereGeometry.attributes.position.setXYZ(idx, v3.x, v3.y, v3.z);
     // })
+
     sphereGeometry.computeVertexNormals();
     sphereGeometry.attributes.position.needsUpdate = true;
 
@@ -202,9 +221,7 @@ function animate() {
     let direction = mouse3D.clone().sub(sphere.position).normalize();
     sphere.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), direction);
 
-    // Interpolate sphere scale
-    let scale = 1.4 * 0.6;
-    sphere.scale.set(scale, scale, scale);
+    
 
     // Render the scene
     renderer.render(scene, camera);
@@ -213,9 +230,12 @@ function animate() {
 
 // Make the canvas responsive
 window.addEventListener('resize', () => {
+    // camera.aspect = window.innerWidth / window.innerHeight;
+    // renderer.setSize(window.innerWidth, window.innerHeight);
     camera.aspect = width / height;
-    camera.updateProjectionMatrix();
     renderer.setSize(width, height);
+    camera.updateProjectionMatrix();
+    console.log('resizing');
 });
 
 // Start the animation loop
@@ -251,8 +271,6 @@ function update(data){
         .attr('dataSongLink', d => "../"+d.link+".mp3")
         .attr('data-title', d => d.title)
         .on('click', function(event, d){
-            console.log(sound.context.currentTime);
-            console.log(sound);
             if (currentAudio){
                 sound.stop();
                 $('.current-song')[0].innerHTML = 'nothing';
@@ -265,9 +283,8 @@ function update(data){
                     sound.play();
                     $('.current-song')[0].innerHTML = d.title;
                     currentAudio = true;
-                
                 })
-            }  
+            } 
             sound.onEnded = function() {
                 console.log('The sound has ended!');
                 sound.stop();
@@ -275,25 +292,11 @@ function update(data){
                 currentAudio = false;
                 $('.current-song')[0].innerHTML = 'nothing';
                 sound.setBuffer(null);
-            };       
+            };  
+            $(this).addClass('active');
+            $(this).siblings().removeClass('active');     
         })
-        
-
-    // const labels = svg.append('g')
-    //     .attr('class', 'labels-node')
-    //     .selectAll('text')
-    //     .data(data)
-    //     .enter().append('text')
-    //     .attr('fill', 'red')
-    //     .text(d=> d.title)
-        
-    // Sembra che Canzone non serva a nulla
-    // const canzone = svg.append('g')
-    //     .attr('class', 'audio-node')
-    //     .selectAll("audio")
-    //     .data(data)
-    //     .enter().append('audio')
-    //     .attr('href', d => d.link+d.highlight+".mp3")
+    
    
     const simulation1 = d3.forceSimulation() 
     //   .force("charge", d3.forceManyBody())
@@ -357,7 +360,6 @@ $('.muter').on('click', function(){
         sound.setVolume(1);
         // video.muted = false;
         soundVolume = false;
-        console.log('now sound will be on?');
 
     } else {
         $('.muter-text')[0].innerHTML = "sound off";
@@ -372,7 +374,6 @@ $('.muter').on('click', function(){
 $('.audioToggle').on('click', function(){
     if(video.muted){
         video.muted = false;
-        alert('Sound on')
 
     } else {
         video.muted = true;

@@ -72,8 +72,8 @@ a{
     height: 100vh;
 }
 .exclusion{
-    mix-blend-mode: difference;
-    -webkit-mix-blend-mode: difference;
+    mix-blend-mode: exclusion;
+    -webkit-mix-blend-mode: exclusion;
 }
 .w-100{
     width: 100%;
@@ -195,11 +195,15 @@ video{
     border-radius: 30px;
     background-color: white;
 }
+
 .single-song{
     fill: #d9d9d9;
-    mix-blend-mode: exclusion;
     r: 6px;
+    mix-blend-mode: exclusion;
     cursor: pointer;
+    /* width: 12px;
+    height: 12px;
+    background-color: red; */
 }
 .single-song:hover{
     outline: 1.5px solid #343434;
@@ -208,9 +212,6 @@ video{
 }
 
 /* WORK */
-.cover-wrapper{
-
-}
 .cover{
     padding: 0 16px;
     position: relative;
@@ -379,7 +380,7 @@ video{
         flex-direction: column;
         justify-content: start;
         position: relative;
-        /* width: 100%; */
+        width: 100vw;
         height: unset;
         padding: 0;
     }
