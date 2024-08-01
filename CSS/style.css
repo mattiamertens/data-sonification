@@ -163,7 +163,6 @@ pointer-events: none;
 .video-wrapper{
     width: 100vw;
     height: 100vh;
-    z-index: 100;
     overflow: hidden;
     top: 0;
     left: 0;
@@ -201,14 +200,14 @@ video{
     r: 6px;
     mix-blend-mode: exclusion;
     cursor: pointer;
-    /* width: 12px;
-    height: 12px;
-    background-color: red; */
 }
 .single-song:hover{
     outline: 1.5px solid #343434;
     border-radius: 100px;
     outline-offset: 8px;
+}
+.single-song-safari{
+    fill: #343434
 }
 
 /* WORK */
@@ -265,6 +264,7 @@ video{
     display: flex;
     gap: 16px;
     height: 100%;
+    max-height: 100%;
 }
 .test-wrapper{
     gap: 24px;
@@ -274,6 +274,8 @@ video{
     align-items: baseline;
     padding: 0px 16px;
     width: 100vw;
+    position: absolute;
+    top: 90%;
 }
 .about-img{
     height: 100%;
@@ -283,7 +285,7 @@ video{
 
 .pic-wrapper{
     width: 50%;
-    max-height: 100%;
+    max-height: 100vh;
     position: relative;
     overflow: hidden;
 }
@@ -308,17 +310,14 @@ video{
 }
 .active, .cerchio:hover{
     outline: 1.5px solid #343434;
-    border-radius: 100px;
+    /* border-radius: 100px; */
     outline-offset: 8px;
 }
 
 .text-wrapper{
     display: flex;
     gap: 44px;
-    /* CAMBIARE PER PROVE */
-    /* height: 60%;    */
     flex-grow: 10;
-
 }
 .bottom-anchor{
     display: flex;
@@ -352,6 +351,11 @@ video{
 
 
 
+@media screen and (min-width: 1600px){ 
+    .cover-pic{
+        max-height: 90%;
+    }
+}
 @media screen and (max-width: 768px){    
 }
 
@@ -395,18 +399,43 @@ video{
     }
     .about-img{
         width: 100%;
-        /* height: auto; */
+        height: auto;
         object-fit: cover;
-        background-repeat: no-repeat;
     }
     .info-wrapper{
         width: 100%;
         /* position: absolute;
         top: 50%; */
         min-height: 447px;
+        padding: 0 16px;
     }
     .test-div{
         flex-direction: column;
         width: 100vw;
+    }
+}
+
+@media not all and (min-resolution:.001dpcm) { 
+
+    body{
+        background-color: red;
+    }
+
+}
+body_::-webkit-full-page-media, _:future, :root .safari_only {
+    background-color: red;
+}
+
+@media not all and (min-resolution: 0.001dpcm) { 
+    @supports (-webkit-appearance:none) {
+      .safari-only {
+        background-color: red;
+      }
+    }
+  }
+  
+@supports (-webkit-touch-callout: none) {
+    body {
+        background-color: red; /* For Safari */
     }
 }

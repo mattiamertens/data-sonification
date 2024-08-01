@@ -4,6 +4,7 @@ import openSimplexNoise from 'https://cdn.skypack.dev/open-simplex-noise';
 
 const width = document.documentElement.clientWidth;
 const height = document.documentElement.clientHeight;
+console.log(width);
 
 // Create a scene
 const scene = new THREE.Scene();
@@ -60,20 +61,6 @@ for (let i = 0; i < sphereGeometry.attributes.position.count; i++){
 sphereGeometry.setAttribute('initialDistance', new THREE.BufferAttribute(initialDistances, 1));
 
 // SHADER MATERIAL
-// let sphereMesh = new THREE.ShaderMaterial({
-//     uniforms: {      
-//         colorA: { value: new THREE.Color(0x0037B2) },
-//         colorB: { value: new THREE.Color(0x8DE4F7) },
-//         u_frequency: {type: 'f', value: 0.0},
-//         audioData: { value: new Float32Array(32) }
-//     },
-//     vertexShader: document.getElementById('v-shad').textContent,
-//     fragmentShader: document.getElementById('fragmentShader').textContent,
-//     // wireframe: true
-// });
-
-// SECOND SHADER MATERIAL
-
 let sphereMesh = new THREE.ShaderMaterial({
     uniforms: {      
         colorA: {type: 'vec3', value: new THREE.Vector3(0.5, 0.5, 0.5)},
@@ -87,8 +74,8 @@ let sphereMesh = new THREE.ShaderMaterial({
 
 let sphere = new THREE.Mesh(sphereGeometry, sphereMesh);
 // Interpolate sphere scale
-let scale = 1.4 * 0.6;
-sphere.scale.set(scale, scale, scale);
+// let scale = 1.4 * 0.6;
+// sphere.scale.set(scale, scale, scale);
 scene.add(sphere);
 
 const listener = new THREE.AudioListener();
@@ -138,16 +125,6 @@ function animate() {
     let audioData = analyser.data;
     let avgfrequency = analyser.getAverageFrequency()/60;
     // console.log(audioData);
-
-    sphereGeometry.positionData.forEach((p, idx) => {
-        let audioFactor = audioData[idx % audioData.length] / 256;
-        // let noiseValue = noise(p.x*(avgfrequency), p.y*avgfrequency, p.z*avgfrequency, elapsedTime*(0.2 + avgfrequency/(elapsedTime*1000))) + (avgfrequency * 0.01);
-        let noiseValue = noise(p.x*(avgfrequency), p.y*avgfrequency, p.z*avgfrequency, elapsedTime*0.2);
-        v3.copy(p).addScaledVector(p, noiseValue);
-
-        // console.log(p.x, p.y, p.z)
-        sphereGeometry.attributes.position.setXYZ(idx, v3.x, v3.y, v3.z);
-    })
 
 
     sphereGeometry.positionData.forEach((p, idx) => {
@@ -202,15 +179,6 @@ function animate() {
         
     //     geometry.attributes.position.setXYZ(idx, v3.x, v3.y, v3.z);
     // })
-    // geometry.computeVertexNormals();
-    // geometry.attributes.position.needsUpdate = true;
-
-    // Update audio data
-    // sphereMesh.uniforms.audioData.value = audioData;
-    // console.log(audioData);
-
-    // uniforms.u_frequency.value = avgfrequency;
-    // sphereMesh.uniforms.u_frequency.value = avgfrequency;
 
     sphere.rotation.y += 0.0006;
     sphere.rotation.x += -0.0006;
@@ -296,33 +264,57 @@ function update(data){
             $(this).addClass('active');
             $(this).siblings().removeClass('active');     
         })
+        
     
    
-    const simulation1 = d3.forceSimulation() 
-    //   .force("charge", d3.forceManyBody())
-      .force("x", d3.forceX())
-      .force("y", d3.forceY())
-    //   .force("charge", d3.forceManyBody().strength(-15))
-    //   .force("charge", d3.forceManyBody().strength(-35).distanceMax(800))
-    //   .force("charge", d3.forceManyBody().strength(200).distanceMax(-10))
-    //   .force("center", d3.forceCenter(width / 2, height / 2))
-      .force("collision", d3.forceCollide().radius(60))
-    //   .force("radial", d3.forceRadial(0,0, 0))
-    //   .force("collide", d3.forceCollide().radius(20))
-      .on("tick", ticked2);
+    let simulation1 = d3.forceSimulation() 
 
+    if (width > 768 && width < 1024){
+        simulation1 = d3.forceSimulation() 
+        .force("r", d3.forceRadial(width/3))
+        .on("tick", ticked2);
+        console.log('mid');
 
+        
+    }
+    else if (width > 1024){
+        simulation1 = d3.forceSimulation() 
+        .force("r", d3.forceRadial(width/2.2))
+        .on("tick", ticked2);
+        console.log('biig')
+    }
+    else {
+        simulation1 = d3.forceSimulation() 
+        .force("r", d3.forceRadial(width/2.5))
+        .on("tick", ticked2);
+        console.log('tiny')
+    }
+   
     function ticked2() {
         node.attr("cx", d => d.x)
             .attr("cy", d => d.y)
             .call(drag(simulation1));
-
-        // labels.attr('x', d => d.x)
-        //       .attr('y', d => d.y)
     }
-      simulation1.nodes(data)
-      simulation1.alpha(1)
-      simulation1.restart()
+
+    simulation1.nodes(data)
+    simulation1.alpha(1)
+    simulation1.restart()
+
+    // const simulation2 = d3.forceSimulation()
+    //     .force("r", d3.forceRadial(width/2.2))
+    //     .on("tick", ticked2);
+
+    // if (width > 768){
+    //     simulation1.nodes(data)
+    //     simulation1.alpha(1)
+    //     simulation1.restart()
+    //     console.log('wide simulation');
+    // } else{
+    //     simulation2.nodes(data)
+    //     simulation2.alpha(1)
+    //     simulation2.restart()
+    //     console.log('tight simulation');
+    // }
 
       function drag(simulation) {
         function dragstarted(event, d) {
@@ -382,8 +374,17 @@ $('.audioToggle').on('click', function(){
 
 // VIDEO PLAY PAUSE BASED ON SCROLL
 $(window).scroll(function(){
-  var scroll = $(this).scrollTop();
-  scroll > height/2 ? video.pause() : video.play()
+  var scoll = $(this).scrollTop();
+  var scroll = video.getBoundingClientRect()
+  scroll.y < 16 ? video.play() : video.pause()
 })
 
 
+// SAFARI CORRECTOR
+$(document).ready(function(){
+    var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+        if (isSafari) {
+            let take = document.getElementsByClassName('single-song');
+            $('.single-song').addClass('single-song-safari')
+        }
+});
