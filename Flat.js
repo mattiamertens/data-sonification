@@ -29,14 +29,6 @@ controls.enableZoom = false;
 
 document.getElementById('canvas').appendChild(renderer.domElement);
 
-// LIGHTS
-// const ambientLight = new THREE.AmbientLight(0xFF0000), 
-//     pointLight = new THREE.PointLight(0x00FF00),
-//     dl = new THREE.DirectionalLight(0xFF00C8, 100);
-//     scene.add(ambientLight, pointLight, dl);
-//     pointLight.position.set(0, 4, 0);
-//     dl.position.set(-3, 5, 0);
-
 // SPHERE GEOMETRY
 let sphereGeometry = new THREE.SphereGeometry(3, 100, 100);
 sphereGeometry.positionData = [];
@@ -173,7 +165,7 @@ const svg = d3.select(".song-graph")
     .attr("preserveAspectRatio", "xMinYMin meet");
 
 // Load data from JSON file
-d3.json("../assets/songs_D&P.json").then(data =>{
+d3.json("../assets/songs_F.json").then(data =>{
     update(data);
 })
 
@@ -312,11 +304,11 @@ $('.audioToggle').on('click', function(){
 })
 
 // VIDEO PLAY PAUSE BASED ON SCROLL
-$(window).scroll(function(){
-  var scoll = $(this).scrollTop();
-  var scroll = video.getBoundingClientRect()
-  scroll.y < 16 ? video.play() : video.pause()
-})
+// $(window).scroll(function(){
+//   var scoll = $(this).scrollTop();
+//   var scroll = video.getBoundingClientRect()
+//   scroll.y < 16 ? video.play() : video.pause()
+// })
 
 
 // SAFARI CORRECTOR

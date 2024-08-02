@@ -12,7 +12,7 @@ const scene = new THREE.Scene();
 
 // Create a camera
 const camera = new THREE.PerspectiveCamera(100, width / height, 0.1, 10000);
-camera.position.z = 8;
+
 
 
 // Create a renderer
@@ -136,7 +136,6 @@ function animate() {
 
 
     sphere.rotation.y += 0.006+avgfrequency;
-    // console.log(rot)
     sphere.rotation.x += -0.006;
 
     // Update raycaster with mouse position
@@ -221,49 +220,40 @@ function update(data){
                 $('.single-song').removeClass('active');
             };       
         })
-        
-    // Sembra che Canzone non serva a nulla
-    // const canzone = svg.append('g')
-    //     .attr('class', 'audio-node')
-    //     .selectAll("audio")
-    //     .data(data)
-    //     .enter().append('audio')
-    //     .attr('href', d => d.link+d.highlight+".mp3")
-   
-    const simulation1 = d3.forceSimulation() 
-    //   .force("charge", d3.forceManyBody())
-    //   .force("x", d3.forceX())
-    //   .force("y", d3.forceY())
-    //   .force("charge", d3.forceManyBody().strength(-15))
-    //   .force("charge", d3.forceManyBody().strength(-35).distanceMax(800))
-    //   .force("charge", d3.forceManyBody().strength(200).distanceMax(-10))
-    //   .force("center", d3.forceCenter(width / 2, height / 2))
-    //   .force("collision", d3.forceCollide().radius(60))
-    // .force("charge", d3.forceCollide().radius(5).iterations(2))
-    .force("r", d3.forceRadial(width/5))
-    .on("tick", ticked2);
-    // console.log(simulation1);
-   
-    const simulation2 = d3.forceSimulation()
-        .force("r", d3.forceRadial(width/2.2))
+
+    let simulation1 = d3.forceSimulation() 
+
+    if (width > 768 && width < 1024){
+        camera.position.z = 6;
+        simulation1 = d3.forceSimulation() 
+        .force("r", d3.forceRadial(width/3))
         .on("tick", ticked2);
-
-
+        console.log('mid');
+    }
+    else if (width > 1024){
+        camera.position.z = 7;
+        simulation1 = d3.forceSimulation() 
+        .force("r", d3.forceRadial(width/4.7))
+        .on("tick", ticked2);
+        console.log('biig')
+    }
+    else {
+        camera.position.z = 9;
+        simulation1 = d3.forceSimulation() 
+        .force("r", d3.forceRadial(width/2.5))
+        .on("tick", ticked2);
+        console.log('tiny')
+    }
+   
     function ticked2() {
         node.attr("cx", d => d.x)
             .attr("cy", d => d.y)
             .call(drag(simulation1));
     }
 
-    if (width > 768){
-        simulation1.nodes(data)
-        simulation1.alpha(1)
-        simulation1.restart()
-    } else{
-        simulation2.nodes(data)
-        simulation2.alpha(1)
-        simulation2.restart()
-    }
+    simulation1.nodes(data)
+    simulation1.alpha(1)
+    simulation1.restart()
 
     function drag(simulation) {
     function dragstarted(event, d) {
@@ -301,7 +291,6 @@ $('.muter').on('click', function(){
         sound.setVolume(1);
         // video.muted = false;
         soundVolume = false;
-        console.log('now sound will be on?');
 
     } else {
         $('.muter-text')[0].innerHTML = "sound off";
@@ -316,7 +305,6 @@ $('.muter').on('click', function(){
 $('.audioToggle').on('click', function(){
     if(video.muted){
         video.muted = false;
-        alert('Sound on')
 
     } else {
         video.muted = true;
@@ -332,7 +320,7 @@ $(window).scroll(function(){
 $(document).ready(function(){
 var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     if (isSafari) {
-        console.log('fdffsd')
+        console.log('Safari detected');
         let take = document.getElementsByClassName('single-song');
         $('.single-song').addClass('single-song-safari')
     }
