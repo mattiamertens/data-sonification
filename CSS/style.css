@@ -415,27 +415,9 @@ video{
     }
 }
 
-@media not all and (min-resolution:.001dpcm) { 
 
-    body{
-        background-color: red;
-    }
 
-}
-body_::-webkit-full-page-media, _:future, :root .safari_only {
-    background-color: red;
-}
-
-@media not all and (min-resolution: 0.001dpcm) { 
-    @supports (-webkit-appearance:none) {
-      .safari-only {
-        background-color: red;
-      }
-    }
-  }
-  
+/* SAFARI FIX */
 @supports (-webkit-touch-callout: none) {
-    body {
-        background-color: red; /* For Safari */
-    }
+
 }
