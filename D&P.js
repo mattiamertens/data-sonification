@@ -315,7 +315,7 @@ $('.audioToggle').on('click', function(){
 $(window).scroll(function(){
   var scoll = $(this).scrollTop();
   var scroll = video.getBoundingClientRect()
-  scroll.y < 16 ? video.play() : video.pause()
+  scroll.y < 32 ? video.play() : video.pause()
 })
 
 
@@ -323,6 +323,7 @@ $(window).scroll(function(){
 $(document).ready(function(){
     var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         if (isSafari) {
+            console.log('safari');
             let take = document.getElementsByClassName('single-song');
             $('.single-song').addClass('single-song-safari')
         }
