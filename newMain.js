@@ -145,11 +145,20 @@ function animate() {
 
 
 // Make the canvas responsive
-window.addEventListener('resize', () => {
-    camera.aspect = width / height;
+// window.addEventListener('resize', () => {
+//     camera.aspect = width / height;
+//     camera.updateProjectionMatrix();
+//     renderer.setSize(width, height);
+// });
+function onWindowResize() {
+    const newWidth = container.clientWidth;
+    const newHeight = container.clientHeight;
+    camera.aspect = newWidth / newHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize(width, height);
-});
+    renderer.setSize(newWidth, newHeight);
+    console.log('resizing');
+}
+window.addEventListener('resize', onWindowResize);
 
 // Start the animation loop
 animate();
