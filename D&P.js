@@ -7,21 +7,27 @@ const height = document.documentElement.clientHeight;
 
 const w = window.innerWidth;
 const h = window.innerHeight;
-console.log(w);
 
+const container = document.getElementById('canvas');
+const c_width = container.clientWidth;
+const c_height = container.clientHeight;
+
+console.log(w);
 console.log(width);
+
 
 // Create a scene
 const scene = new THREE.Scene();
 
 // Create a camera
-const camera = new THREE.PerspectiveCamera(100, width / height, 0.1, 10000);
+const camera = new THREE.PerspectiveCamera(100, c_width / c_height);
 camera.position.z = 8;
 
 
 // Create a renderer
 const renderer = new THREE.WebGLRenderer({antialias: true});
-renderer.setSize(width, height);
+// renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setSize(c_width, c_height);
 renderer.setClearColor(0xEBEBEB, 1);
 
 // Disable zooming
@@ -143,14 +149,26 @@ function animate() {
 
 
 // Make the canvas responsive
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
+// window.addEventListener('resize', () => {
+//     camera.aspect = window.innerWidth / window.innerHeight;
+//     // camera.fov = Math.atan(window.innerHeight / 2 / camera.position.z) * 2 * THREE.Math.RAD2DEG;
+//     camera.updateProjectionMatrix();
+//     renderer.setSize(window.innerWidth, window.innerHeight);
+//     // camera.aspect = width / height;
+//     // renderer.setSize(width, height);
+//     // console.log('resizing');
+//     console.log(window.innerWidth);
+// });
+
+function onWindowResize() {
+    const newWidth = container.clientWidth;
+    const newHeight = container.clientHeight;
+    camera.aspect = newWidth / newHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    // camera.aspect = width / height;
-    // renderer.setSize(width, height);
+    renderer.setSize(newWidth, newHeight);
     console.log('resizing');
-});
+}
+window.addEventListener('resize', onWindowResize);
 
 // Start the animation loop
 animate();
@@ -189,6 +207,7 @@ function update(data){
                 sound.stop();
                 $('.current-song')[0].innerHTML = 'nothing';
                 currentAudio = false;
+                $(this).removeClass('active');
             }
             else {
                 const linkino = this.getAttribute('dataSongLink');
@@ -198,6 +217,7 @@ function update(data){
                     $('.current-song')[0].innerHTML = d.title;
                     currentAudio = true;
                 })
+                $(this).addClass('active');
             } 
             sound.onEnded = function() {
                 console.log('The sound has ended!');
@@ -207,7 +227,6 @@ function update(data){
                 $('.current-song')[0].innerHTML = 'nothing';
                 sound.setBuffer(null);
             };  
-            $(this).addClass('active');
             $(this).siblings().removeClass('active');     
         })
         
@@ -222,24 +241,6 @@ function update(data){
     });
         
     const simulation = d3.forceSimulation(data)
-    // .force("radial", d3.forceRadial(d => {
-    //     const angle = (data.indexOf(d) / data.length) * 2 * Math.PI;
-    //     return radius;
-    // }).strength())
-    // .force("x", d3.forceX(d => {
-    //     const angle = (data.indexOf(d) / data.length) * 2 * Math.PI;
-
-    //     console.log((data.indexOf(d) / data.length));
-    //     console.log((angle));
-    //     // console.log(Math.cos(angle) * radius);
-        
-    //     return Math.cos(angle) * radius;       
-    // }).strength(1))
-    // .force("y", d3.forceY(d => {
-    //     const angle = (data.indexOf(d) / data.length) * 2 * Math.PI;
-    //     return Math.sin(angle) * radius;
-    // }).strength(1))
-    // .force("collide", d3.forceCollide(100))
     .force("x", d3.forceX(d => d.x).strength(1))
     .force("y", d3.forceY(d => d.y).strength(1))
     .on("tick", ticked2);

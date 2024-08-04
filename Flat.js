@@ -3,24 +3,26 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import openSimplexNoise from 'https://cdn.skypack.dev/open-simplex-noise';
 
 const width = document.documentElement.clientWidth;
+const height = document.documentElement.clientHeight;
+
 const i_width = window.innerWidth;
 const i_height = window.innerHeight;
-console.log(i_width);
 
-const height = document.documentElement.clientHeight;
-console.log(width);
+const container = document.getElementById('canvas');
+const c_width = container.clientWidth;
+const c_height = container.clientHeight;
 
 // Create a scene
 const scene = new THREE.Scene();
 
 // Create a camera
-const camera = new THREE.PerspectiveCamera(100, width / height, 0.1, 10000);
+const camera = new THREE.PerspectiveCamera(100, c_width / c_height);
 camera.position.z = 8;
 
 
 // Create a renderer
 const renderer = new THREE.WebGLRenderer({antialias: true});
-renderer.setSize(width, height);
+renderer.setSize(c_width, c_height);
 renderer.setClearColor(0xEBEBEB, 1);
 
 // Disable zooming
@@ -142,14 +144,25 @@ function animate() {
 
 
 // Make the canvas responsive
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
+// window.addEventListener('resize', () => {
+//     camera.aspect = window.innerWidth / window.innerHeight;
+//     camera.updateProjectionMatrix();
+//     renderer.setSize(window.innerWidth, window.innerHeight);
+//     // camera.aspect = width / height;
+//     // renderer.setSize(width, height);
+//     console.log('resizing');
+// });
+
+
+function onWindowResize() {
+    const newWidth = container.clientWidth;
+    const newHeight = container.clientHeight;
+    camera.aspect = newWidth / newHeight;
     camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    // camera.aspect = width / height;
-    // renderer.setSize(width, height);
+    renderer.setSize(newWidth, newHeight);
     console.log('resizing');
-});
+}
+window.addEventListener('resize', onWindowResize);
 
 // Start the animation loop
 animate();
@@ -188,6 +201,7 @@ function update(data){
                 sound.stop();
                 $('.current-song')[0].innerHTML = 'nothing';
                 currentAudio = false;
+                $(this).removeClass('active');
             }
             else {
                 const linkino = this.getAttribute('dataSongLink');
@@ -197,6 +211,7 @@ function update(data){
                     $('.current-song')[0].innerHTML = d.title;
                     currentAudio = true;
                 })
+                $(this).addClass('active');
             } 
             sound.onEnded = function() {
                 console.log('The sound has ended!');
@@ -206,7 +221,7 @@ function update(data){
                 $('.current-song')[0].innerHTML = 'nothing';
                 sound.setBuffer(null);
             };  
-            $(this).addClass('active');
+            console.log('clicked');
             $(this).siblings().removeClass('active');     
         })
         

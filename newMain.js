@@ -5,20 +5,24 @@ import openSimplexNoise from 'https://cdn.skypack.dev/open-simplex-noise';
 const width = document.documentElement.clientWidth;
 const height = document.documentElement.clientHeight;
 
+const container = document.getElementById('canvas');
+const c_width = container.clientWidth;
+const c_height = container.clientHeight;
+
 // Create a scene
 const scene = new THREE.Scene();
 // Set the background color
 
 
 // Create a camera
-const camera = new THREE.PerspectiveCamera(100, width / height, 0.1, 10000);
+const camera = new THREE.PerspectiveCamera(100, c_width / c_height, 0.1, 10000);
 camera.position.z = 8;
 
 
 
 // Create a renderer
 const renderer = new THREE.WebGLRenderer();
-renderer.setSize(width, height);
+renderer.setSize(c_width, c_height);
 renderer.setClearColor(0xEBEBEB, 1);
 
 // Disable zooming
@@ -186,6 +190,7 @@ function update(data){
                 sound.stop();
                 $('.current-song')[0].innerHTML = 'nothing';
                 currentAudio = false;
+                $(this).removeClass('active');
             }
             else {
                 const linkino = this.getAttribute('dataSongLink_h');
@@ -195,6 +200,7 @@ function update(data){
                     $('.current-song')[0].innerHTML = d.title;
                     currentAudio = true;
                 })
+
                 $(this).addClass('active');
                 $(this).siblings().removeClass('active');
             }  

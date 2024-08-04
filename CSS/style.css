@@ -360,7 +360,7 @@ video{
 
 @media screen and (max-width: 576px){
     .album-title{
-        font-size: 44px;
+        font-size: 2.7rem;
     }
     
     /* WORK */
@@ -437,5 +437,8 @@ video{
 @supports (-webkit-touch-callout: none) {
     .single-song{
         fill: #343434;
+    }
+    .active{
+        fill: #64ACF4;
     }
 }
