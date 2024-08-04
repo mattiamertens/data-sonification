@@ -325,6 +325,21 @@ $(window).scroll(function(){
   scroll > height/2 ? video.pause() : video.play()
 })
 
+$('.video').on('click', function(){
+    // if(video.paused){
+    //     video.play();
+    // } else {
+    //     video.pause();
+    // }
+    if (!this.fullscreenElement) {
+        this.requestFullscreen();
+        // alert('fullscreen');
+    } 
+    // else if (this.exitFullscreen) {
+    //     this.exitFullscreen();
+    // }
+})
+
 // $(document).ready(function(){
 // var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 //     if (isSafari) {
