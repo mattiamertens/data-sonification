@@ -285,7 +285,6 @@ video{
     object-fit: contain;
 
 }
-
 .pic-wrapper{
     width: 50%;
     max-height: 100vh;
@@ -298,7 +297,6 @@ video{
     gap: 24px;
     display: flex;
 }
-
 .interaction{
     gap: 12px
 }
@@ -449,7 +447,6 @@ video{
     .credits{
         width: 100%;
     }
-    
 }
 
 
