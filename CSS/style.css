@@ -419,5 +419,7 @@ video{
 
 /* SAFARI FIX */
 @supports (-webkit-touch-callout: none) {
-
+    .single-song{
+        fill: #343434;
+    }
 }

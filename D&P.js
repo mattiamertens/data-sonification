@@ -29,14 +29,6 @@ controls.enableZoom = false;
 
 document.getElementById('canvas').appendChild(renderer.domElement);
 
-// LIGHTS
-// const ambientLight = new THREE.AmbientLight(0xFF0000), 
-//     pointLight = new THREE.PointLight(0x00FF00),
-//     dl = new THREE.DirectionalLight(0xFF00C8, 100);
-//     scene.add(ambientLight, pointLight, dl);
-//     pointLight.position.set(0, 4, 0);
-//     dl.position.set(-3, 5, 0);
-
 // SPHERE GEOMETRY
 let sphereGeometry = new THREE.SphereGeometry(3, 100, 100);
 sphereGeometry.positionData = [];
@@ -219,41 +211,47 @@ function update(data){
         })
         
     
-   
-    let simulation1 = d3.forceSimulation() 
-
-    if (width > 768 && width < 1024){
-        simulation1 = d3.forceSimulation() 
-        .force("r", d3.forceRadial(width/3))
-        .on("tick", ticked2);
-        console.log('mid');
-
+    const radius = Math.min(width, height) / 3;
+    console.log(radius);
+    
+    data.forEach((d, i) => {
+        const angle = (i / data.length) * 2 * Math.PI - Math.PI / 2; 
+        d.x = Math.cos(angle) * radius;
+        d.y = Math.sin(angle) * radius;
+    });
         
-    }
-    else if (width > 1024){
-        camera.position.z = 7;
-        simulation1 = d3.forceSimulation() 
-        .force("r", d3.forceRadial(width/3.7))
-        .on("tick", ticked2);
-        console.log('biig')
-    }
-    else {
-        camera.position.z = 9;
-        simulation1 = d3.forceSimulation() 
-        .force("r", d3.forceRadial(width/2.5))
-        .on("tick", ticked2);
-        console.log('tiny')
-    }
-   
+    const simulation = d3.forceSimulation(data)
+    // .force("radial", d3.forceRadial(d => {
+    //     const angle = (data.indexOf(d) / data.length) * 2 * Math.PI;
+    //     return radius;
+    // }).strength())
+    // .force("x", d3.forceX(d => {
+    //     const angle = (data.indexOf(d) / data.length) * 2 * Math.PI;
+
+    //     console.log((data.indexOf(d) / data.length));
+    //     console.log((angle));
+    //     // console.log(Math.cos(angle) * radius);
+        
+    //     return Math.cos(angle) * radius;       
+    // }).strength(1))
+    // .force("y", d3.forceY(d => {
+    //     const angle = (data.indexOf(d) / data.length) * 2 * Math.PI;
+    //     return Math.sin(angle) * radius;
+    // }).strength(1))
+    // .force("collide", d3.forceCollide(100))
+    .force("x", d3.forceX(d => d.x).strength(1))
+    .force("y", d3.forceY(d => d.y).strength(1))
+    .on("tick", ticked2);
+
+    simulation.nodes(data)
+    simulation.alpha(1)
+    simulation.restart()
+
     function ticked2() {
         node.attr("cx", d => d.x)
             .attr("cy", d => d.y)
-            .call(drag(simulation1));
+            .call(drag(simulation));
     }
-
-    simulation1.nodes(data)
-    simulation1.alpha(1)
-    simulation1.restart()
 
     
     function drag(simulation) {
@@ -312,11 +310,11 @@ $('.audioToggle').on('click', function(){
 })
 
 // VIDEO PLAY PAUSE BASED ON SCROLL
-$(window).scroll(function(){
-  var scoll = $(this).scrollTop();
-  var scroll = video.getBoundingClientRect()
-  scroll.y < 32 ? video.play() : video.pause()
-})
+// $(window).scroll(function(){
+//   var scoll = $(this).scrollTop();
+//   var scroll = video.getBoundingClientRect()
+//   scroll.y < 32 ? video.play() : video.pause()
+// })
 
 
 // SAFARI CORRECTOR
