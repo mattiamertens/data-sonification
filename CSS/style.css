@@ -73,7 +73,6 @@ a{
 }
 .exclusion{
     mix-blend-mode: exclusion;
-    -webkit-mix-blend-mode: exclusion;
 }
 .w-100{
     width: 100%;
@@ -177,6 +176,7 @@ video{
     left: 50%;
     transform: translate(-50%, -50%);
     width: 80%;
+    font-size: 18px;
 }
 .current-song{
     padding: 4px 6px;
@@ -253,17 +253,22 @@ video{
 }
 
 
-
-
-
-
-
-/* ABOUT */
 .content-wrapper{
     display: flex;
     gap: 16px;
     height: 100%;
     max-height: 100%;
+}
+
+
+
+
+/* ABOUT */
+.content-wrapper-about{
+    gap: 16px;
+    height: 100%;
+    max-height: 100%;
+    padding-right: 16px;
 }
 .test-wrapper{
     gap: 24px;
@@ -271,10 +276,9 @@ video{
 }
 .test-div{
     align-items: baseline;
-    padding: 0px 16px;
+    padding: 0px 16px 48px;
     width: 100vw;
-    /* position: absolute; */
-    top: 90%;
+    gap: 16px;
 }
 .about-img{
     height: 100%;
@@ -332,7 +336,10 @@ video{
     text-align: start;
 }
 
-
+.credits{
+    align-items: baseline;
+    width: 50%;
+}
 .single-credit{
     color: rgba(255, 255, 255, 0.6);
     font-size: 14px;
@@ -359,6 +366,9 @@ video{
 }
 
 @media screen and (max-width: 576px){
+    .cta-wrapper{
+        padding: 0 32px;
+    }
     .album-title{
         font-size: 2.7rem;
     }
@@ -378,6 +388,15 @@ video{
         padding: 46px 16px;
     }
     .content-wrapper{
+        flex-direction: column;
+        justify-content: start;
+        position: relative;
+        width: 100vw;
+        height: 100%;
+        padding: 0;
+    }
+    .content-wrapper-about{
+        padding: 0;
         flex-direction: column;
         justify-content: start;
         position: relative;
@@ -426,7 +445,9 @@ video{
     .test-div{
         flex-direction: column;
         width: 100vw;
-        padding-bottom: 48px;
+    }
+    .credits{
+        width: 100%;
     }
     
 }

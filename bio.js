@@ -1,13 +1,6 @@
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
-const width = document.documentElement.clientWidth;
-const height = document.documentElement.clientHeight;
-
 const pic_dots = d3.select(".dots")
-    // .attr("width", width)
-    // .attr("height", height)
-    // .attr("viewBox", `${-width/2} ${-height/2} ${width} ${height}`)
-    // .attr("preserveAspectRatio", "xMinYMin meet");
 
 d3.json("assets/bio.json").then(dataDots =>{
     updateDots(dataDots);
@@ -29,4 +22,3 @@ function updateDots(dataDots){
         });
 
 }
-
