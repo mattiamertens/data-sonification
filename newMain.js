@@ -27,20 +27,6 @@ controls.enableZoom = false;
 
 document.getElementById('canvas').appendChild(renderer.domElement);
 
-
-// LIGHTS
-const ambientLight = new THREE.AmbientLight(0xFF0000), 
-    pointLight = new THREE.PointLight(0x00FF00),
-    dl = new THREE.DirectionalLight(0xFF00C8, 100);
-    scene.add(ambientLight, pointLight, dl);
-    pointLight.position.set(0, 4, 0);
-    dl.position.set(-3, 5, 0);
-
-// const helper = new THREE.PointLightHelper(pointLight, 5);
-// scene.add(helper);
-// const helper2 = new THREE.DirectionalLightHelper(dl, 5);
-// scene.add(helper2);
-
 // SPHERE GEOMETRY
 let sphereGeometry = new THREE.SphereGeometry(3, 100, 100);
 sphereGeometry.positionData = [];
@@ -232,24 +218,6 @@ function update(data){
     });
         
     const simulation = d3.forceSimulation(data)
-    // .force("radial", d3.forceRadial(d => {
-    //     const angle = (data.indexOf(d) / data.length) * 2 * Math.PI;
-    //     return radius;
-    // }).strength())
-    // .force("x", d3.forceX(d => {
-    //     const angle = (data.indexOf(d) / data.length) * 2 * Math.PI;
-
-    //     console.log((data.indexOf(d) / data.length));
-    //     console.log((angle));
-    //     // console.log(Math.cos(angle) * radius);
-        
-    //     return Math.cos(angle) * radius;       
-    // }).strength(1))
-    // .force("y", d3.forceY(d => {
-    //     const angle = (data.indexOf(d) / data.length) * 2 * Math.PI;
-    //     return Math.sin(angle) * radius;
-    // }).strength(1))
-    // .force("collide", d3.forceCollide(100))
     .force("x", d3.forceX(d => d.x).strength(1))
     .force("y", d3.forceY(d => d.y).strength(1))
     .on("tick", ticked2);

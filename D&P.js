@@ -3,11 +3,12 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import openSimplexNoise from 'https://cdn.skypack.dev/open-simplex-noise';
 
 const width = document.documentElement.clientWidth;
-const i_width = window.innerWidth;
-const i_height = window.innerHeight;
-console.log(i_width);
-
 const height = document.documentElement.clientHeight;
+
+const w = window.innerWidth;
+const h = window.innerHeight;
+console.log(w);
+
 console.log(width);
 
 // Create a scene
