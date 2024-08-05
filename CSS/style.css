@@ -454,9 +454,9 @@ video{
 /* SAFARI FIX */
 @supports (-webkit-touch-callout: none) {
     .single-song{
-        fill: #f867b9;
+        fill: #343434;
     }
     .active{
-        fill: #64ACF4;
+        fill: #ffffff;
     }
 }
