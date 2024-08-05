@@ -296,6 +296,7 @@ $('.muter').on('click', function(){
 $('.audioToggle').on('click', function(){
     if(video.muted){
         video.muted = false;
+        $('.muter-text')[0].innerHTML = "sound on";
 
     } else {
         video.muted = true;
