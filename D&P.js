@@ -320,11 +320,11 @@ $('.audioToggle').on('click', function(){
 
 
 // SAFARI CORRECTOR
-$(document).ready(function(){
-    var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-        if (isSafari) {
-            console.log('safari');
-            let take = document.getElementsByClassName('single-song');
-            $('.single-song').addClass('single-song-safari')
-        }
-});
+// $(document).ready(function(){
+//     var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+//         if (isSafari) {
+//             console.log('safari');
+//             let take = document.getElementsByClassName('single-song');
+//             $('.single-song').addClass('single-song-safari')
+//         }
+// });
