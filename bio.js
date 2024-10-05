@@ -30,11 +30,11 @@ function looppetto(){
         }
           $($('.cerchio')[i]).addClass('pulsating-circle');
     }
-    setInterval(() => {
-        looppetto();
-        console.log('loop');
-    }, 400);
 };
-looppetto();
+setInterval(() => {
+    looppetto();
+    console.log('loop');
+}, 400);
+// looppetto();
 
 
