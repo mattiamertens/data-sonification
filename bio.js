@@ -18,7 +18,23 @@ function updateDots(dataDots){
             $('.about-img').attr('src', 'assets/pics/resized/'+d.Foto+'.jpg');
             $('.bio-text')[0].innerHTML = d.Bio;
             $(this).addClass('active');
-            $(this).siblings().removeClass('active');
+            $(this).removeClass('pulsating-circle');
+            $(this).siblings().removeClass('active pulsating-circle');
         });
 
 }
+function looppetto(){
+    for (let i = 0; i < 6; i++) {
+        if ($($('.cerchio')[i]).hasClass('active')) {
+            continue; // Skip element
+        }
+          $($('.cerchio')[i]).addClass('pulsating-circle');
+    }
+    setInterval(() => {
+        looppetto();
+        console.log('loop');
+    }, 400);
+};
+looppetto();
+
+
