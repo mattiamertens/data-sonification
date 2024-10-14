@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../CSS/style.css">    
+    <link rel="shortcut icon" href="../assets/pics/favicon.png" type="image/x-icon"> 
+    <title>Sound Sculpting</title>
+
+</head>
+<body>
+    <div class="navbar flex-sb-center fixed fixed-padding exclusion">
+        <div class="home "><a href="../index.html" class="bold button-tertiary">Sound Sculpting</a></div>
+        <div class="muter bold flex-center-center"> 
+            <div class="muter-text bold button-tertiary">sound on</div>
+            <!-- <div class="line_viz">-----</div> -->
+        </div>
+    </div>
+    
+    <div class="footer flex-sb-center fixed fixed-padding exclusion">
+        <div class="work button-tertiary bold"><a href="../work.html" class="bold button-tertiary">work</a></div>
+        <div class="about button-tertiary bold"><a href="../about.html" class="bold button-tertiary"> about </a></div>
+    </div>
+
+    <div class="interactive-wrapper">
+        <div id="canvas"></div>
+        <div class="album-wrapper flex-center-center column">
+            <div class="album-title exclusion flex-center-center column">FANTASY WORKS <span class="subtitle">MESSAGES FROM THE NEW WORLD</span> </div>
+            <!-- <div class="album-titles exclusion flex-center-center">MESSAGES FROM THE NEW WORLD</div> -->
+            <div class="cta-wrapper flex-center-center exclusion column">
+                Interact with a dot to hear the track play
+                <div class="currently-playing flex-center-center">Currently playing:&nbsp; <div class="current-song">nothing</div></div>
+            </div>
+            <div class="song-wrapper absolute">
+                <svg class="song-graph"></svg>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-wrapper column">
+        <div class="video-wrapper" style="z-index: 0;">
+            <video controls muted preload="auto" loop poster="../assets/pics/poster_d&p.png" class="video">
+                <source src="../assets/video/album/trailer.mp4" type="video/mp4">
+            </video>
+        </div>
+        <div class="album-description-wrapper g-24 vh-100 flex-sb-start">
+            <div class="description-text exclusion column g-24">
+                <p>
+                    Everything started with four pieces that I composed, which I later reworked. They were four academic exercises in style, clearly defined, but I wanted to tear them apart because they no longer represented me. While sheet music can be torn, music itself cannot, so I decided to stretch it.
+                </p>
+                <p>
+                    Then I was carried away: I started recording brief moments from concerts, from my choir rehearsals, and from the sounds of nature in the city. Then I would go home and stretch them; in a way, it was as if I were recreating them, modifying reality as I wanted, or seeing it in another way, knowing that I could transform the essence of things. It felt somewhat demiurgic.
+                </p>
+                <p>
+                    I discovered the expressive power of stretching. It’s music that emerges empirically, destroying all predefined academicism and structural intent. I thought of a painter who throws color onto a canvas: it starts from chance, and then each stretch seems to call for the next; I write what I feel must follow. Each stretch has its own nature; it needs to last longer or suddenly cease. I sense whether it should repeat, whether the repetition should be identical or different, whether it should be transposed or layered… one second more, one second less; a few decibels more, a few decibels less, without any grid.
+                </p>
+                <p>
+                    I chose to stretch to create a space-time dimension, like a Picassian distortion of a figure, in this case, a musical one. In extreme stretching, I achieved an almost grotesque granulation of the musical figure and a total distortion of the instrument, which seems to open up, revealing the weaves that make up its sound.
+                </p>
+                <p>
+                    But behind the stretching, I’ve also concealed a caricatured intent, which creates a different listening experience: stretching can extend those moments in a piece that we wish lasted longer, slowing their time down, almost freezing them, allowing us to savor them fully. By using stretching as a caricatured emphasis of the piece, the stretched version does not represent exactly a new piece; instead, it aims to represent the perception of the original one, in a Platonic relationship between the earthly idea and its ideal, hyperuranic form.
+                </p>
+                <p>
+                    “It took me four years to paint like Raffaello, but a lifetime to paint like a child.” 
+                    <br>—Pablo Picasso
+                </p>
+            </div>
+            <div class="album-cover-wrapper">
+                <img src="../assets/pics/covers/Diagram_and_projection.png" alt="" class="album-cover-s">
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+<script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.166.1/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.166.1/examples/jsm/"
+      }
+    }
+  </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+<script id="codeV" type="text/glsl">
+    #define NORMAL
+
+    #if defined( FLAT_SHADED ) || defined( USE_BUMPMAP ) || defined( TANGENTSPACE_NORMALMAP )
+    
+        varying vec3 vViewPosition;
+    
+    #endif
+    
+    #include <common>
+    #include <uv_pars_vertex>
+    #include <displacementmap_pars_vertex>
+    #include <normal_pars_vertex>
+    #include <morphtarget_pars_vertex>
+    #include <skinning_pars_vertex>
+    #include <logdepthbuf_pars_vertex>
+    #include <clipping_planes_pars_vertex>
+    
+    void main() {
+    
+        #include <uv_vertex>
+    
+        #include <beginnormal_vertex>
+        #include <morphnormal_vertex>
+        #include <skinbase_vertex>
+        #include <skinnormal_vertex>
+        #include <defaultnormal_vertex>
+        #include <normal_vertex>
+    
+        #include <begin_vertex>
+        #include <morphtarget_vertex>
+        #include <skinning_vertex>
+        #include <displacementmap_vertex>
+        #include <project_vertex>
+        #include <logdepthbuf_vertex>
+        #include <clipping_planes_vertex>
+    
+    #if defined( FLAT_SHADED ) || defined( USE_BUMPMAP ) || defined( TANGENTSPACE_NORMALMAP )
+    
+        vViewPosition = - mvPosition.xyz;
+    
+    #endif
+    
+    }
+</script>
+<script id="codeF" type="text/glsl">
+    uniform vec3 colorA;
+
+    #define NORMAL
+
+    #if defined( FLAT_SHADED ) || defined( USE_BUMPMAP ) || defined( TANGENTSPACE_NORMALMAP )
+    
+        varying vec3 vViewPosition;
+    
+    #endif
+    
+    #include <packing>
+    #include <uv_pars_fragment>
+    #include <normal_pars_fragment>
+    #include <bumpmap_pars_fragment>
+    #include <normalmap_pars_fragment>
+    #include <logdepthbuf_pars_fragment>
+    #include <clipping_planes_pars_fragment>
+    
+    void main() {
+    
+        #include <clipping_planes_fragment>
+        #include <logdepthbuf_fragment>
+        #include <normal_fragment_begin>
+        #include <normal_fragment_maps>
+    
+        gl_FragColor = vec4( normalize( normal ) * colorA + 0.5, 1.0 );
+    
+        #ifdef OPAQUE
+    
+            gl_FragColor.a = 1.0;
+    
+        #endif
+    
+    }
+</script>
+
+  
+<script type="module" src="../FW.js"></script>
+
+</html>

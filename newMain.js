@@ -280,13 +280,13 @@ $('.muter').on('click', function(){
     if (soundVolume) {
         $('.muter-text')[0].innerHTML = "sound on";
         sound.setVolume(1);
-        // video.muted = false;
+        video.muted = false;
         soundVolume = false;
 
     } else {
         $('.muter-text')[0].innerHTML = "sound off";
         sound.setVolume(0);
-        // video.muted = true;
+        video.muted = true;
         soundVolume = true;
     }
 })
