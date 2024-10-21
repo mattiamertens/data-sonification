@@ -305,11 +305,21 @@ $('.muter').on('click', function(){
 $('.audioToggle').on('click', function(){
     if(video.muted){
         video.muted = false;
+        console.log('mute');
+        
 
     } else {
         video.muted = true;
     }
 })
+
+$('.video').on('click', function(){
+    if (!this.fullscreenElement) {
+        this.requestFullscreen();
+        // alert('fullscreen');
+    } 
+})
+
 
 // VIDEO PLAY PAUSE BASED ON SCROLL
 // $(window).scroll(function(){
