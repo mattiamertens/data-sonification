@@ -260,7 +260,6 @@ video{
     flex-wrap: wrap;
 }
 
-
 .content-wrapper{
     display: flex;
     gap: 16px;
@@ -413,6 +412,16 @@ video{
     .description-text{
         font-size: 18px;
     }
+    .cover{
+        max-width: 100%;
+    }
+
+    /* VENERE */
+    .mobile-vid-fix{
+        width: 100% !important;
+        /* height: unset; */
+        object-fit: cover;
+    }
 
     /* ABOUT */
     .test-wrapper{
@@ -482,6 +491,7 @@ video{
     .credits{
         width: 100%;
     }
+
 }
 
 
