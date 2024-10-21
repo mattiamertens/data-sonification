@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="../CSS/style.css">   
+    <link rel="shortcut icon" href="../assets/pics/favicon.png" type="image/x-icon"> 
+    <title>Sound Sculpting</title>
+
+</head>
+<body>
+    <div class="navbar flex-sb-center fixed fixed-padding exclusion">
+        <div class="home "><a href="../index.html" class="bold button-tertiary">Sound Sculpting</a></div>
+        <div class="muter bold flex-center-center"> 
+            <div class="muter-text bold button-tertiary">sound on</div>
+            <!-- <div class="line_viz">-----</div> -->
+        </div>
+    </div>
+    
+    <div class="footer flex-sb-center fixed fixed-padding exclusion">
+        <div class="work button-tertiary bold"><a href="../work.html" class="bold button-tertiary">work</a></div>
+        <div class="about button-tertiary bold"><a href="../about.html" class="bold button-tertiary"> about </a></div>
+    </div>
+
+    <!-- <div class="interactive-wrapper">
+        <div id="canvas"></div>
+        <div class="album-wrapper flex-center-center column">
+            <div class="album-title exclusion flex-center-center">FLATLANDIA</div>
+            <div class="cta-wrapper flex-center-center exclusion column">
+                Interact with a dot to hear the track play
+                <div class="currently-playing flex-center-center">Currently playing:&nbsp; <div class="current-song">nothing</div></div>
+            </div>
+            <div class="song-wrapper absolute">
+                <svg class="song-graph"></svg>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="content-wrapper column">
+        
+        <div class="video-wrapper flex-center-center" style="z-index: 0;">
+            <video controls preload="auto" poster="" class="video contain mobile-vid-fix" style="width: unset;">
+                <source src="../assets/video/album/venere.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="album-description-wrapper g-24 vh-100 flex-sb-start">
+            <div class="description-text exclusion column g-24">
+                <p>
+                    "Venere (edit)" is an excerpt from the audiovisual work "Once upon_the iCloud 2D S/C ide", which premiered in Hong Kong on August 22, 2024. The project explores the theme of Slow Life.
+                </p>
+                <p>
+                    While walking through Hong Kong, I noticed a unique feature in the sound of the traffic lights: when the pedestrian signal was red, the light emitted a slow beep, and when it turned green, the beeping nearly doubled in speed. This alternating rhythm between waiting and quickly crossing the street was captured through sound. What sonority could better represent a project about Slow Life?
+                </p>
+                <p>
+                    I sampled the sound, where each pattern was made up of a sequence of slow beeps followed by a faster one. I then created a panning effect, alternating the beeps from left to right—one beep on the left, the next on the right, and so on. I layered these sounds, with a second layer coming in halfway through the first, and a third halfway through the second, and so forth. This resulted in the fast beeps from the second half of the first pattern in the first layer overlapping with the slow beeps from the first part of the pattern entering in the second layer, which were exactly twice the note value.
+                </p>
+                <p>
+                    The outcome was a rhythmic and spatial counterpoint, where the beeps seemed to respond to each other from opposite points in space, their rhythms intertwining and imitating one another, yet never quite meeting.
+                </p>
+                <p>
+                    On top of this soundscape, I added "Venere", an electronic track I composed in 2022, set to the same bpm.
+                </p>
+                <p>
+                    This interplay of rhythm and panning was perfectly reflected in the video created by visual artists Koki Sakakihara and Hina Ebihara.
+                </p>
+            </div>
+            <div class="album-cover-wrapper">
+                <img src="../assets/pics/covers/Venere.webp" alt="" class="album-cover-s">
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+<script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.166.1/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.166.1/examples/jsm/"
+      }
+    }
+  </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+<script id="codeV" type="text/glsl">
+    #define NORMAL
+
+    #if defined( FLAT_SHADED ) || defined( USE_BUMPMAP ) || defined( TANGENTSPACE_NORMALMAP )
+    
+        varying vec3 vViewPosition;
+    
+    #endif
+    
+    #include <common>
+    #include <uv_pars_vertex>
+    #include <displacementmap_pars_vertex>
+    #include <normal_pars_vertex>
+    #include <morphtarget_pars_vertex>
+    #include <skinning_pars_vertex>
+    #include <logdepthbuf_pars_vertex>
+    #include <clipping_planes_pars_vertex>
+    
+    void main() {
+    
+        #include <uv_vertex>
+    
+        #include <beginnormal_vertex>
+        #include <morphnormal_vertex>
+        #include <skinbase_vertex>
+        #include <skinnormal_vertex>
+        #include <defaultnormal_vertex>
+        #include <normal_vertex>
+    
+        #include <begin_vertex>
+        #include <morphtarget_vertex>
+        #include <skinning_vertex>
+        #include <displacementmap_vertex>
+        #include <project_vertex>
+        #include <logdepthbuf_vertex>
+        #include <clipping_planes_vertex>
+    
+    #if defined( FLAT_SHADED ) || defined( USE_BUMPMAP ) || defined( TANGENTSPACE_NORMALMAP )
+    
+        vViewPosition = - mvPosition.xyz;
+    
+    #endif
+    
+    }
+</script>
+<script id="codeF" type="text/glsl">
+    uniform vec3 colorA;
+
+    #define NORMAL
+
+    #if defined( FLAT_SHADED ) || defined( USE_BUMPMAP ) || defined( TANGENTSPACE_NORMALMAP )
+    
+        varying vec3 vViewPosition;
+    
+    #endif
+    
+    #include <packing>
+    #include <uv_pars_fragment>
+    #include <normal_pars_fragment>
+    #include <bumpmap_pars_fragment>
+    #include <normalmap_pars_fragment>
+    #include <logdepthbuf_pars_fragment>
+    #include <clipping_planes_pars_fragment>
+    
+    void main() {
+    
+        #include <clipping_planes_fragment>
+        #include <logdepthbuf_fragment>
+        #include <normal_fragment_begin>
+        #include <normal_fragment_maps>
+    
+        gl_FragColor = vec4( normalize( normal ) * colorA + 0.5, 1.0 );
+    
+        #ifdef OPAQUE
+    
+            gl_FragColor.a = 1.0;
+    
+        #endif
+    
+    }
+</script>
+
+  
+<script type="module" src="../newMain.js"></script>
+
+</html>

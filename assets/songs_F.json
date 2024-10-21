@@ -1,37 +1,52 @@
 [
   {
-    "title": "In the Night of the Day",
+    "title": "In the Night of the Day & In the Day of the Night",
     "album": "Flatlandia",
-    "link": "assets/albums/Flatlandia/1"
+    "link": "assets/albums/Flatlandia/1_2"
   },
   {
-    "title": "In the Day of the Night",
-    "album": "Flatlandia",
-    "link": "assets/albums/Flatlandia/2"
-  },
-  {
-    "title": "Transition I",
+    "title": "Elevation I: Distopia",
     "album": "Flatlandia",
     "link": "assets/albums/Flatlandia/3"
   },
   {
-    "title": "The Second Tree in a Row",
+    "title": "Upward and Downward",
     "album": "Flatlandia",
     "link": "assets/albums/Flatlandia/4"
   },
   {
-    "title": "Here to There",
+    "title": "The Second Tree in a Row",
     "album": "Flatlandia",
     "link": "assets/albums/Flatlandia/5"
   },
   {
-    "title": "Transition II",
+    "title": "Elevation II: Intermittency and Dynamism",
     "album": "Flatlandia",
     "link": "assets/albums/Flatlandia/6"
   },
   {
-    "title": "Prelude to the Lights of the City",
+    "title": "Here to There",
     "album": "Flatlandia",
     "link": "assets/albums/Flatlandia/7"
+  },
+  {
+    "title": "Elevation III: Utopia",
+    "album": "Flatlandia",
+    "link": "assets/albums/Flatlandia/8"
+  },
+  {
+    "title": "Prelude to the Lights of the City",
+    "album": "Flatlandia",
+    "link": "assets/albums/Flatlandia/9"
+  },
+  {
+    "title": "Elevation IV: The Dry World",
+    "album": "Flatlandia",
+    "link": "assets/albums/Flatlandia/10"
+  },
+  {
+    "title": "Zeitmasse",
+    "album": "Flatlandia",
+    "link": "assets/albums/Flatlandia/11"
   }
 ]
