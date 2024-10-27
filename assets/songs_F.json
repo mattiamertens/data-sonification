@@ -1,52 +1,74 @@
 [
   {
+    "index": 1,
     "title": "In the Night of the Day & In the Day of the Night",
     "album": "Flatlandia",
     "link": "assets/albums/Flatlandia/1_2"
   },
   {
-    "title": "Elevation I: Distopia",
-    "album": "Flatlandia",
-    "link": "assets/albums/Flatlandia/3"
-  },
-  {
+    "index": 2,
     "title": "Upward and Downward",
     "album": "Flatlandia",
-    "link": "assets/albums/Flatlandia/4"
+    "link": "assets/albums/Flatlandia/Upward_and_Downward"
   },
   {
+    "index": 3,
+    "title": "Elevation I - In Heaven as It is on Earth",
+    "album": "Flatlandia",
+    "link": "assets/albums/Flatlandia/Elevation_I"
+  },
+  {
+    "index": 4,
     "title": "The Second Tree in a Row",
     "album": "Flatlandia",
-    "link": "assets/albums/Flatlandia/5"
+    "link": "assets/albums/Flatlandia/The_Second_Tree_in_a_Row"
   },
   {
+    "index": 5,
     "title": "Elevation II: Intermittency and Dynamism",
     "album": "Flatlandia",
-    "link": "assets/albums/Flatlandia/6"
+    "link": "assets/albums/Flatlandia/Elevation_II"
   },
   {
+    "index": 6,
     "title": "Here to There",
     "album": "Flatlandia",
-    "link": "assets/albums/Flatlandia/7"
+    "link": "assets/albums/Flatlandia/Here_to_There"
   },
   {
-    "title": "Elevation III: Utopia",
+    "index": 7,
+    "title": "The Third Second in a Row",
     "album": "Flatlandia",
-    "link": "assets/albums/Flatlandia/8"
+    "link": "assets/albums/Flatlandia/The_Third_Second_in_a_Row"
   },
   {
+    "index": 8,
     "title": "Prelude to the Lights of the City",
     "album": "Flatlandia",
-    "link": "assets/albums/Flatlandia/9"
+    "link": "assets/albums/Flatlandia/Prelude_to_the_Lights_of_the_City"
   },
   {
-    "title": "Elevation IV: The Dry World",
+    "index": 9,
+    "title": "Elevation III - The Dry World",
     "album": "Flatlandia",
-    "link": "assets/albums/Flatlandia/10"
+    "link": "assets/albums/Flatlandia/Elevation_III"
   },
   {
+    "index": 10,
+    "title": "Downward and Upward",
+    "album": "Flatlandia",
+    "link": "assets/albums/Flatlandia/Downward_and_Upward"
+  },
+  {
+    "index": 11,
+    "title": "Elevation IV - On Earth as it is in Heaven",
+    "album": "Flatlandia",
+    "link": "assets/albums/Flatlandia/Elevation_IV"
+  },
+  {
+    "index": 12,
     "title": "Zeitmasse",
     "album": "Flatlandia",
-    "link": "assets/albums/Flatlandia/11"
+    "link": "assets/albums/Flatlandia/Zeitmasse"
   }
 ]
