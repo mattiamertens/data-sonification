@@ -400,7 +400,7 @@ function releaseWakeLock() {
     if (wakelock !== null) {
         wakelock.release();
         wakelock = null;
+        console.log('Wake Lock is released!');
     }
-    console.log('Wake Lock is released!');
     
 }
