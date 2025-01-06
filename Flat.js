@@ -210,6 +210,9 @@ function update(data){
                     sound.play();
                     $('.current-song')[0].innerHTML = d.title;
                     currentAudio = true;
+
+                    // WakeLock API request
+                    requestWakeLock();
                 })
                 $(this).addClass('active');
             } 
@@ -220,6 +223,9 @@ function update(data){
                 currentAudio = false;
                 $('.current-song')[0].innerHTML = 'nothing';
                 sound.setBuffer(null);
+
+                // WakeLock API release
+                releaseWakeLock();
             };  
             console.log('clicked');
             $(this).siblings().removeClass('active');     
@@ -372,3 +378,29 @@ $('.audioToggle').on('click', function(){
 //             $('.single-song').addClass('single-song-safari')
 //         }
 // });
+
+
+// WAKELOCK to keep the screen on
+let wakelock = null;
+
+if ('wakeLock' in navigator) {
+    console.log('Wake Lock API is supported in your browser');
+    
+}
+else {
+    console.log('Wake Lock API is not supported in your browser');
+}
+
+async function requestWakeLock() {
+    wakelock = await navigator.wakeLock.request('screen');
+    console.log('Wake Lock is active!');
+}
+
+function releaseWakeLock() {
+    if (wakelock !== null) {
+        wakelock.release();
+        wakelock = null;
+    }
+    console.log('Wake Lock is released!');
+    
+}
