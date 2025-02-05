@@ -1,32 +1,26 @@
 [
   {
-    "title": "Soundscape 1: Morgenstueck",
-    "album": "Diagram and projection",
-    "link": "assets/albums/Fantasy_works/1"
+    "title": "Morgenstueck",
+    "link": "assets/albums/Fantasy_works/Morgenstueck"
   },
   {
-    "title": "Soundscape 2: Daemmerungstueck",
-    "album": "Diagram and projection",
-    "link": "assets/albums/Fantasy_works/2"
+    "title": "Daemmerungstueck",
+    "link": "assets/albums/Fantasy_works/Daemmerungstueck"
   },
   {
-    "title": "Soundscape 3: Nachtstueck",
-    "album": "Diagram and projection",
-    "link": "assets/albums/Fantasy_works/3"
+    "title": "Nachtstueck",
+    "link": "assets/albums/Fantasy_works/Nachtstueck"
   },
   {
-    "title": "Soundscape 4: The Blooming Garden",
-    "album": "Diagram and projection",
-    "link": "assets/albums/Fantasy_works/4"
+    "title": "The Blooming Garden",
+    "link": "assets/albums/Fantasy_works/The Blooming Garden"
   },
   {
-    "title": "Soundscape 5: Sternstueck",
-    "album": "Diagram and projection",
-    "link": "assets/albums/Fantasy_works/5"
+    "title": "Sternstueck",
+    "link": "assets/albums/Fantasy_works/Sternstueck"
   },
   {
-    "title": "Soundscape 6: Prayer",
-    "album": "Diagram and projection",
-    "link": "assets/albums/Fantasy_works/6"
+    "title": "Prayer",
+    "link": "assets/albums/Fantasy_works/Prayer"
   }
 ]
