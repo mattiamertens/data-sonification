@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import openSimplexNoise from 'https://cdn.skypack.dev/open-simplex-noise';
+// D3 code for songs
+import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 const width = document.documentElement.clientWidth;
 const height = document.documentElement.clientHeight;
@@ -142,18 +144,6 @@ function animate() {
     renderer.render(scene, camera);
 }
 
-
-// Make the canvas responsive
-// window.addEventListener('resize', () => {
-//     camera.aspect = window.innerWidth / window.innerHeight;
-//     camera.updateProjectionMatrix();
-//     renderer.setSize(window.innerWidth, window.innerHeight);
-//     // camera.aspect = width / height;
-//     // renderer.setSize(width, height);
-//     console.log('resizing');
-// });
-
-
 function onWindowResize() {
     const newWidth = container.clientWidth;
     const newHeight = container.clientHeight;
@@ -168,169 +158,191 @@ window.addEventListener('resize', onWindowResize);
 animate();
 
 
-// D3 code for songs
-import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
-const svg = d3.select(".song-graph")
-    .attr("width", width)
-    .attr("height", height) 
-    .attr("viewBox", `${-width/2} ${-height/2} ${width} ${height}`)
-    .attr("preserveAspectRatio", "xMinYMin meet");
+// SCRUBBER PLAYBACK
+const scrubber = document.getElementById('scrubber');
+let isDragging = false;
+let songStartTime = 0;
+let timePassed = 0;
+let pausedAt = 0;
+let isPaused = false;
+
+function formatTime(seconds) {
+    let minutes = Math.floor(seconds / 60);
+    let secs = Math.floor(seconds % 60);
+    return `${minutes}:${secs < 10 ? '0' + secs : secs}`;
+}
+
+function updateScrubber() {
+    if (!isDragging && sound.isPlaying) {
+        timePassed = (sound.context.currentTime - songStartTime);
+        scrubber.value = (timePassed / sound.buffer.duration) * scrubber.max;
+
+        // console.log(timePassed);
+    }
+    requestAnimationFrame(updateScrubber);      
+}
+
+
+scrubber.addEventListener('input', function() {
+    isDragging = true;
+});
+
+scrubber.addEventListener("change", function () {
+    const newTime = (scrubber.value / scrubber.max) * sound.buffer.duration;
+
+    songStartTime = sound.context.currentTime - newTime;
+    sound.offset = newTime;
+
+    if (sound.isPlaying) {
+        sound.stop();
+        
+        sound.play();
+    }
+
+    isDragging = false;
+    console.log('scrubber changed');
+    
+});
+
+
+// D3 code for songs
+const trackListContainer = d3.select(".track-list");
 
 // Load data from JSON file
 d3.json("../assets/songs_F.json").then(data =>{
     update(data);
+    $('.n-of-tracks').text(data.length + ' TRACKS');
 })
 
-var currentAudio = false;
-// var currentTrack = null;
+var currentAudio = null;
 
 function update(data){
 
-    const node = svg.append("g")
-        .attr("class", "preview-songs-node")
-        .selectAll("circle")
-        .data(data)
-        .enter().append("circle")
-        .attr("class", "single-song")
-        .attr('dataSongLink_h', d => +d.link+"_h.mp3")
-        .attr('dataSongLink', d => "../"+d.link+".mp3")
-        .attr('data-title', d => d.title)
-        .on('click', function(event, d){
-            if (currentAudio){
+    const track = trackListContainer.selectAll('div')
+    .data(data)
+    .enter().append('div')
+    .attr('class', 'track flex-sb-center')
+    .attr('dataSongLink', d => "../"+d.link+".mp3")
+    .html(d => 
+        `<div class="track-title s-text">${d.title}</div>
+        <div class="minutes xs-text muted-text">${d.songDuration}</div>
+        <div class="play-button button-tertiary">Play</div>
+        `
+    )
+    .on('click', function(event, d){
+        var playButton = $(this).find('.play-button');
+        var trackTitle = $(this).find('.track-title');
+        var currentSong = $('.current-song')[0];
+        const linkino = this.getAttribute('dataSongLink');
+
+        if (currentAudio === linkino){
+            if (sound.isPlaying){
+                // Stop SAME song that is already playing
+
+                pausedAt = timePassed
+                console.log('paused at: ' + pausedAt);
+                
                 sound.stop();
-                $('.current-song')[0].innerHTML = 'nothing';
-                currentAudio = false;
+                currentSong.innerHTML = 'Nothing';
+                // currentAudio = null;
+                
+                playButton.text('Play');
+                trackTitle.removeClass('bold underlined');
                 $(this).removeClass('active');
+
             }
             else {
-                const linkino = this.getAttribute('dataSongLink');
+                // Resume SAME song
                 audioLoader.load(linkino, function(buffer){
                     sound.setBuffer(buffer);
+                    console.log(pausedAt);
+                    
+                    sound.offset = pausedAt;
+                    songStartTime = sound.context.currentTime - pausedAt;
                     sound.play();
-                    $('.current-song')[0].innerHTML = d.title;
-                    currentAudio = true;
 
-                    // WakeLock API request
-                    requestWakeLock();
+                    console.log(songStartTime);
+                    
                 })
+
+                console.log('Same song');
+
+                playButton.text('Pause');
+                trackTitle.addClass('bold underlined');
                 $(this).addClass('active');
-            } 
-            sound.onEnded = function() {
-                console.log('The sound has ended!');
-                sound.stop();
-                // sound.context.currentTime = 0;
-                currentAudio = false;
-                $('.current-song')[0].innerHTML = 'nothing';
-                sound.setBuffer(null);
+            }
+        } else {
+            if (sound.isPlaying){
+                // Stop OTHER song that is already playing
+                sound.stop();   
+                console.log('clicked anoter song');
+                // sound.setBuffer(null);
+                scrubber.value = 0;                
+            }
 
-                // WakeLock API release
-                releaseWakeLock();
-            };  
-            console.log('clicked');
-            $(this).siblings().removeClass('active');     
-        })
+            // Start the new song
+            audioLoader.load(linkino, function(buffer){
+                sound.setBuffer(buffer);
+
+                scrubber.max = sound.buffer.duration;
+                songStartTime = sound.context.currentTime;
+                sound.offset = 0;
+                pausedAt = 0;
+                sound.play();
+
+                currentSong.innerHTML = d.title;
+                currentAudio = linkino;
+
+                requestWakeLock();
+                console.log('New song');
+                console.log(songStartTime);
+                
+
+                const timeDisplay = document.getElementById('song-duration');
+                const songDuration = formatTime(sound.buffer.duration);
+                timeDisplay.innerHTML = `${songDuration}`;
+
+                
+            })
+
+            playButton.text('Pause');
+            trackTitle.addClass('bold underlined');
+            $(this).addClass('active');
+            
+        } 
+
+        sound.onEnded = function() {
+            console.log('The sound has ended!');
+            sound.stop();
+            currentAudio = null;
+            currentSong.innerHTML = 'Nothing';
+            sound.setBuffer(null);
+
+            scrubber.value = 0;
+            playButton.text('Play');
+
+            // WakeLock API release
+            releaseWakeLock();
+        };  
         
-    
-   
-    // Create a radial force simulation
-    const radius = Math.min(width, height) / 3;
-    console.log(radius);
-    
-    data.forEach((d, i) => {
-        const angle = (i / data.length) * 2 * Math.PI - Math.PI / 2; 
-        d.x = Math.cos(angle) * radius;
-        d.y = Math.sin(angle) * radius;
-    });
-        
-    const simulation = d3.forceSimulation(data)
-    // .force("radial", d3.forceRadial(d => {
-    //     const angle = (data.indexOf(d) / data.length) * 2 * Math.PI;
-    //     return radius;
-    // }).strength())
-    // .force("x", d3.forceX(d => {
-    //     const angle = (data.indexOf(d) / data.length) * 2 * Math.PI;
-
-    //     console.log((data.indexOf(d) / data.length));
-    //     console.log((angle));
-    //     // console.log(Math.cos(angle) * radius);
-        
-    //     return Math.cos(angle) * radius;       
-    // }).strength(1))
-    // .force("y", d3.forceY(d => {
-    //     const angle = (data.indexOf(d) / data.length) * 2 * Math.PI;
-    //     return Math.sin(angle) * radius;
-    // }).strength(1))
-    // .force("collide", d3.forceCollide(100))
-    .force("x", d3.forceX(d => d.x).strength(1))
-    .force("y", d3.forceY(d => d.y).strength(1))
-    .on("tick", ticked2);
-
-    simulation.nodes(data)
-    simulation.alpha(1)
-    simulation.restart()
-
-
-    // let simulation1 = d3.forceSimulation() 
-
-    // if (width > 768 && width < 1024){
-    //     simulation1 = d3.forceSimulation() 
-    //     .force("r", d3.forceRadial(width/3))
-    //     .on("tick", ticked2);
-    //     console.log('mid');
-
-        
-    // }
-    // else if (width > 1024){
-    //     camera.position.z = 7;
-    //     simulation1 = d3.forceSimulation() 
-    //     .force("r", d3.forceRadial(width/3.7))
-    //     .on("tick", ticked2);
-    //     console.log('biig')
-    // }
-    // else {
-    //     camera.position.z = 9;
-    //     simulation1 = d3.forceSimulation() 
-    //     .force("r", d3.forceRadial(width/2.5))
-    //     .on("tick", ticked2);
-    //     console.log('tiny')
-    // }
-   
-    function ticked2() {
-        node.attr("cx", d => d.x)
-            .attr("cy", d => d.y)
-            .call(drag(simulation));
-    }
-
-    // simulation1.nodes(data)
-    // simulation1.alpha(1)
-    // simulation1.restart()
-
-    
-    function drag(simulation) {
-        function dragstarted(event, d) {
-            if (!event.active) simulation.alphaTarget(0.3).restart();
-            d.fx = d.x;
-            d.fy = d.y;
-        }
-
-        function dragged(event, d) {
-            d.fx = event.x;
-            d.fy = event.y;
-        }
-
-        function dragended(event, d) {
-            if (!event.active) simulation.alphaTarget(0);
-            d.fx = null;
-            d.fy = null;
-        }
-
-        return d3.drag()
-            .on("start", dragstarted)
-            .on("drag", dragged)
-            .on("end", dragended);
-    }
+        $(this).siblings().removeClass('active');
+        $(this).siblings().find('.play-button').text('Play');
+        $(this).siblings().find('.track-title').removeClass('bold underlined');
+    })
 }
+requestAnimationFrame(updateScrubber);
+
+$('.pause').on('click', function(){
+    if (sound.isPlaying){
+        sound.pause();
+        $('.pause-text')[0].innerHTML = "Play";
+    } else {
+        sound.play();
+        $('.pause-text')[0].innerHTML = "Pause";
+    }
+})
+
 
 
 
@@ -382,14 +394,6 @@ $('.audioToggle').on('click', function(){
 
 // WAKELOCK to keep the screen on
 let wakelock = null;
-
-if ('wakeLock' in navigator) {
-    console.log('Wake Lock API is supported in your browser');
-    
-}
-else {
-    console.log('Wake Lock API is not supported in your browser');
-}
 
 async function requestWakeLock() {
     wakelock = await navigator.wakeLock.request('screen');

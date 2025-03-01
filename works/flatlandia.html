@@ -26,12 +26,46 @@
         <div id="canvas"></div>
         <div class="album-wrapper flex-center-center column">
             <div class="album-title exclusion flex-center-center">FLATLANDIA</div>
-            <div class="cta-wrapper flex-center-center exclusion column">
-                Interact with a dot to hear the track play
-                <div class="currently-playing flex-center-center">Currently playing:&nbsp; <div class="current-song">nothing</div></div>
+            
+            <div class="cta-wrapper p-16 flex-center-center column">
+                <div class="controls-header w-100 flex-sb-center">
+                    <div class="currently-playing flex-center-center xs-text">Currently playing:</div>
+                    <div class="button-tertiary show-tracks bold">Show all tracks</div>
+                </div>
+                <div class="current-song w-100">Nothing</div>
+
+                <div class="music-controls w-100 flex-sb-center">
+                    <div class="playback-controls flex-center-center">
+                        <div class="previous flex-center-center column music-control ">
+                            <div class="icon icon-m" alt="day-type" style="mask-image: var(--icon-previous);"></div>
+                            Previous
+                        </div>
+                        <div class="pause flex-center-center column music-control">
+                            <div class="icon icon-m" alt="day-type" style="mask-image: var(--icon-play);"></div>
+                            <div class="pause-text">Pause</div>
+                        </div>
+                        <div class="next flex-center-center column music-control">
+                            <div class="icon icon-m" alt="day-type" style="mask-image: var(--icon-next);"></div>
+                            Next
+                        </div>
+                    </div>
+
+                    <div class="scrubber w-100 flex-center-center g-8">
+                        <input type="range" id="scrubber" class="scrubber-range w-100 exclusion" min="0" max="100" value="0" step="0.1">
+                        <div class="song-duration exclusion" id="song-duration">0:00</div>
+                    </div>
+                </div>
+
             </div>
-            <div class="song-wrapper absolute">
-                <svg class="song-graph"></svg>
+
+            <div class="song-graph absolute flex column g-16 p-16">
+                <div class="tracks-header flex-sb-center">
+                    <div class="n-of-tracks muted-text bold"></div>
+                    <div class="visibilityToggle button-tertiary">Hide</div>
+                </div>
+                <div class="track-list flex column g-8">
+
+                </div>
             </div>
         </div>
     </div>
