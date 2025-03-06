@@ -57,6 +57,8 @@
     --neutral_black: #000000;
     --neutral_dk-grey: #353535;
     --neutral_white: #ffffff;
+
+    --navbar-h: 46px;
 }
 
 
@@ -76,18 +78,26 @@ a{
 }
 #canvas{
     z-index: -1;
-    position: absolute;
-    width: 100vw;
+    width: 50vw;
     height: 100vh;
 }
 .exclusion{
     mix-blend-mode: exclusion;
+}
+.h-100{
+    height: 100%;
 }
 .w-100{
     width: 100%;
 }
 .vh-100{
     height: 100vh;
+}
+.vw-100{
+    width: 100vw;
+}
+.vw-50{
+    width: 50vw;
 }
 .flex{
     display: flex;
@@ -98,6 +108,11 @@ a{
 .flex-sb-center {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+.flex-sa-center {
+    display: flex;
+    justify-content: space-around;
     align-items: center;
 }
 .flex-sb-start {
@@ -215,8 +230,9 @@ pointer-events: none;
 
 
 .album-wrapper{
-    height: 100vh;
-    gap: 24px;
+    height: calc(100vh - 2*var(--navbar-h));
+    /* align-self: stretch; */
+
 }
 .album-title{
     font-size: 80px;
@@ -225,7 +241,8 @@ pointer-events: none;
     font-size: 32px;
 }
 .cta-wrapper{
-    /* font-size: 24px; */
+    background-color: var(--neutral_white);
+    box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.20);
     width: 490px;
     border-radius: 6px;
 }
@@ -266,17 +283,20 @@ video{
     border-radius: 4px;
 }
 
-.song-graph{
-    left: 0;
+.track-container{
     z-index: 10;
-    width: 25vw;
     border-radius: 8px;
-    background-color: rgba(0, 0, 0, 0.12);
-    backdrop-filter: blur(8px);
+    background-color: var(--neutral_white);
+    box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.20);
+    flex-grow: 1;
+    overflow-y: hidden;
     
     & *{
         color: black;
     }
+}
+.track-list{
+    overflow-y: scroll;
 }
 .song{
     width: 8px;
@@ -319,8 +339,14 @@ video{
     width: 50px;
 }
 .music-control{
-    width: 70px;
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--neutral_black);
+    & *{
+        color: var(--neutral_black);
+    }
 }
+
 .scrubber-fill{
     background-color: var(--neutral_white);
     height: 2px;
@@ -348,6 +374,9 @@ video{
     height: 12px;
     background-color: var(--neutral_white);
     border-radius: 50%;
+}
+.time-display{
+    min-width: 32px;
 }
 
 
@@ -454,9 +483,8 @@ video{
     cursor: pointer;
 }
 .active, .cerchio:hover{
-    /* outline: 1.5px solid #353535; */
     border: 1.5px solid #353535;
-    /* outline-offset: 8px; */
+    background: linear-gradient(89deg, rgba(121, 202, 230, 0.80) -13.19%, rgba(169, 117, 247, 0.80) 120.12%);
 }
 
 .text-wrapper{
@@ -535,7 +563,7 @@ video{
 
 @media screen and (max-width: 576px){
     .cta-wrapper{
-        padding: 0 32px;
+        /* padding: 0 32px; */
     }
     .album-title{
         font-size: 2.7rem;
@@ -550,6 +578,10 @@ video{
     }
     .cover{
         max-width: 100%;
+    }
+    /* ALBUMS */
+    .interactive-wrapper{
+        flex-direction: column;
     }
 
     /* VENERE */

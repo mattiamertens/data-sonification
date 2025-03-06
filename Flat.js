@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import openSimplexNoise from 'https://cdn.skypack.dev/open-simplex-noise';
-// D3 code for songs
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 const width = document.documentElement.clientWidth;
@@ -179,8 +178,30 @@ function updateScrubber() {
         scrubber.value = (timePassed / sound.buffer.duration) * scrubber.max;
 
         // console.log(timePassed);
+        const currentTimeDisplay = document.getElementById('current-time-display');
+        if (currentTimeDisplay) {
+            currentTimeDisplay.innerHTML = formatTime(timePassed);
+        }
     }
     requestAnimationFrame(updateScrubber);      
+}
+
+$('.pause').on('click', playPauseText);
+let pauseText = document.getElementsByClassName('pause-text')[0];
+
+function playPauseText(){
+    console.log('central pause button clicked');
+    
+    if (sound.isPlaying){
+        pausedAt = timePassed
+        sound.stop();
+        pauseText.innerHTML = "Play";
+    } else {
+        sound.offset = pausedAt;
+        songStartTime = sound.context.currentTime - pausedAt;
+        sound.play();
+        pauseText.innerHTML = "Pause";
+    }
 }
 
 
@@ -208,9 +229,12 @@ scrubber.addEventListener("change", function () {
 
 // D3 code for songs
 const trackListContainer = d3.select(".track-list");
+let currentSongIndex = -1;
+let trackData = [];
 
 // Load data from JSON file
 d3.json("../assets/songs_F.json").then(data =>{
+    trackData = data;
     update(data);
     $('.n-of-tracks').text(data.length + ' TRACKS');
 })
@@ -236,6 +260,9 @@ function update(data){
         var currentSong = $('.current-song')[0];
         const linkino = this.getAttribute('dataSongLink');
 
+        currentSongIndex = data.indexOf(d);
+        console.log(currentSongIndex);
+
         if (currentAudio === linkino){
             if (sound.isPlaying){
                 // Stop SAME song that is already playing
@@ -244,10 +271,11 @@ function update(data){
                 console.log('paused at: ' + pausedAt);
                 
                 sound.stop();
-                currentSong.innerHTML = 'Nothing';
+                // currentSong.innerHTML = 'Nothing';
                 // currentAudio = null;
                 
                 playButton.text('Play');
+                pauseText.innerHTML = "Play";
                 trackTitle.removeClass('bold underlined');
                 $(this).removeClass('active');
 
@@ -303,10 +331,11 @@ function update(data){
                 const songDuration = formatTime(sound.buffer.duration);
                 timeDisplay.innerHTML = `${songDuration}`;
 
-                
             })
 
             playButton.text('Pause');
+            pauseText.innerHTML = 'Pause';
+
             trackTitle.addClass('bold underlined');
             $(this).addClass('active');
             
@@ -331,19 +360,43 @@ function update(data){
         $(this).siblings().find('.track-title').removeClass('bold underlined');
     })
 }
+
 requestAnimationFrame(updateScrubber);
 
-$('.pause').on('click', function(){
-    if (sound.isPlaying){
-        sound.pause();
-        $('.pause-text')[0].innerHTML = "Play";
+function playSongByIndex(index) {
+    if (index < 0 || index >= trackData.length) return; // Bounds check
+    
+    // Get the track element at this index
+    const trackElements = trackListContainer.selectAll('.track').nodes();
+    const trackToPlay = d3.select(trackElements[index]);
+    
+    // Simulate a click on this track
+    trackToPlay.node().click();
+    
+    // Update the current index
+    currentSongIndex = index;
+}
+
+document.querySelector('.next').addEventListener('click', function() {
+    if (currentSongIndex === -1) {
+        // If no song is playing, play the first one
+        playSongByIndex(0);
     } else {
-        sound.play();
-        $('.pause-text')[0].innerHTML = "Pause";
+        // Play the next song, or loop back to the first one
+        const nextIndex = (currentSongIndex + 1) % trackData.length;
+        playSongByIndex(nextIndex);
     }
-})
-
-
+});
+document.querySelector('.previous').addEventListener('click', function() {
+    if (currentSongIndex === -1) {
+        // If no song is playing, play the first one
+        playSongByIndex(0);
+    } else {
+        // Play the next song, or loop back to the first one
+        const nextIndex = (currentSongIndex - 1) % trackData.length;
+        playSongByIndex(nextIndex);
+    }
+});
 
 
 // Audio toggle
@@ -373,13 +426,6 @@ $('.audioToggle').on('click', function(){
         video.muted = true;
     }
 })
-
-// VIDEO PLAY PAUSE BASED ON SCROLL
-// $(window).scroll(function(){
-//   var scoll = $(this).scrollTop();
-//   var scroll = video.getBoundingClientRect()
-//   scroll.y < 16 ? video.play() : video.pause()
-// })
 
 
 // SAFARI CORRECTOR
