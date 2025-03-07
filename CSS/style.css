@@ -56,6 +56,7 @@
 
     --neutral_black: #000000;
     --neutral_dk-grey: #353535;
+    --neutral_lt-grey: #999999;
     --neutral_white: #ffffff;
 
     --navbar-h: 46px;
@@ -389,7 +390,7 @@ video{
 }
 
 .album-description-wrapper{
-    padding: 23px 16px 46px;
+    padding: 24px 16px 46px;
     overflow: hidden;
 }
 .description-text{
@@ -554,6 +555,12 @@ video{
 }
 
 @media screen and (max-width: 576px){
+    .album-description-wrapper{
+        /* flex-direction: column-reverse; */
+    }
+    .reduced-font-size{
+        font-size: 1.7rem;
+    }
     .cta-wrapper{
         /* padding: 0 32px; */
     }
