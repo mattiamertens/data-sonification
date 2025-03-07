@@ -1,52 +1,72 @@
 [
   {
+    "index": 1,
     "title": "White on White",
     "album": "Diagram and projection",
+    "songDuration": "7:18",
     "link": "assets/albums/Diagram_and_projection/1"
   },
   {
+    "index": 2,
     "title": "Into Convergence",
     "album": "Diagram and projection",
+    "songDuration": "1:14",
     "link": "assets/albums/Diagram_and_projection/2"
   },
   {
+    "index": 3,
     "title": "The Bells of St. Petersburg",
     "album": "Diagram and projection",
+    "songDuration": "3:13",
     "link": "assets/albums/Diagram_and_projection/3"
   },
   {
+    "index": 4,
     "title": "Palette",
     "album": "Diagram and projection",
+    "songDuration": "2:52",
     "link": "assets/albums/Diagram_and_projection/4"
   },
   {
+    "index": 5,
     "title": "The Immigration of Butterflies",
     "album": "Diagram and projection",
+    "songDuration": "1:56",
     "link": "assets/albums/Diagram_and_projection/5"
   },
   {
+    "index": 6,
     "title": "The Birdcage",
     "album": "Diagram and projection",
+    "songDuration": "2:32",
     "link": "assets/albums/Diagram_and_projection/6"
   },
   {
+    "index": 7,
     "title": "In the Light Hour",
     "album": "Diagram and projection",
+    "songDuration": "2:15",
     "link": "assets/albums/Diagram_and_projection/7"
   },
   {
+    "index": 8,
     "title": "Sidetrack",
     "album": "Diagram and projection",
+    "songDuration": "2:02",
     "link": "assets/albums/Diagram_and_projection/8"
   },
   {
+    "index": 9,
     "title": "A Shade of Grey",
     "album": "Diagram and projection",
+    "songDuration": "0:49",
     "link": "assets/albums/Diagram_and_projection/9"
   },
   {
+    "index": 10,
     "title": "Black on Black",
     "album": "Diagram and projection",
+    "songDuration": "1:40",
     "link": "assets/albums/Diagram_and_projection/10"
   }
 ]
