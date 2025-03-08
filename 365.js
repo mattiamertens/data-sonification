@@ -18,7 +18,7 @@ const scene = new THREE.Scene();
 
 // Create a camera
 const camera = new THREE.PerspectiveCamera(100, c_width / c_height);
-camera.position.z = 8;
+camera.position.z = 8.6;
 
 
 // Create a renderer
@@ -191,7 +191,6 @@ let pauseText = document.getElementsByClassName('pause-text')[0];
 
 function playPauseText(){
     console.log('central pause button clicked');
-    // console.log($('.play-button'));
 
     if (currentSongIndex === -1) {
         var playButton = $('.active').find('.play-button');
@@ -212,7 +211,7 @@ function playPauseText(){
             songStartTime = sound.context.currentTime - pausedAt;
             sound.play();
             pauseText.innerHTML = "Pause";
-            playButton.innerHTML = "Pause";
+            playButton[0].innerHTML = "Pause";
         }
     }
 
@@ -412,6 +411,7 @@ document.querySelector('.previous').addEventListener('click', function() {
         playSongByIndex(nextIndex);
     }
 });
+
 
 
 // Audio toggle
