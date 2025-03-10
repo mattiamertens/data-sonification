@@ -3,78 +3,91 @@
     "index": 1,
     "title": "In the Night of the Day & In the Day of the Night",
     "album": "Flatlandia",
+    "songDuration": "6:06",
     "link": "assets/albums/Flatlandia/In the Night of the Day & In the Day of the Night"
   },
   {
     "index": 2,
     "title": "Upward and Downward",
     "album": "Flatlandia",
+    "songDuration": "2:04",
     "link": "assets/albums/Flatlandia/Upward and Downward"
   },
   {
     "index": 3,
     "title": "Elevation I: In Heaven as It is on Earth",
     "album": "Flatlandia",
+    "songDuration": "2:20",
     "link": "assets/albums/Flatlandia/Elevation I꞉ In Heaven as It is on Earth"
   },
   {
     "index": 4,
     "title": "The Second Tree in a Row",
     "album": "Flatlandia",
+    "songDuration": "3:46",
     "link": "assets/albums/Flatlandia/The Second Tree in a Row"
   },
   {
     "index": 5,
     "title": "Elevation II: Intermittency and Dynamism",
     "album": "Flatlandia",
+    "songDuration": "2:43",
     "link": "assets/albums/Flatlandia/Elevation II꞉ Intermittency and Dynamism"
   },
   {
     "index": 6,
     "title": "Here to There",
     "album": "Flatlandia",
+    "songDuration": "3:33",
     "link": "assets/albums/Flatlandia/Here to There"
   },
   {
     "index": 7,
     "title": "The Third Second in a Row",
     "album": "Flatlandia",
+    "songDuration": "4:04",
     "link": "assets/albums/Flatlandia/The Third Second in a Row"
   },
   {
     "index": 8,
     "title": "Prelude to the Lights of the City",
     "album": "Flatlandia",
+    "songDuration": "6:20",
     "link": "assets/albums/Flatlandia/Prelude to the Lights of the City"
   },
   {
     "index": 9,
     "title": "Elevation III: The Dry World",
     "album": "Flatlandia",
+    "songDuration": "1:56",
     "link": "assets/albums/Flatlandia/Elevation III꞉ The Dry World"
   },
   {
     "index": 10,
     "title": "Downward and Upward",
     "album": "Flatlandia",
+    "songDuration": "3:28",
     "link": "assets/albums/Flatlandia/Downward and Upward"
   },
   {
     "index": 11,
     "title": "Elevation IV: On Earth as it is in Heaven",
     "album": "Flatlandia",
+    "songDuration": "1:34",
     "link": "assets/albums/Flatlandia/Elevation IV꞉ On Earth as It is in Heaven"
   },
   {
     "index": 12,
     "title": "Nearly an Epilogue꞉ Reminiscences",
     "album": "Flatlandia",
+    "songDuration": "4:21",
     "link": "assets/albums/Flatlandia/Nearly an Epilogue꞉ Reminiscences"
   },
   {
     "index": 13,
     "title": "Zeitmasse",
     "album": "Flatlandia",
+    "songDuration": "12:37",
     "link": "assets/albums/Flatlandia/Zeitmasse"
   }
 ]

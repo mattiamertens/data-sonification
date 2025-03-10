@@ -49,6 +49,18 @@
     font-style: normal;
     font-display: swap;
 }
+:root{
+    --icon-previous: url('../assets/icons/previous.svg');
+    --icon-next: url('../assets/icons/next.svg');
+    --icon-play: url('../assets/icons/play.svg');
+
+    --neutral_black: #000000;
+    --neutral_dk-grey: #353535;
+    --neutral_lt-grey: #999999;
+    --neutral_white: #ffffff;
+
+    --navbar-h: 46px;
+}
 
 
 body, * {
@@ -67,12 +79,14 @@ a{
 }
 #canvas{
     z-index: -1;
-    position: absolute;
-    width: 100vw;
+    width: 50vw;
     height: 100vh;
 }
 .exclusion{
     mix-blend-mode: exclusion;
+}
+.h-100{
+    height: 100%;
 }
 .w-100{
     width: 100%;
@@ -80,12 +94,26 @@ a{
 .vh-100{
     height: 100vh;
 }
+.vw-100{
+    width: 100vw;
+}
+.vw-50{
+    width: 50vw;
+}
+.flex{
+    display: flex;
+}
 .column{
     flex-direction: column;
 }
 .flex-sb-center {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+.flex-sa-center {
+    display: flex;
+    justify-content: space-around;
     align-items: center;
 }
 .flex-sb-start {
@@ -104,6 +132,74 @@ a{
     justify-content: start;
     align-items: center;
 }
+.g-8{
+    gap: 8px;
+}
+.g-16{
+    gap: 16px;
+}
+.g-24{
+    gap: 24px;
+}
+
+.p-16{
+    padding: 16px;
+}
+
+/* TEXT */
+.m-text{
+    font-size: 16px;
+}
+.s-text{
+    font-size: 14px;
+}
+.xs-text{
+    font-size: 12px;
+}
+.bold{
+    font-weight: 500;
+}
+.underlined{
+    text-decoration: underline;
+}
+.muted-text{
+    color: #353535 !important;
+}
+
+/* SVG ICONS */
+.icon{
+    background-color: var(--neutral_black);
+    mask-size: cover;
+    mask-repeat: no-repeat;
+}
+.icon-s{
+    width: 16px;
+    height: 16px;
+}
+.icon-m{
+    width: 24px;
+    height: 24px;
+}
+.icon-l{
+    width: 32px;
+    height: 32px;
+}
+.muted-icon{
+    background-color: var(--neutral_dk-grey);
+    color: var(--neutral_dk-grey);
+}
+.colored-icon{
+    background-color: var(--violet);
+}
+.mask-image{
+    mask-size: contain;
+    background-size: contain;
+}
+
+/* POSITIONING */
+.absolute{
+    position: absolute;
+}
 .fixed{
     position: fixed;
     left: 0;
@@ -111,12 +207,7 @@ a{
     font-size: 18px;
     z-index: 100;
 }
-.absolute{
-    position: absolute;
-}
-.bold{
-    font-weight: 500;
-}
+
 .fixed-padding{
     padding: 12px 16px;
 }
@@ -137,26 +228,18 @@ pointer-events: none;
 .button-tertiary:hover{
     text-decoration: underline;
 }
-.g-24{
-    gap: 24px;
-}
 
 
 .album-wrapper{
-    height: 100vh;
-    gap: 24px;
+    height: calc(100vh - 2*var(--navbar-h));
+    /* align-self: stretch; */
+
 }
 .album-title{
     font-size: 80px;
 }
 .subtitle{
     font-size: 32px;
-}
-.cta-wrapper{
-    font-size: 24px;
-}
-.currrently-playing{
-    flex-wrap: wrap;
 }
 .interactive-wrapper{
     z-index: 101;
@@ -186,36 +269,114 @@ video{
     font-size: 18px;
 }
 .current-song{
-    padding: 4px 6px;
-    background-color: #ffffff;
+    padding: 6px;
+    background-color: #dfdfdf;
     color: black;
-    border-radius: 3px;
+    border-radius: 4px;
 }
 
-.song-graph{
+.track-container{
     z-index: 10;
+    border-radius: 8px;
+    background-color: var(--neutral_white);
+    box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.20);
+    /* flex-grow: 1; */
+    overflow-y: hidden;
+    & *{
+        color: black;
+    }
 }
-.song{
-    width: 8px;
-    height: 8px;
-    border-radius: 30px;
-    background-color: white;
+.container-visible{
+    display: flex !important;
+}
+.visibilityToggle{
+    display: none;
+}
+.track-list{
+    overflow-y: scroll;
 }
 
-.single-song{
-    fill: #d9d9d9;
-    r: 6px;
-    mix-blend-mode: exclusion;
-    cursor: pointer;
-}
 .single-song:hover{
     outline: 1.5px solid #343434;
     border-radius: 100px;
     outline-offset: 8px;
 }
-.single-song-safari{
-    fill: #343434
+
+.track{
+    background-color: #f5f5f5;
+    padding: 4px 8px;
+    border-radius: 6px;
+    min-height: 42px;
+    cursor: pointer;
+
+    &:hover{
+        background-color: #e3e3e3;
+    }
 }
+.track-title{
+    width: 210px;
+    text-align: left;
+}
+.play-button{
+    width: 50px;
+}
+
+.cta-wrapper{
+    background-color: var(--neutral_white);
+    box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.20);
+    width: 490px;
+    border-radius: 6px;
+}
+.currrently-playing{
+    flex-wrap: wrap;
+}
+.show-tracks{
+    color: var(--neutral_dk-grey);
+    pointer-events: none;
+}
+.music-control{
+    cursor: pointer;
+    font-size: 12px;
+    color: var(--neutral_black);
+    & *{
+        color: var(--neutral_black);
+    }
+}
+
+.scrubber-fill{
+    background-color: var(--neutral_white);
+    height: 2px;
+    border-radius: 4px;
+}
+.scrubber-handle{
+    width: 8px;
+    height: 8px;
+    border-radius: 100px;
+    background-color: var(--neutral_white);
+    cursor: pointer;
+}
+#scrubber{
+    width: 100%;
+    height: 2px;
+    -webkit-appearance: none;
+    background-color: var(--neutral_white);
+    border-radius: 40px;
+    cursor: pointer;
+}
+
+#scrubber::-webkit-slider-thumb{
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    background-color: var(--neutral_white);
+    border-radius: 50%;
+}
+.time-display{
+    min-width: 32px;
+}
+
+
+
 
 /* WORK */
 .cover{
@@ -232,7 +393,7 @@ video{
 }
 
 .album-description-wrapper{
-    padding: 23px 16px 46px;
+    padding: 24px 16px 46px;
     overflow: hidden;
 }
 .description-text{
@@ -318,9 +479,8 @@ video{
     cursor: pointer;
 }
 .active, .cerchio:hover{
-    outline: 1.5px solid #343434;
-    /* border-radius: 100px; */
-    outline-offset: 8px;
+    border: 1.5px solid #353535;
+    background: linear-gradient(89deg, rgba(121, 202, 230, 0.80) -13.19%, rgba(169, 117, 247, 0.80) 120.12%);
 }
 
 .text-wrapper{
@@ -398,8 +558,11 @@ video{
 }
 
 @media screen and (max-width: 576px){
-    .cta-wrapper{
-        padding: 0 32px;
+    .album-description-wrapper{
+        /* flex-direction: column-reverse; */
+    }
+    .reduced-font-size{
+        font-size: 1.7rem;
     }
     .album-title{
         font-size: 2.7rem;
@@ -414,6 +577,44 @@ video{
     }
     .cover{
         max-width: 100%;
+    }
+
+
+
+
+    /* ALBUMS */
+    .interactive-wrapper{
+        flex-direction: column;
+        padding: var(--navbar-h) 16px;
+        gap: 48px;
+        justify-content: center;
+    }
+    #canvas{
+        width: 100%;
+    }
+    .album-wrapper{
+        width: 100%;
+        height: 50%;
+        justify-content: flex-end;
+        position: relative;
+    }
+    .cta-wrapper{
+        width: 100%;
+    }
+    .track-container{
+        display: none;
+        position: absolute;
+        /* top: 100%; */
+        max-height: 490px;
+        min-height: 450px;
+        transition: all 0.3s;
+    }
+    .visibilityToggle{
+        display: inline-block;
+    }
+    .show-tracks{
+        color: var(--neutral_white);
+        pointer-events: all;
     }
 
     /* VENERE */

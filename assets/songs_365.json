@@ -1,0 +1,37 @@
+[
+  {
+    "index": 1,
+    "title": "1256 Stone St",
+    "album": "365",
+    "songDuration": "2:20",
+    "link": "assets/albums/365/1. 1256 Stone St"
+  },
+  {
+    "index": 2,
+    "title": "Nachtstueck",
+    "album": "365",
+    "songDuration": "1:28",
+    "link": "assets/albums/365/2. nachstück"
+  },
+  {
+    "index": 3,
+    "title": "Night in New York",
+    "album": "365",
+    "songDuration": "1:52",
+    "link": "assets/albums/365/3. night in New York"
+  },
+  {
+    "index": 4,
+    "title": "Sternstueck",
+    "album": "365",
+    "songDuration": "2:30",
+    "link": "assets/albums/365/4. sternstück"
+  },
+  {
+    "index": 5,
+    "title": "Prayer",
+    "album": "365",
+    "songDuration": "2:48",
+    "link": "assets/albums/365/5. prayer"
+  }
+]

@@ -22,16 +22,54 @@
         <div class="about button-tertiary bold"><a href="../about.html" class="bold button-tertiary"> about </a></div>
     </div>
 
-    <div class="interactive-wrapper">
-        <div id="canvas"></div>
-        <div class="album-wrapper flex-center-center column">
+    <div class="interactive-wrapper flex-sa-center">
+        <div class="vh-100 vw-50 flex-center-center">
+            <div id="canvas" class="absolute"></div>
             <div class="album-title exclusion flex-center-center">DIAGRAM AND PROJECTION</div>
-            <div class="cta-wrapper flex-center-center exclusion column">
-                Interact with a dot to hear the track play
-                <div class="currently-playing flex-center-center">Currently playing:&nbsp; <div class="current-song">nothing</div></div>
+        </div>
+        <div class="album-wrapper flex-center-center column g-16">
+            <div class="track-container w-100 flex column g-16 p-16">
+                <div class="tracks-header flex-sb-center">
+                    <div class="n-of-tracks muted-text bold"></div>
+                    <div class="visibilityToggle button-tertiary bold">Hide</div>
+                </div>
+                <div class="track-list flex column g-8">
+
+                </div>
             </div>
-            <div class="song-wrapper absolute">
-                <svg class="song-graph"></svg>
+            
+            <div class="cta-wrapper p-16 flex-center-center column g-16">
+                <div class="flex column g-8 w-100">
+                    <div class="controls-header w-100 flex-sb-center exclusion">
+                        <div class="currently-playing flex-center-center xs-text">Currently playing:</div>
+                        <div class="button-tertiary show-tracks bold">Show all tracks</div>
+                    </div>
+                    <div class="current-song w-100 active">Nothing</div>
+                </div>
+
+                <div class="music-controls w-100 flex-sb-center g-16 column">  <!-- REMOVE COLUMN IF NOT NEEDED -->
+                    <div class="playback-controls flex-center-center g-16">
+                        <div class="previous flex-center-center column music-control">
+                            <div class="icon icon-m" alt="day-type" style="mask-image: var(--icon-previous);"></div>
+                            Previous
+                        </div>
+                        <div class="pause flex-center-center column music-control" style="width: 60px;">
+                            <div class="icon icon-m" alt="day-type" style="mask-image: var(--icon-play);"></div>
+                            <div class="pause-text">Play</div>
+                        </div>
+                        <div class="next flex-center-center column music-control">
+                            <div class="icon icon-m" alt="day-type" style="mask-image: var(--icon-next);"></div>
+                            Next
+                        </div>
+                    </div>
+
+                    <div class="scrubber w-100 flex-center-center g-8 exclusion s-text">
+                        <div class="time-display" id="current-time-display">0:00</div>
+                        <input type="range" id="scrubber" class="scrubber-range w-100 exclusion" min="0" max="100" value="0" step="0.1">
+                        <div class="song-duration exclusion flex time-display" id="song-duration">0:00</div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -45,19 +83,19 @@
         <div class="album-description-wrapper g-24 vh-100 flex-sb-start">
             <div class="description-text exclusion column g-24">
                 <p>
-                    As a pianist, I was daily in contact with the masterpieces of the past and therefore I always found challenging to compose for piano myself. I was able to express myself only through musical language I inherited from the pieces I had been studying: my early works were overflowing with thematic ideas.
+                    Diagram and Projection is an album for piano, for Disklavier, and for both simultaneously, produced on a Disklavier Bösendorfer 280 with the support of Yamaha Music Europe GmbH. I composed it in 2024 and world-premiered it in New York the same year.
                 </p>
                 <p>
-                    After many years of composing, my change was not gradual, but drastic: in 2021, I composed White on White, a piece that destroyed my past full of notes and is built almost around single note.
+                    I performed the album on a Disklavier Bösendorfer 280, extracted the MIDI file of the performance, edited it in Logic, and then sent the edited version back to the piano, which played it while being recorded.
                 </p>
                 <p>
-                    Hence, three years later, Diagram and Projection is an album born from internalizing the extremization of White on White's fracture. White on White is its seed, a quite complex and structured piece... that generates the less elaborated following tracks, each dedicated to a nuance of the first one. Mostly, I stopped thinking of music as a series of notes and started thinking of it as flows of energy: a composition for me is an intensification and fading of different sound colours, a malleable mass that sways in search of its form but never manages to structure itself.
+                    The Disklavier was not only present in the production phase but from the very beginning, as I worked with its capabilities in mind: the music itself, in both its composition and performance, anticipates and embodies the essence of this technology. Without abandoning the legacy of piano performance, I brought my sound design expertise to the keyboard, treating it as an electronic instrument—pushing beyond its mechanical limits to achieve effects similar to those I create in audio editing software. The score features frequent and detailed changes in dynamics, meter, tempo, and pedal, which aim to be onomatopoeias of the automations, such as EQ, reverb, and delay.
                 </p>
                 <p>
-                    The change that led me to this concept came from my experience in the field of film composition, especially that of electronic music, but it was hard for me to transpose it onto the piano. I translated the cinematic, ambient sound and surround spatiality onto my keyboard through almost imperceptible dIfferences in dynamics, arranged in different, simultaneous layers, that play like automations of a Channel EQ of a drone, in the minimalism of obsessive and hypnotic repetition, in a particular and detailed use of pedal, in changes of meter and metronome. To me, these features are almost more important than the notes themselves, they destroy any superstructure in search of that layout of an idea that is born as a free soundscape.
+                    TDiagram and Projection was born from the need to unify into a single musical language the influences I have absorbed from two vastly different worlds: my background as a classical-romantic pianist and as a composer specialized in film scoring, electronic music, and sound design. This album represents the duality between tradition and innovation, between humanity and technology—a theme that is not only deeply personal but also highly relevant in today’s artistic landscape, especially with the rise of artificial intelligence in the arts.
                 </p>
                 <p>
-                    At a certain point, each key was not longer corresponding to its note and I focused on the charm of distorting the instrument: it is a piano that cannot and does not want to be such.
+                    Until now, the Disklavier has been used in the editing of piano repertoire recordings or by composers writing for it. Diagram and Projection is the first ever project to approach the instrument simultaneously as both a pianist and a composer, making the Disklavier the heart of the creative process.
                 </p>
             </div>
             <div class="album-cover-wrapper">
@@ -164,6 +202,6 @@
 
   
 <script type="module" src="../D&P.js"></script>
-<script type="module" src="../safari.js"></script>
+<script type="module" src="../trackListToggle.js"></script>
 
 </html>

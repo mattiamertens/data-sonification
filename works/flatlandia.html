@@ -22,16 +22,54 @@
         <div class="about button-tertiary bold"><a href="../about.html" class="bold button-tertiary"> about </a></div>
     </div>
 
-    <div class="interactive-wrapper">
-        <div id="canvas"></div>
-        <div class="album-wrapper flex-center-center column">
+    <div class="interactive-wrapper flex-sa-center">
+        <div class="vh-100 vw-50 flex-center-center">
+            <div id="canvas" class="absolute"></div>
             <div class="album-title exclusion flex-center-center">FLATLANDIA</div>
-            <div class="cta-wrapper flex-center-center exclusion column">
-                Interact with a dot to hear the track play
-                <div class="currently-playing flex-center-center">Currently playing:&nbsp; <div class="current-song">nothing</div></div>
+        </div>
+        <div class="album-wrapper flex-start-center column g-16">
+            <div class="track-container w-100 flex column g-16 p-16 h-100">
+                <div class="tracks-header flex-sb-center">
+                    <div class="n-of-tracks muted-text bold"></div>
+                    <div class="visibilityToggle button-tertiary bold">Hide</div>
+                </div>
+                <div class="track-list flex column g-8">
+
+                </div>
             </div>
-            <div class="song-wrapper absolute">
-                <svg class="song-graph"></svg>
+            
+            <div class="cta-wrapper p-16 flex-center-center column g-16">
+                <div class="flex column g-8 w-100">
+                    <div class="controls-header w-100 flex-sb-center exclusion">
+                        <div class="currently-playing flex-center-center xs-text">Currently playing:</div>
+                        <div class="button-tertiary show-tracks bold">Show all tracks</div>
+                    </div>
+                    <div class="current-song w-100 active">Nothing</div>
+                </div>
+
+                <div class="music-controls w-100 flex-sb-center g-16 column">  <!-- REMOVE COLUMN IF NOT NEEDED -->
+                    <div class="playback-controls flex-center-center g-16">
+                        <div class="previous flex-center-center column music-control">
+                            <div class="icon icon-m" alt="day-type" style="mask-image: var(--icon-previous);"></div>
+                            Previous
+                        </div>
+                        <div class="pause flex-center-center column music-control" style="width: 60px;">
+                            <div class="icon icon-m" alt="day-type" style="mask-image: var(--icon-play);"></div>
+                            <div class="pause-text">Play</div>
+                        </div>
+                        <div class="next flex-center-center column music-control">
+                            <div class="icon icon-m" alt="day-type" style="mask-image: var(--icon-next);"></div>
+                            Next
+                        </div>
+                    </div>
+
+                    <div class="scrubber w-100 flex-center-center g-8 exclusion s-text">
+                        <div class="time-display" id="current-time-display">0:00</div>
+                        <input type="range" id="scrubber" class="scrubber-range w-100 exclusion" min="0" max="100" value="0" step="0.1">
+                        <div class="song-duration exclusion flex time-display" id="song-duration">0:00</div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -47,43 +85,32 @@
         <div class="album-description-wrapper g-24 vh-100 flex-sb-start">
             <div class="description-text exclusion column g-24">
                 <p>
-                    In Flatland: A Romance of Many Dimensions by Edwin A. Abbott, the concept of dimensions is explored through imaginary worlds such as Pointland, Lineland, Flatland, and Spaceland. The points, the inhabitants of Pointland, live in a world without dimensions and cannot imagine a line. In Lineland, a one-dimensional world, the lines cannot conceive of a square. In Flatland, a two-dimensional world, geometric shapes cannot comprehend the third dimension. 
+                    In Flatland: A Romance of Many Dimensions by Edwin A. Abbott, the concept of dimensions is explored through the imaginary worlds of Pointland, Lineland, Flatland, and Spaceland. The points, the inhabitants of Pointland, live in a dimensionless world and cannot imagine lines. In Lineland, a one-dimensional world, lines cannot conceive of a circle. In Flatland, a two-dimensional world, circles fail to understand a sphere. Spaceland, on the other hand, is the three-dimensional world. 
                 </p>
                 <p>
-                    The protagonist, a square, meets a sphere from Spaceland, a three-dimensional world. The sphere tries to explain the nature of the third dimension to the square, but initially, it is unsuccessful. To help it understand, the sphere lifts the square out of the two-dimensional plane, allowing it to see Flatland from above and become aware of the third dimension. This encounter leads the square to reflect on the possibility of a fourth dimension, showing how each being is limited by its own dimensional perception, preventing it from conceiving of other dimensions outside its own.
+                    Humans live in a three-dimensional world and can recognize their own dimension as well as the ones below it. However, just as a one-dimensional world cannot conceive of a two-dimensional one, and a two-dimensional world cannot comprehend a three-dimensional one, the three-dimensional world cannot conceive of the fourth dimension. This suggests that there are not only three dimensions, but rather that we are unable to conceive of the ones beyond our own because we are limited by it, and that dimensions are, in fact, infinite.
                 </p>
                 <p>
-                    Humankind is that sphere; it lives in a three-dimensional world and can recognize the underlying dimensions: the two-dimensional and the one-dimensional. However, just as a one-dimensional world cannot conceive of the two-dimensional, and the two-dimensional world cannot understand the three- dimensional, the three-dimensional world cannot conceive of the fourth dimension. This suggests that there are not just three dimensions, but that we are unable to grasp the subsequent ones, and that in reality, there are infinite dimensions.
+                    Reading this novel inevitably led me to ask myself: what dimensions does music have? Thus, I interpreted Pointland, the dimensionless world, as silence; Lineland, the one-dimensional, linear world, as musical melody; Flatland, the two-dimensional world, defined by verticality and horizontality, as harmony; and Spaceland, with verticality, horizontality, and depth, as musical spatiality. However, I wanted the poetics of Flatlandia to reside in the fourth dimension—a dimension whose existence we acknowledge but which we do not know how to depict.
                 </p>
                 <p>
-                    Reading this novel inevitably led me to ask myself: what dimensions does music have? Thus, I interpreted, in my own way, Pointland, the world without dimensions, as silence; Lineland, the one-dimensional world, therefore linear, as the musical melody; Flatland, the two-dimensional world, defined by verticality and horizontality, as harmony; and Spaceland, with verticality, horizontality, and depth, as musical spatiality. However, I wanted the poetry of the album to reside in the fourth dimension, a dimension whose existence we know, but which we do not know how to represent.
+                    This search for the unknown yet existing dimension elicits emotions derived from what we cannot comprehend: what is unknown to us, on one hand, inspires hope because it allows us to find in it a consoling refuge; on the other, it embodies fear of what does not belong to us. The fourth dimension, for a three-dimensional world, thus becomes a concept similar to God for a monotheistic religion. In this way, Flatlandia transforms into a profoundly spiritual work—though not necessarily religious.
                 </p>
                 <p>
-                    This search for the unknown dimension, yet existing, evokes those emotions that arise from what we cannot comprehend: what we do not know, on one hand, evokes hope because it allows us to find a comforting refuge within it, while on the other hand, it embodies fear of what does not belong to us. The fourth dimension, for a three-dimensional world, thus becomes a concept similar to God in a monotheistic religion. In this way, my album Flatlandia transforms into a work deeply spiritual—even if not necessarily religious.
+                    In Flatlandia, acoustic instruments and electronics are combined to recreate the metaphysical worlds of Abbott’s novel. On one hand, I used electronics to evoke the idea of the intangibility of the fourth dimension; on the other, I wanted acoustic instruments to represent the world known to us. The electronics are created using sampled acoustic instruments, making them sound almost acoustic; conversely, the acoustic instruments are electronically processed to the point of sounding almost electronic. This duality—electronics that sound almost acoustic and acoustics that sound almost electronic—gives life to a dialogue between two different worlds, each contaminated by the other in a desire to meet: the three-dimensional world we belong to and the four-dimensional world we aspire to. These two universes seem to brush against each other, separated only by an extremely thin line, appearing crossable but in reality never truly so.
                 </p>
 
 
                 <p>
-                    In the album, the recurrent use of choir and organ are clear references to liturgical repertoire, while the titles emphasize this concept, frequently evoking light and darkness, such as In the Night of the Day and In the Day of the Night, or the sky—more precisely, prayer—such as Elevation I: In Heaven as it is on Earth and Elevation IV: On Earth as it is in Heaven, to even include references to the universe, such as Zeitmasse. Moreover, the choice of the term Elevation for those transitional tracks highlights the idea of movement upwards, an ascension, rather than a horizontal passage.
-                </p>
-                <p>
-                    In Flatlandia, acoustic instruments and electronics are combined to recreate the metaphysical worlds of Abbott’s novel. On one hand, I used electronics to evoke the intangibility of the fourth dimension and, on the other, I wanted the organic sounds of acoustic instruments to represent the world known to us, such as Pointland, Flatlandia, and Spaceland. The electronics are created using sampled acoustic instruments, almost making them sound acoustic; conversely, the acoustic instruments are edited electronically until they transform into sounds reminiscent of electronics. My goal was to achieve a game of ambiguous duality—electronics that sound almost acoustic and acoustics that sound almost electronic—creating a dialogue between two separate worlds that strive to meet: the three-dimensional world that belongs to us and the four-dimensional world we aspire to. These two universes seem to graze each other, divided only by an extremely thin line, so thin that it appears passable, but it will never actually be.
-                </p>
-                <p>
-                    In fact, after an incessant, romantically inspired search for the Wanderer in an attempt to overcome that line, the album concludes with the failure of that attempt at contact: Zeitmasse. This final piece represents the epilogue in which all the previous tracks converge: a vortex of their thematic ideas, heavily electronically processed, with the intent to simulate chaos. Thus, the electronics that spill like a raging river over the acoustics represent the fourth dimension flooding the three-dimensional world, the collapse of Nietzschean certainties, being overwhelmed by what one wishes to possess, but also being swept away by one’s own imagination, the madness dominating over reason, until the collapse and total silence, leaving the mark of a humanity that longs for transcendence but remains trapped in its own limits.
-                </p>
-                <p>
-                    Flatlandia is an album I composed over the course of a year, in 2024. It did not begin as a project with a clear goal from the start, but rather represents the culmination of a rich evolution of changes—perhaps even more radical—that is still ongoing. Today, the work responds to a well-defined musical ideology precisely in its variety.
-                </p>
-                <p>
-                    The project is in media res, in the transition from the stylistic influences of the artists I admired to a gradual search for my own identity. These elements form the thread of this album, even more so than the structured project I outlined. I love to start a project thinking it’s a point of arrival. I love to finish it knowing it was, in fact, a point of departure. Every project exists only because of what follows it. If my project was born with the intention of mastering the musical dimension I could not see, I realized that I was mastered by the awareness of the dimensions I knew… just as a circle is limited by its perimeter in knowing the sphere. Thus, I asked myself…
+                    In fact, after a Wanderer-like search to transcend that line, the album concludes with the failure of that attempt at contact: Zeitmasse. This final piece represents the epilogue where all previous tracks converge—a vortex of their thematic ideas, heavily processed electronically, aiming to simulate chaos. Thus, the electronics overflowing like a flooding river onto the acoustic realm become the fourth dimension inundating the three-dimensional world, the collapse of Nietzschean certainties, the overwhelming force of what one desires to possess, but also the overpowering of one’s own imagination, madness reigning over reason—until the final collapse into absolute silence, leaving behind the trace of a humanity yearning for transcendence yet trapped within its own limitations.
                 </p>
                 
-                <p>
-                    How does music sound in Tetraland? <br>
 
-                    <br><br><br>
-                    This open-ended question is the valid conclusion to a project born from all that preceded it.
+                <p>
+                    So I asked myself...
+                    <br><br><br><br>
+
+                    How does music sound in Tetraland? <br>
                 </p>
             </div>
             <div class="album-cover-wrapper">
@@ -190,6 +217,6 @@
 
 
 <script type="module" src="../Flat.js"></script>
-<script type="module" src="../safari.js"></script>
+<script type="module" src="../trackListToggle.js"></script>
 
 </html>
