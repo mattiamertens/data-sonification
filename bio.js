@@ -4,7 +4,7 @@ const pic_dots = d3.select(".dots")
 
 d3.json("assets/bio.json").then(dataDots =>{
     updateDots(dataDots);
-    $('.cerchio').first().addClass('active');
+    $('.cerchio').first().addClass('active-circle');
 })
 
 function updateDots(dataDots){
@@ -17,15 +17,15 @@ function updateDots(dataDots){
         .on("click", function(event, d){
             $('.about-img').attr('src', 'assets/pics/resized/'+d.Foto+'.jpg');
             $('.bio-text')[0].innerHTML = d.Bio;
-            $(this).addClass('active');
+            $(this).addClass('active-circle');
             $(this).removeClass('pulsating-circle');
-            $(this).siblings().removeClass('active pulsating-circle');
+            $(this).siblings().removeClass('active-circle pulsating-circle');
         });
 
 }
 function looppetto(){
     for (let i = 0; i < 6; i++) {
-        if ($($('.cerchio')[i]).hasClass('active')) {
+        if ($($('.cerchio')[i]).hasClass('active-circle')) {
             continue; // Skip element
         }
           $($('.cerchio')[i]).addClass('pulsating-circle');

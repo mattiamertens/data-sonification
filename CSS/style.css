@@ -478,9 +478,15 @@ video{
     background-color: white;
     cursor: pointer;
 }
-.active, .cerchio:hover{
+.active-circle, .cerchio:hover{
+    outline: 1.5px solid #343434;
+    /* border-radius: 100px; */
+    outline-offset: 8px;
+}
+
+.active {
     border: 1.5px solid #353535;
-    background: linear-gradient(89deg, rgba(121, 202, 230, 0.80) -13.19%, rgba(169, 117, 247, 0.80) 120.12%);
+    background: linear-gradient(89deg, rgba(121, 202, 230, 0.80) -13.19%, rgba(169, 117, 247, 0.80) 120.12%); 
 }
 
 .text-wrapper{
