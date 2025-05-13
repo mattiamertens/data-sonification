@@ -261,7 +261,7 @@ function update(data){
     .data(data)
     .enter().append('div')
     .attr('class', 'track flex-sb-center')
-    .attr('dataSongLink', d => "../"+d.link+".mp3")
+    .attr('dataSongLink', d => "../"+d.link+".mp3") // cambiare anche il JSON!!!!
     .html(d => 
         `<div class="track-title s-text">${d.title}</div>
         <div class="minutes xs-text muted-text">${d.songDuration}</div>
