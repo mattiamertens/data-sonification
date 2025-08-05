@@ -580,6 +580,9 @@ video{
     .cover-wrapper{
         flex-direction: column;
     }
+    .timeout-content{
+        padding: 12% !important;
+    }
     .description-text{
         font-size: 18px;
     }
@@ -712,4 +715,30 @@ video{
     .active{
         fill: #ffffff;
     }
+}
+
+/* TEMPORARY EDIT TO HIDE WORK */
+.timeout-content{
+    /* position: fixed;
+    z-index: 1000; */
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.1);
+    text-align: center;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    padding: 20%;
+    pointer-events: none;
+    /* -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px); */
+}
+.disable-ui{
+    pointer-events: none;
+}
+.blurredOut{
+    filter: blur(12px);
+    pointer-events: none;
 }
