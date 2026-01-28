@@ -3,91 +3,96 @@
     "index": 1,
     "title": "In the Day of the Night",
     "album": "Flatlandia",
-    "songDuration": "5:00",
-    "link": "assets/albums/Flatlandia/In the Day of the Night"
+    "songDuration": "5:06",
+    "link": "assets/albums/Flatlandia/In the Day of the Night",
+    "class": ""
   },
   {
     "index": 2,
-    "title": "Upward and Downward",
+    "title": "Shard I",
     "album": "Flatlandia",
     "songDuration": "2:04",
-    "link": "assets/albums/Flatlandia/Upward and Downward"
+    "link": "assets/albums/Flatlandia/Shard I",
+    "class": "not-playable"
   },
   {
     "index": 3,
     "title": "Elevation I: In Heaven as It is on Earth",
     "album": "Flatlandia",
     "songDuration": "2:20",
-    "link": "assets/albums/Flatlandia/Elevation I꞉ In Heaven as It is on Earth"
+    "link": "assets/albums/Flatlandia/Elevation I꞉ In Heaven as It is on Earth",
+    "class": "not-playable"
   },
   {
     "index": 4,
-    "title": "The Second Tree in a Row",
+    "title": "Kreuzspiel",
     "album": "Flatlandia",
     "songDuration": "3:46",
-    "link": "assets/albums/Flatlandia/The Second Tree in a Row"
+    "link": "assets/albums/Flatlandia/Kreuzspiel",
+    "class": "not-playable"
   },
   {
     "index": 5,
     "title": "Elevation II: Intermittency and Dynamism",
     "album": "Flatlandia",
     "songDuration": "2:43",
-    "link": "assets/albums/Flatlandia/Elevation II - Intermittency and Dynamism"
+    "link": "assets/albums/Flatlandia/Elevation II - Intermittency and Dynamism",
+    "class": "not-playable"
   },
   {
     "index": 6,
     "title": "Here to There",
     "album": "Flatlandia",
     "songDuration": "3:33",
-    "link": "assets/albums/Flatlandia/Here to There"
+    "link": "assets/albums/Flatlandia/Here to There",
+    "class": "not-playable"
   },
   {
     "index": 7,
-    "title": "The Third Second in a Row",
+    "title": "In the Night of the Day",
     "album": "Flatlandia",
-    "songDuration": "4:04",
-    "link": "assets/albums/Flatlandia/The Third Second in a Row"
+    "songDuration": "3:54",
+    "link": "assets/albums/Flatlandia/In the Night of the Day",
+    "class": ""
   },
   {
     "index": 8,
     "title": "Prelude to the Lights of the City",
     "album": "Flatlandia",
     "songDuration": "6:44",
-    "link": "assets/albums/Flatlandia/Prelude to the Lights of the City"
+    "link": "assets/albums/Flatlandia/Prelude to the Lights of the City",
+    "class": "not-playable"
   },
   {
     "index": 9,
-    "title": "Elevation III: The Dry World",
+    "title": "Shard II",
     "album": "Flatlandia",
     "songDuration": "1:56",
-    "link": "assets/albums/Flatlandia/Elevation III - The Dry World"
+    "link": "assets/albums/Flatlandia/Shard II",
+    "class": "not-playable"
   },
   {
     "index": 10,
-    "title": "Downward and Upward",
+    "title": "Elevation III: On Earth as It is in Heaven",
     "album": "Flatlandia",
-    "songDuration": "3:28",
-    "link": "assets/albums/Flatlandia/Downward and Upward"
+    "songDuration": "2:14",
+    "link": "assets/albums/Flatlandia/Elevation III - On Earth as It is in Heaven",
+    "class": ""
   },
   {
     "index": 11,
-    "title": "Elevation IV: On Earth as it is in Heaven",
+    "title": "Reprise",
     "album": "Flatlandia",
     "songDuration": "1:34",
-    "link": "assets/albums/Flatlandia/Elevation IV - On Earth as It is in Heaven"
+    "link": "assets/albums/Flatlandia/Reprise",
+    "class": "not-playable"
   },
   {
     "index": 12,
-    "title": "In the Night of the Day",
-    "album": "Flatlandia",
-    "songDuration": "4:19",
-    "link": "assets/albums/Flatlandia/In the Night of the Day"
-  },
-  {
-    "index": 13,
     "title": "Zeitmasse",
     "album": "Flatlandia",
     "songDuration": "12:54",
-    "link": "assets/albums/Flatlandia/Zeitmasse"
+    "link": "assets/albums/Flatlandia/Zeitmasse",
+    "class": "not-playable"
   }
 ]

@@ -1,0 +1,106 @@
+[
+  {
+    "index": 1,
+    "title": "riot",
+    "album": "BER",
+    "songDuration": "2:31",
+    "link": "assets/albums/BER/riot",
+    "class": ""
+  },
+  {
+    "index": 2,
+    "title": "ID1",
+    "album": "BER",
+    "songDuration": "2:46",
+    "link": "assets/albums/BER/ID1",
+    "class": ""
+  },
+  {
+    "index": 3,
+    "title": "ID2",
+    "album": "BER",
+    "songDuration": "5:05",
+    "link": "assets/albums/BER/ID2",
+    "class": ""
+  },
+  {
+    "index": 4,
+    "title": "ID3",
+    "album": "BER",
+    "songDuration": "2:48",
+    "link": "assets/albums/BER/ID3",
+    "class": ""
+  },
+  {
+    "index": 5,
+    "title": "kreuzberg",
+    "album": "BER",
+    "songDuration": "2:43",
+    "link": "assets/albums/BER/kreuzberg",
+    "class": "not-playable"
+  },
+  {
+    "index": 6,
+    "title": "viktoriapark",
+    "album": "BER",
+    "songDuration": "5:15",
+    "link": "assets/albums/BER/viktoriapark",
+    "class": ""
+  },
+  {
+    "index": 7,
+    "title": "ID4",
+    "album": "BER",
+    "songDuration": "3:54",
+    "link": "assets/albums/BER/ID4",
+    "class": "not-playable"
+  },
+  {
+    "index": 8,
+    "title": "ID5",
+    "album": "BER",
+    "songDuration": "5:24",
+    "link": "assets/albums/BER/ID5",
+    "class": ""
+  },
+  {
+    "index": 9,
+    "title": "ID6",
+    "album": "BER",
+    "songDuration": "1:56",
+    "link": "assets/albums/BER/ID6",
+    "class": "not-playable"
+  },
+  {
+    "index": 10,
+    "title": "rummelsburg",
+    "album": "BER",
+    "songDuration": "2:14",
+    "link": "assets/albums/BER/Erummelsburg",
+    "class": "not-playable"
+  },
+  {
+    "index": 11,
+    "title": "Companion Material",
+    "album": "BER",
+    "songDuration": "1:34",
+    "link": "assets/albums/BER/Companion Material",
+    "class": "not-playable"
+  },
+  {
+    "index": 12,
+    "title": "Extra",
+    "album": "BER",
+    "songDuration": "12:54",
+    "link": "assets/albums/BER/Extra",
+    "class": "not-playable"
+  },
+  {
+    "index": 13,
+    "title": "Scores",
+    "album": "BER",
+    "songDuration": "12:54",
+    "link": "assets/albums/BER/Scores",
+    "class": "not-playable"
+  }
+]

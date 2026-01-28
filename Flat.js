@@ -251,7 +251,7 @@ d3.json("../assets/songs_F.json").then(data =>{
     trackData = data;
     update(data);
     
-    $('.n-of-tracks').text(data.length + ' TRACKS');
+    $('.n-of-tracks').text('3/' + data.length + ' TRACKS');
 })
 var currentAudio = null;
 
@@ -260,7 +260,7 @@ function update(data){
     const track = trackListContainer.selectAll('div')
     .data(data)
     .enter().append('div')
-    .attr('class', 'track flex-sb-center')
+    .attr('class', d => `track flex-sb-center ${d.class}`)
     .attr('dataSongLink', d => "../"+d.link+".m4a") // cambiare anche il JSON!!!!
     .html(d => 
         `<div class="track-title s-text">${d.title}</div>

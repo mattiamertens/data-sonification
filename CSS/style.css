@@ -53,9 +53,11 @@
     --icon-previous: url('../assets/icons/previous.svg');
     --icon-next: url('../assets/icons/next.svg');
     --icon-play: url('../assets/icons/play.svg');
+    --icon-info: url('../assets/icons/info.svg');
 
     --neutral_black: #000000;
-    --neutral_dk-grey: #353535;
+    --neutral_dk-grey: #272727;
+    --neutral_md-grey: #666;
     --neutral_lt-grey: #999999;
     --neutral_white: #ffffff;
 
@@ -174,6 +176,9 @@ a{
     background-color: var(--neutral_black);
     mask-size: cover;
     mask-repeat: no-repeat;
+    &:hover{
+        opacity: 0.1;
+    }
 }
 .icon-s{
     width: 16px;
@@ -188,6 +193,10 @@ a{
     height: 32px;
 }
 .muted-icon{
+    background-color: var(--neutral_md-grey);
+    color: var(--neutral_md-grey);
+}
+.disabled-icon{
     background-color: var(--neutral_dk-grey);
     color: var(--neutral_dk-grey);
 }
@@ -243,6 +252,7 @@ pointer-events: none;
 }
 .subtitle{
     font-size: 32px;
+    text-transform: uppercase;
 }
 .interactive-wrapper{
     z-index: 101;
@@ -279,6 +289,7 @@ video{
 }
 
 .track-container{
+    position: relative;
     z-index: 10;
     border-radius: 8px;
     background-color: var(--neutral_white);
@@ -334,7 +345,7 @@ video{
     flex-wrap: wrap;
 }
 .show-tracks{
-    color: var(--neutral_dk-grey);
+    color: var(--neutral_md-grey);
     pointer-events: none;
 }
 .music-control{
@@ -403,6 +414,7 @@ video{
     width: 70%;
     display: flex;
     font-size: 22px;
+    line-height: 1.2;
     height: 100%;
     overflow-y: scroll;
     -ms-overflow-style: none;  /* IE and Edge */
@@ -411,7 +423,12 @@ video{
 }
 .description-text::-webkit-scrollbar {
     display: none;
-  }
+}
+.paragraph_title{
+    /* font-size: 22px; */
+    font-weight: 600;
+    text-transform: uppercase;
+}
   
 .album-cover-wrapper{
     display: flex;
@@ -741,4 +758,33 @@ video{
 .blurredOut{
     filter: blur(12px);
     pointer-events: none;
+}
+
+
+.not-playable{
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.4;
+}
+.tooltip-text{
+    visibility: hidden;
+    background: linear-gradient(89deg, rgba(121, 202, 230, 0.80) -13.19%, rgba(169, 117, 247, 0.80) 120.12%);;
+    text-align: center;
+    border-radius: 4px;
+    padding: 8px;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 1;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+@media screen and (max-width: 576px){
+    .tooltip-text{
+        top: 2%;
+    }
+}
+.visible {
+    visibility: visible;
 }
