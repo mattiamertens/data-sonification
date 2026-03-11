@@ -67,7 +67,7 @@
     "index": 9,
     "title": "viktoriapark",
     "album": "BER",
-    "songDuration": "8:02",
+    "songDuration": "5:12",
     "link": "assets/albums/BER/viktoriapark",
     "class": ""
   },
@@ -75,23 +75,23 @@
     "index": 10,
     "title": "ID3",
     "album": "BER",
-    "songDuration": "2:14",
+    "songDuration": "2:47",
     "link": "assets/albums/BER/ID3",
-    "class": ""
+    "class": "not-playable"
   },
   {
     "index": 11,
-    "title": "Level",
+    "title": "level",
     "album": "BER",
     "songDuration": "2:14",
-    "link": "assets/albums/BER/Level",
+    "link": "assets/albums/BER/level",
     "class": ""
   },
   {
     "index": 12,
     "title": "Says",
     "album": "BER",
-    "songDuration": "2:14",
+    "songDuration": "5:24",
     "link": "assets/albums/BER/Says",
     "class": "not-playable"
   }
