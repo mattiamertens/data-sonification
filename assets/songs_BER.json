@@ -3,7 +3,7 @@
     "index": 1,
     "title": "riot",
     "album": "BER",
-    "songDuration": "2:31",
+    "songDuration": "2:33",
     "link": "assets/albums/BER/riot",
     "class": ""
   },
@@ -11,72 +11,88 @@
     "index": 2,
     "title": "ID1",
     "album": "BER",
-    "songDuration": "2:46",
+    "songDuration": "2:48",
     "link": "assets/albums/BER/ID1",
     "class": ""
   },
   {
     "index": 3,
-    "title": "ID2",
+    "title": "momentary",
     "album": "BER",
-    "songDuration": "5:05",
-    "link": "assets/albums/BER/ID2",
+    "songDuration": "5:13",
+    "link": "assets/albums/BER/momentary",
     "class": ""
   },
   {
     "index": 4,
-    "title": "ID3",
+    "title": "collapse",
     "album": "BER",
     "songDuration": "2:48",
-    "link": "assets/albums/BER/ID3",
-    "class": ""
-  },
-  {
-    "index": 5,
-    "title": "kreuzberg",
-    "album": "BER",
-    "songDuration": "2:43",
-    "link": "assets/albums/BER/kreuzberg",
+    "link": "assets/albums/BER/momentary",
     "class": "not-playable"
   },
   {
-    "index": 6,
-    "title": "viktoriapark",
+    "index": 5,
+    "title": "unfold",
     "album": "BER",
-    "songDuration": "5:15",
-    "link": "assets/albums/BER/viktoriapark",
+    "songDuration": "2:43",
+    "link": "assets/albums/BER/unfold",
+    "class": ""
+  },
+  {
+    "index": 6,
+    "title": "ID2",
+    "album": "BER",
+    "songDuration": "1:56",
+    "link": "assets/albums/BER/ID2",
     "class": ""
   },
   {
     "index": 7,
-    "title": "ID4",
+    "title": "Kreuzberg",
     "album": "BER",
     "songDuration": "3:54",
-    "link": "assets/albums/BER/ID4",
+    "link": "assets/albums/BER/Kreuzberg",
     "class": "not-playable"
   },
   {
     "index": 8,
-    "title": "ID5",
+    "title": "Looping tape",
     "album": "BER",
-    "songDuration": "5:24",
-    "link": "assets/albums/BER/ID5",
-    "class": ""
-  },
-  {
-    "index": 9,
-    "title": "ID6",
-    "album": "BER",
-    "songDuration": "1:56",
-    "link": "assets/albums/BER/ID6",
+    "songDuration": "5:51",
+    "link": "assets/albums/BER/Looping tape",
     "class": "not-playable"
   },
   {
+    "index": 9,
+    "title": "viktoriapark",
+    "album": "BER",
+    "songDuration": "8:02",
+    "link": "assets/albums/BER/viktoriapark",
+    "class": ""
+  },
+  {
     "index": 10,
-    "title": "rummelsburg",
+    "title": "ID3",
     "album": "BER",
     "songDuration": "2:14",
-    "link": "assets/albums/BER/Erummelsburg",
+    "link": "assets/albums/BER/ID3",
+    "class": ""
+  },
+  {
+    "index": 11,
+    "title": "Level",
+    "album": "BER",
+    "songDuration": "2:14",
+    "link": "assets/albums/BER/Level",
+    "class": ""
+  },
+  {
+    "index": 12,
+    "title": "Says",
+    "album": "BER",
+    "songDuration": "2:14",
+    "link": "assets/albums/BER/Says",
     "class": "not-playable"
   }
 ]
