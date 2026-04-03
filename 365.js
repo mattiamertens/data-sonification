@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import openSimplexNoise from 'https://cdn.skypack.dev/open-simplex-noise';
+import openSimplexNoise from 'https://esm.sh/open-simplex-noise';
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 const width = document.documentElement.clientWidth;
