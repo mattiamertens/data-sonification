@@ -251,11 +251,15 @@ d3.json("../assets/songs_F.json").then(data =>{
     trackData = data;
     update(data);
     
-    $('.n-of-tracks').text('3/' + data.length + ' TRACKS');
+    $('.n-of-tracks').text('4/' + data.length + ' TRACKS');
+
 })
+
 var currentAudio = null;
 
 function update(data){
+
+    
 
     const track = trackListContainer.selectAll('div')
     .data(data)
