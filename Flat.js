@@ -251,7 +251,9 @@ d3.json("../assets/songs_F.json").then(data =>{
     trackData = data;
     update(data);
     
-    $('.n-of-tracks').text('4/' + data.length + ' TRACKS');
+    const playableCount = data.filter(track => !track.class).length;
+
+    $('.n-of-tracks').text( playableCount + ' TRACKS');
 
 })
 
