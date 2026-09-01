@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import openSimplexNoise from 'https://esm.sh/open-simplex-noise';
+import { makeNoise4D } from 'https://esm.sh/open-simplex-noise';
 import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 const width = document.documentElement.clientWidth;
@@ -70,7 +70,7 @@ const audioLoader = new THREE.AudioLoader();
 const analyser = new THREE.AudioAnalyser(sound, 32);
 
 
-let noise = openSimplexNoise.makeNoise4D(Date.now());
+let noise = makeNoise4D(Date.now());
 let clock = new THREE.Clock();
 
 // Mouse position
