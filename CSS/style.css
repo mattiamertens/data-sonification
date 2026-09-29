@@ -1,15 +1,5 @@
 @font-face {
     font-family: 'Berlin Grotesk';
-    src: url('fonts/BerlinGrotesk-Thin.eot');
-    src: url('fonts/BerlinGrotesk-Thin.eot?#iefix') format('embedded-opentype'),
-        url('fonts/BerlinGrotesk-Thin.woff2') format('woff2'),
-        url('fonts/BerlinGrotesk-Thin.woff') format('woff');
-    font-weight: 100;
-    font-style: normal;
-    font-display: swap;
-}
-@font-face {
-    font-family: 'Berlin Grotesk';
     src: url('fonts/BerlinGrotesk-Light.eot');
     src: url('fonts/BerlinGrotesk-Light.eot?#iefix') format('embedded-opentype'),
         url('fonts/BerlinGrotesk-Light.woff2') format('woff2'),
@@ -18,16 +8,7 @@
     font-style: normal;
     font-display: swap;
 }
-@font-face {
-    font-family: 'Berlin Grotesk';
-    src: url('fonts/BerlinGrotesk-Regular.eot');
-    src: url('fonts/BerlinGrotesk-Regular.eot?#iefix') format('embedded-opentype'),
-        url('fonts/BerlinGrotesk-Regular.woff2') format('woff2'),
-        url('fonts/BerlinGrotesk-Regular.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-}
+
 @font-face {
     font-family: 'Berlin Grotesk';
     src: url('fonts/BerlinGrotesk-Medium.eot');
@@ -39,21 +20,19 @@
     font-display: swap;
 }
 
-@font-face {
-    font-family: 'Berlin Grotesk';
-    src: url('fonts/BerlinGrotesk-Bold.eot');
-    src: url('fonts/BerlinGrotesk-Bold.eot?#iefix') format('embedded-opentype'),
-        url('fonts/BerlinGrotesk-Bold.woff2') format('woff2'),
-        url('fonts/BerlinGrotesk-Bold.woff') format('woff');
-    font-weight: 700;
-    font-style: normal;
-    font-display: swap;
-}
 :root{
     --icon-previous: url('../assets/icons/previous.svg');
     --icon-next: url('../assets/icons/next.svg');
     --icon-play: url('../assets/icons/play.svg');
     --icon-info: url('../assets/icons/info.svg');
+
+    --bg--primary: #191919;
+    --bg--secondary: #121212;
+    --bg--secondary-hover: #1e1e1e;
+    --bg--tertiary: #030303;
+
+    --text--primary: #ffffff;
+    --text--secondary: #b4b4b4;
 
     --neutral_black: #000000;
     --neutral_dk-grey: #272727;
@@ -70,11 +49,12 @@ body, * {
     padding: 0;
     font-family: 'Berlin Grotesk', sans-serif;
     font-weight: 300;
-    color: var(--neutral_black);
-    box-sizing: border-box;
+    color: var(--text--primary);
+    box-sizing: border-box;    
 }
 body{
-    background-color: #EBEBEB;
+    background-color: var(--bg--primary);
+    scrollbar-color: var(--text--secondary) var(--bg--primary);
 }
 a{
     text-decoration: none;
@@ -88,7 +68,7 @@ a{
     mix-blend-mode: exclusion;
 }
 .white-txt{
-    color: #ffffff;
+    color: var(--text--primary);
 }
 .h-100{
     height: 100%;
@@ -168,16 +148,17 @@ a{
     text-decoration: underline;
 }
 .muted-text{
-    color: #353535 !important;
+    /* color: #353535 !important; */
+    color: var(--text--secondary) !important;
 }
 
 /* SVG ICONS */
 .icon{
-    background-color: var(--neutral_black);
+    background-color: var(--text--primary);
     mask-size: cover;
     mask-repeat: no-repeat;
     &:hover{
-        opacity: 0.1;
+        opacity: 0.5;
     }
 }
 .icon-s{
@@ -283,8 +264,7 @@ video{
 }
 .current-song{
     padding: 6px;
-    background-color: #dfdfdf;
-    color: black;
+    color: var(--text--primary);
     border-radius: 4px;
 }
 
@@ -292,12 +272,12 @@ video{
     position: relative;
     z-index: 10;
     border-radius: 8px;
-    background-color: var(--neutral_white);
+    background-color: var(--bg--tertiary);
     box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.20);
     /* flex-grow: 1; */
     overflow-y: hidden;
     & *{
-        color: black;
+        color: var(--text--primary);
     }
 }
 .container-visible{
@@ -317,14 +297,14 @@ video{
 }
 
 .track{
-    background-color: #f5f5f5;
+    background-color: var(--bg--secondary);
     padding: 4px 8px;
     border-radius: 6px;
     min-height: 42px;
     cursor: pointer;
 
     &:hover{
-        background-color: #e3e3e3;
+        background-color: var(--bg--secondary-hover);
     }
 }
 .track-title{
@@ -336,7 +316,7 @@ video{
 }
 
 .cta-wrapper{
-    background-color: var(--neutral_white);
+    background-color: var(--bg--tertiary);
     box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.20);
     width: 490px;
     border-radius: 6px;
@@ -351,14 +331,15 @@ video{
 .music-control{
     cursor: pointer;
     font-size: 12px;
-    color: var(--neutral_black);
+    width: 46px;
+    color: var(--text--primary);
     & *{
-        color: var(--neutral_black);
+        color: var(--text--primary);
     }
 }
 
 .scrubber-fill{
-    background-color: var(--neutral_black);
+    background-color: var(--text--primary);
     height: 2px;
     border-radius: 4px;
 }
@@ -366,14 +347,14 @@ video{
     width: 8px;
     height: 8px;
     border-radius: 100px;
-    background-color: var(--neutral_black);
+    background-color: var(--text--primary);
     cursor: pointer;
 }
 #scrubber{
     width: 100%;
     height: 2px;
     -webkit-appearance: none;
-    background-color: var(--neutral_black);
+    background-color: var(--text--primary);
     border-radius: 40px;
     cursor: pointer;
 }
@@ -382,7 +363,7 @@ video{
     -webkit-appearance: none;
     width: 12px;
     height: 12px;
-    background-color: var(--neutral_black);
+    background-color: var(--text--primary);
     border-radius: 50%;
 }
 .time-display{
@@ -426,7 +407,7 @@ video{
 }
 .paragraph_title{
     /* font-size: 22px; */
-    font-weight: 600;
+    font-weight: 500;
     text-transform: uppercase;
 }
   

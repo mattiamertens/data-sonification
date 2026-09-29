@@ -272,16 +272,17 @@ const trackListContainer = d3.select(".track-list");
 let currentSongIndex = -1;
 let trackData = [];
 
+const albumId = document.body.dataset.album;
+const jsonPath = `../assets/${albumId}.json`;
 
 // Load data from JSON file
-d3.json("../assets/songs_F.json").then(data =>{
+d3.json(jsonPath).then(data =>{
     trackData = data;
     update(data);
     
     const playableCount = data.filter(track => !track.class).length;
 
     $('.n-of-tracks').text( playableCount + ' TRACKS');
-
 })
 
 var currentAudio = null;
@@ -323,7 +324,7 @@ function update(data){
                 
                 playButton.text('Play');
                 pauseText.innerHTML = "Play";
-                trackTitle.removeClass('bold underlined');
+                trackTitle.removeClass('bold');
                 $(this).removeClass('active');
 
             }
@@ -344,7 +345,7 @@ function update(data){
                 console.log('Same song');
 
                 playButton.text('Pause');
-                trackTitle.addClass('bold underlined');
+                trackTitle.addClass('bold');
                 $(this).addClass('active');
             }
         } else {
@@ -383,7 +384,7 @@ function update(data){
             playButton.text('Pause');
             pauseText.innerHTML = 'Pause';
 
-            trackTitle.addClass('bold underlined');
+            trackTitle.addClass('bold');
             $(this).addClass('active');
             
         } 
@@ -404,7 +405,7 @@ function update(data){
         
         $(this).siblings().removeClass('active');
         $(this).siblings().find('.play-button').text('Play');
-        $(this).siblings().find('.track-title').removeClass('bold underlined');
+        $(this).siblings().find('.track-title').removeClass('bold');
     })
 }
 
