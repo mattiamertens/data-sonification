@@ -1,0 +1,18 @@
+[
+  {
+    "index": 1,
+    "title": "Encore",
+    "album": "Farewell",
+    "songDuration": "5:06",
+    "link": "assets/albums/Farewell/Encore",
+    "class": ""
+  },
+  {
+    "index": 2,
+    "title": "Goodbye",
+    "album": "Farewell",
+    "songDuration": "5:06",
+    "link": "assets/albums/Farewell/Goodbye",
+    "class": ""
+  }
+]

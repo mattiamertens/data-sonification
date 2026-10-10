@@ -1,0 +1,26 @@
+[
+  {
+    "index": 1,
+    "title": "Momentary",
+    "album": "Finesse",
+    "songDuration": "5:06",
+    "link": "assets/albums/Finesse/Momentary",
+    "class": ""
+  },
+  {
+    "index": 2,
+    "title": "Finesse",
+    "album": "Finesse",
+    "songDuration": "5:06",
+    "link": "assets/albums/Finesse/Finesse",
+    "class": ""
+  },
+  {
+    "index": 3,
+    "title": "Finitude",
+    "album": "Finesse",
+    "songDuration": "5:06",
+    "link": "assets/albums/Finesse/Finitude",
+    "class": ""
+  }
+]

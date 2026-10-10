@@ -8,7 +8,7 @@
     <title>Sound Sculpting</title>
 
 </head>
-<body>
+<body data-album="finesse">
     <div class="navbar flex-sb-center fixed fixed-padding exclusion">
         <div class="home "><a href="../index.html" class="bold button-tertiary white-txt">Sound Sculpting</a></div>
         <div class="muter bold flex-center-center"> 
@@ -25,15 +25,14 @@
     <div class="interactive-wrapper flex-sa-center">
         <div class="vh-100 vw-50 flex-center-center">
             <div id="canvas" class="absolute"></div>
-            <div class="album-title exclusion flex-center-center white-txt">BERLIN</div>
+            <div class="album-title exclusion flex-center-center white-txt">FINESSE</div>
         </div>
         <div class="album-wrapper flex-start-center column g-16">
             <div class="track-container w-100 flex column g-16 p-16 h-100">
                 <div class="tracks-header flex-sb-center">
                     <div class="flex-center-center g-8">
                         <div class="n-of-tracks bold"></div>
-                        <div class="icon icon-s info muted-icon" id="tooltip" style="mask-image: var(--icon-info);"></div>
-                        <div class="tooltip-text">Scheduled for release in 2026</div>
+                        <!-- <div class="icon icon-s info muted-icon" id="tooltip" style="mask-image: var(--icon-info);"></div> -->
                     </div>
                     <div class="visibilityToggle button-tertiary bold">Hide</div>
                 </div>
@@ -79,16 +78,27 @@
     </div>
 
     <div class="content-wrapper column">
+        
+        <!-- <div class="video-wrapper" style="z-index: 0;">
+            <video controls preload="auto" class="video">
+                <source src="../assets/video/album/Flatlandia_trailer.mp4" type="video/mp4">
+            </video> -->
+        </div>
 
         <div class="album-description-wrapper g-24 vh-100 flex-sb-start">
             <div class="description-text column g-24">
                 <p>
-                    An album born from my first time in Berlin—a city that made me question everything that came before it. This music is a “what if?”, and as such it follows no rules, except for being the alternative version of what was meant to be. Music made of second choices that answer to no one—perhaps not even to the composer—except themselves. Out in 2026.
+                   The pieces you hear were never played. In a Los Angeles studio, a single performer — Yutaka Kani — recorded a series of fragments on violin and viola, ten seconds or so each, with one microphone. I cut, pitched and stitched those short takes down to the millisecond into entirely new orchestral parts, the arpeggios, melodies and textures you hear. I never composed them, except by producing them; the scores came later.
                 </p>
-            
+                <p>
+                   The felt piano, which those string fragments were built over, was paradoxically recorded afterwards, at Funkhaus Berlin. It was processed into a kind of mumbling, to reflect the same humming the orchestra was built on, take by take.
+                </p>
+                <p>
+                    The electronics became the natural glue between the two.
+                </p>
             </div>
             <div class="album-cover-wrapper">
-                <img src="../assets/pics/covers/berlin.webp" alt="" class="album-cover-s">
+                <img src="../assets/pics/covers/finesse.webp" alt="" class="album-cover-s">
             </div>
         </div>
     </div>
@@ -106,91 +116,7 @@
   </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-
-<script id="codeV" type="text/glsl">
-    #define NORMAL
-
-    #if defined( FLAT_SHADED ) || defined( USE_BUMPMAP ) || defined( TANGENTSPACE_NORMALMAP )
-    
-        varying vec3 vViewPosition;
-    
-    #endif
-    
-    #include <common>
-    #include <uv_pars_vertex>
-    #include <displacementmap_pars_vertex>
-    #include <normal_pars_vertex>
-    #include <morphtarget_pars_vertex>
-    #include <skinning_pars_vertex>
-    #include <logdepthbuf_pars_vertex>
-    #include <clipping_planes_pars_vertex>
-    
-    void main() {
-    
-        #include <uv_vertex>
-    
-        #include <beginnormal_vertex>
-        #include <morphnormal_vertex>
-        #include <skinbase_vertex>
-        #include <skinnormal_vertex>
-        #include <defaultnormal_vertex>
-        #include <normal_vertex>
-    
-        #include <begin_vertex>
-        #include <morphtarget_vertex>
-        #include <skinning_vertex>
-        #include <displacementmap_vertex>
-        #include <project_vertex>
-        #include <logdepthbuf_vertex>
-        #include <clipping_planes_vertex>
-    
-    #if defined( FLAT_SHADED ) || defined( USE_BUMPMAP ) || defined( TANGENTSPACE_NORMALMAP )
-    
-        vViewPosition = - mvPosition.xyz;
-    
-    #endif
-    
-    }
-</script>
-<script id="codeF" type="text/glsl">
-    uniform vec3 colorA;
-
-    #define NORMAL
-
-    #if defined( FLAT_SHADED ) || defined( USE_BUMPMAP ) || defined( TANGENTSPACE_NORMALMAP )
-    
-        varying vec3 vViewPosition;
-    
-    #endif
-    
-    #include <packing>
-    #include <uv_pars_fragment>
-    #include <normal_pars_fragment>
-    #include <bumpmap_pars_fragment>
-    #include <normalmap_pars_fragment>
-    #include <logdepthbuf_pars_fragment>
-    #include <clipping_planes_pars_fragment>
-    
-    void main() {
-    
-        #include <clipping_planes_fragment>
-        #include <logdepthbuf_fragment>
-        #include <normal_fragment_begin>
-        #include <normal_fragment_maps>
-    
-        gl_FragColor = vec4( normalize( normal ) * colorA + 0.5, 1.0 );
-    
-        #ifdef OPAQUE
-    
-            gl_FragColor.a = 1.0;
-    
-        #endif
-    
-    }
-</script>
-
-
-<script type="module" src="../BER.js"></script>
+<script type="module" src="../player.js"></script>
 <script type="module" src="../trackListToggle.js"></script>
 
 </html>
