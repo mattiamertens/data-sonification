@@ -395,6 +395,8 @@ video{
     width: 70%;
     display: flex;
     font-size: 20px;
+    text-align: justify;
+    text-justify: auto;
     line-height: 1.2;
     height: 100%;
     overflow-y: scroll;
