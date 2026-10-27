@@ -478,8 +478,14 @@ $('.audioToggle').on('click', function(){
 // WAKELOCK to keep the screen on
 let wakelock = null;
 async function requestWakeLock() {
-    wakelock = await navigator.wakeLock.request('screen');
-    console.log('Wake Lock is active!');
+    // Skip if a lock is already held (the browser may have released it on its own, e.g. tab hidden)
+    if (wakelock !== null && !wakelock.released) return;
+    try{
+        wakelock = await navigator.wakeLock.request('screen');
+        console.log('Wake Lock is active!');
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 function releaseWakeLock() {
@@ -489,3 +495,13 @@ function releaseWakeLock() {
         console.log('Wake Lock is released!');
     }
 }
+
+// The browser drops the lock when the page is hidden, so take it again on return if music is playing
+document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'visible' && sound.isPlaying) {
+        requestWakeLock();
+    }
+});
+
+
+
