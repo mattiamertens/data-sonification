@@ -99,6 +99,15 @@ const audioLoader = new THREE.AudioLoader();
 
 const analyser = new THREE.AudioAnalyser(sound, 32);
 
+// iOS: play even when the silent switch is on (Safari 17+)
+if (navigator.audioSession) navigator.audioSession.type = 'playback';
+
+// Safari starts the AudioContext suspended and only resumes it from inside a user gesture,
+// so this must be called synchronously in click handlers (not in the load callback)
+function unlockAudio() {
+    if (sound.context.state !== 'running') sound.context.resume();
+}
+
 
 let noise = makeNoise4D(Date.now());
 let clock = new THREE.Clock();
@@ -218,6 +227,7 @@ let pauseText = document.getElementsByClassName('pause-text')[0];
 
 function playPauseText(){
     console.log('central pause button clicked');
+    unlockAudio();
     // console.log($('.play-button'));
 
     if (currentSongIndex === -1) {
@@ -303,6 +313,7 @@ function update(data){
         `
     )
     .on('click', function(event, d){
+        unlockAudio();
         var playButton = $(this).find('.play-button');
         var trackTitle = $(this).find('.track-title');
         var currentSong = $('.current-song')[0];
@@ -339,7 +350,9 @@ function update(data){
                     sound.play();
 
                     console.log(songStartTime);
-                    
+
+                }, undefined, function(err){
+                    console.error('Audio load failed: ' + linkino, err);
                 })
 
                 console.log('Same song');
@@ -379,6 +392,8 @@ function update(data){
                 const songDuration = formatTime(sound.buffer.duration);
                 timeDisplay.innerHTML = `${songDuration}`;
 
+            }, undefined, function(err){
+                console.error('Audio load failed: ' + linkino, err);
             })
 
             playButton.text('Pause');
