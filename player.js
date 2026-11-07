@@ -209,7 +209,8 @@ function formatTime(seconds) {
 }
 
 function updateScrubber() {
-    if (!isDragging && sound.isPlaying) {
+    // Also require a buffer: reading sound.buffer.duration on null would throw and kill this loop for good
+    if (!isDragging && sound.isPlaying && sound.buffer) {
         timePassed = (sound.context.currentTime - songStartTime);
         scrubber.value = (timePassed / sound.buffer.duration) * scrubber.max;
 
@@ -230,11 +231,12 @@ function playPauseText(){
     unlockAudio();
     // console.log($('.play-button'));
 
-    if (currentSongIndex === -1) {
-        var playButton = $('.active').find('.play-button');
-        // If no song is playing, play the first one
-        playSongByIndex(0);
-        playButton.innerHTML = "Pause";
+    // A track is still downloading/decoding: playing now would start an empty buffer and block the real one
+    if (isLoading) return;
+
+    if (currentSongIndex === -1 || !sound.buffer) {
+        // Nothing loaded yet (or the last song ended): play the current song, or the first one
+        playSongByIndex(Math.max(currentSongIndex, 0));
     } else {
         var playButton = $('.active').find('.play-button');
         // Play normally
@@ -260,6 +262,11 @@ scrubber.addEventListener('input', function() {
 });
 
 scrubber.addEventListener("change", function () {
+    // No song loaded: without this, the line below throws and isDragging stays true forever
+    if (!sound.buffer) {
+        isDragging = false;
+        return;
+    }
     const newTime = (scrubber.value / scrubber.max) * sound.buffer.duration;
 
     songStartTime = sound.context.currentTime - newTime;
@@ -281,6 +288,10 @@ scrubber.addEventListener("change", function () {
 const trackListContainer = d3.select(".track-list");
 let currentSongIndex = -1;
 let trackData = [];
+
+// Every click bumps the token, so a load that finishes after a newer click is ignored
+let loadToken = 0;
+let isLoading = false;
 
 const albumId = document.body.dataset.album;
 const jsonPath = `../assets/${albumId}.json`;
@@ -314,6 +325,8 @@ function update(data){
     )
     .on('click', function(event, d){
         unlockAudio();
+        const myToken = ++loadToken;
+        isLoading = false;
         var playButton = $(this).find('.play-button');
         var trackTitle = $(this).find('.track-title');
         var currentSong = $('.current-song')[0];
@@ -340,20 +353,11 @@ function update(data){
 
             }
             else {
-                // Resume SAME song
-                audioLoader.load(linkino, function(buffer){
-                    sound.setBuffer(buffer);
-                    console.log(pausedAt);
-                    
-                    sound.offset = pausedAt;
-                    songStartTime = sound.context.currentTime - pausedAt;
-                    sound.play();
-
-                    console.log(songStartTime);
-
-                }, undefined, function(err){
-                    console.error('Audio load failed: ' + linkino, err);
-                })
+                // Resume SAME song, reusing the buffer already in memory
+                sound.offset = pausedAt;
+                songStartTime = sound.context.currentTime - pausedAt;
+                sound.play();
+                pauseText.innerHTML = "Pause";
 
                 console.log('Same song');
 
@@ -367,11 +371,17 @@ function update(data){
                 sound.stop();   
                 console.log('clicked another song');
                 // sound.setBuffer(null);
-                scrubber.value = 0;                
+                scrubber.value = 0;
             }
+            // Until the new buffer arrives, clicking this same track again should start a fresh load
+            currentAudio = null;
+            isLoading = true;
 
             // Start the new song
             audioLoader.load(linkino, function(buffer){
+                if (myToken !== loadToken) return; // superseded by a later click
+                isLoading = false;
+                if (sound.isPlaying) sound.stop();
                 sound.setBuffer(buffer);
 
                 scrubber.max = sound.buffer.duration;
@@ -393,6 +403,7 @@ function update(data){
                 timeDisplay.innerHTML = `${songDuration}`;
 
             }, undefined, function(err){
+                if (myToken === loadToken) isLoading = false;
                 console.error('Audio load failed: ' + linkino, err);
             })
 
@@ -455,8 +466,8 @@ document.querySelector('.previous').addEventListener('click', function() {
         // If no song is playing, play the first one
         playSongByIndex(0);
     } else {
-        // Play the next song, or loop back to the first one
-        const nextIndex = (currentSongIndex - 1) % trackData.length;
+        // Play the previous song, or loop back to the last one
+        const nextIndex = (currentSongIndex - 1 + trackData.length) % trackData.length;
         playSongByIndex(nextIndex);
     }
 });
